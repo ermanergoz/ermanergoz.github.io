@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Erman ERGÖZ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/page-default.css" id="page-stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Nav Bar Start -->
+<nav class="auto-hide navbar fixed-top navbar-expand-lg bg-dark navbar-dark" id="navbar">
+    <!-- Logo Start -->
+    <a href="index_tr.html" class="navbar-brand">ERMAN ERGOZ</a>
+    <!-- Logo End -->
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a href="#home" class="nav-item nav-link active">Ana Sayfa</a>
+            <a href="#about" class="nav-item nav-link">Hakkımda</a>
+            <!--<a href="#portfolio" class="nav-item nav-link">Eserlerim</a>-->
+            <a href="#contact" class="nav-item nav-link">İletişim</a>
+            <div class="d-lg-none d-md-block">
+                <br>
+                <a href="index.html" class="nav-item nav-link">English | Türkçe</a>
+            </div>
+        </div>
+        <div class="ml-auto d-none d-lg-block">
+            <button onclick="location.href='index.html';" type="button" class="btn btn-primary">
+                English | Türkçe
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Nav Bar End -->
+
+<div data-toggle="collapse" data-target=".navbar-collapse.show">
+    <!-- Home Start -->
+    <div class="home" id="home">
+        <section class="container">
+            <h2>Merhaba! Benim adım Erman,</h2>
+            <h5>Ben, uygulama geliştirme konusunda tutkulu bir uygulama geliştiricisi ve açık kaynak kodlu
+                proje katılımcısıyım.</h5>
+            <!--
+            <h5>uygulama geliştiriciliğidir mesleğim<br>
+                Açık kaynak dünyasında yeteneklerimi sergilerim,<br>
+                Tasarladığım uygulamaları tutkuyla işlerim<br>
+                Her satırda mükemmeliyet, hedefimdir benim</h5>
+                -->
+            <button class="btn btn-primary" type="button" onclick="location.href='#about';"><i
+                    class="fa fa-angle-down"></i>
+                Daha Fazla
+            </button>
+        </section>
+        <div class="background-grid-container" id="gridContainer"></div>
+    </div>
+    <!-- Home End -->
+
+    <!-- About Me Start -->
+    <div class="about" id="about">
+        <section class="container">
+            <h2>Hakkımda</h2>
+            <p>Hizmetlerimi, uygulama geliştiricisi olarak her büyüklükteki işletme, start-up, şahıslar ve diğer
+                serbest çalışanlar/geliştiricilerle çalışmak üzere sunmaktayım. Dünyanın çeşitli yerlerinden
+                müşteriler ile birçok deneyimim var. İşletmeniz geliştikçe uygulamada değişiklikler
+                yapabilmeniz için, her projenin iyi belgelenmiş ve sürdürülebilir olduğundan emin olmaktayım.</p>
+            <p>Budapeşte'den Eötvös Loránd Üniversitesi Bilgisayar Bilimleri lisans derecesine sahibim. Algoritmalar,
+                veri yapıları ve çeşitli programlama kavramları hakkında derin bir anlayışa sahibim. Kotlin ve Swift'in
+                yanı sıra, Java ve C++ gibi diğer programlama teknolojilerinde de kendime güvenmekteyim. Yeni
+                deneyimlere açığım ve beklentilerinize bağlı olarak, alanımın dışında kalan projelerde de yüksek düzeyde
+                işbirliği yapabilirim.</p>
+        </section>
+    </div>
+    <!-- About Me End -->
+
+    <!-- Portfolio Start
+    <div class="portfolio" id="portfolio">
+        <section class="container">
+            <h2>Eserlerim</h2>
+            <h4><a href="usurf-file-manager_tr.html"> USurf Dosya Yöneticisi&ensp;
+                <i class="fa-brands fa-android"></i></a>
+            </h4>
+            <p>USurf Dosya Yöneticisi, kullanıcıların dosyalarına göz atmalarını, indirdiklerini bulmalarını,
+                depolama alanlarını yönetmelerini, dosyalarını taşımalarını ve çok daha fazlasını sağlayan
+                basit bir açık kaynaklı Android dosya yöneticisi uygulamasıdır.
+                <a href="usurf-file-manager_tr.html">Daha fazlası için tıklayın.</a>
+            </p>
+            <br>
+            <h4>WSA-Android&ensp;<i class="fa-brands fa-android"></i></h4>
+            <p>Budapeşte'deki Mirum Agency'de yüklenici Android geliştiricisi olarak çalışırken, WSA-Android işçi
+                güvenliği uygulamasının bakımını yaptım ve geliştirdim.</p>
+            <br>
+            <h4><a href="sack-counter_tr.html">Çuval Sayacı&ensp;<i class="fa-brands fa-android"></i></a></h4>
+            <p>Ankara/Türkiye'de bulunan bir şeker fabrikası için çuval sayacı uygulaması. Bu uygulama, ML-Kit
+                kullanılarak Orange Pi üzerinde çalıştırılmak üzere yapılmıştır.
+                <a href="sack-counter_tr.html">Daha fazlası için tıklayın.</a>
+            </p>
+            <br>
+            <h4><a href="https://ermanergoz.github.io/huzurevi"> Isparta Huzurevi&ensp;
+                <i class="fa-solid fa-globe"></i></a>
+            </h4>
+            <p>Isparta Huzurevi Sağlık Eğitim & Dayanışma Vakfı ve Isparta Huzurevi Sağlık Eğitim &
+                Dayanışma Derneği için statik web sitesi.
+                <a href="https://ermanergoz.github.io/huzurevi">Web sitesini ziyaret etmek için tıklayın.
+                    <i class="fas fa-external-link-alt"></i></a>
+            </p>
+            <br>
+            <h5>Ve daha fazlası!</h5>
+        </section>
+    </div>
+    Portfolio End -->
+
+    <!-- Contact Start -->
+    <div class="contact" id="contact">
+        <section class="container">
+            <h2>İletişim</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Eğer aklınızda konuşmak istediğiniz bir proje varsa, hemen iletişime geçelim!</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <p>E-posta:<br><i class="fa fa-envelope fa-fw email">&nbsp;</i><a
+                                href="mailto: erman.ergoz@gmail.com" target="_blank">erman.ergoz@gmail.com</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>Facebook:<br><i class="fa-brands fa-facebook-f fa-fw facebook"></i><a
+                                href="https://www.facebook.com/erman.ergoz" target="_blank">&nbsp;facebook.com/erman.ergoz</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>Instagram:<br><i class="fa-brands fa-instagram fa-fw instagram"></i><a
+                                href="https://www.instagram.com/ermanergz/" target="_blank">&nbsp;instagram.com/ermanergz</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>LinkedIn:<br><i class="fa-brands fa-linkedin-in fa-fw linkedin"></i><a
+                                href="https://www.linkedin.com/in/ermanergoz/" target="_blank">&nbsp;linkedin.com/in/ermanergoz</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Contact End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <button class="btn btn-primary" type="button" onclick="location.href='#home';">
+            <i class="fa fa-angle-up"></i> Başa dön
+        </button>
+        <p class="copyright">&copy; 2021 - <span id="copyright"></span> Yusuf Erman ERGÖZ&nbsp;&nbsp;&nbsp;&nbsp;<button
+                type="button" class="btn btn-primary" data-toggle="modal" data-target="#privacyPolicyModal">Gizlilik
+            politikası
+        </button>
+
+            <!-- The Modal -->
+        <div class="modal" id="privacyPolicyModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title">Gizlilik Politikası</h1>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Son güncelleme: 25 Ağustos 2022</p>
+                        <br>
+                        <p>Gizliliğinizi ciddiye alıyorum. Gizliliğinizi daha iyi korumak için, kişisel bilgilerinizin
+                            toplanma ve kullanılma şeklini açıklayan bu gizlilik politikasının bildirimini
+                            sağlıyorum.</p>
+
+                        <h2>Bilgilerin Toplanması</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) ziyaretçileri üzerinde izleyici
+                            kullanmaz ve veri toplamaz.</p>
+
+                        <h2>Çerezler</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) çerez kullanmaz.</p>
+
+                        <h2>Reklamlar ve Diğer Üçüncü Taraflar</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) reklam göstermez ve herhangi bir
+                            üçüncü taraf reklam ortakları kullanmaz. Herhangi bir üçüncü taraf site veya hizmetin
+                            içeriği, gizlilik politikaları veya uygulamaları üzerinde hiçbir kontrolüm veya sorumluluğum
+                            yoktur.</p>
+
+                        <h2>Üçüncü Taraf Web Sitelerine Bağlantılar</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io), tarafımca işletilmeyen diğer web
+                            sitelerine bağlantılar içerebilir. Bir üçüncü taraf bağlantısına tıklarsanız, o üçüncü
+                            tarafın sitesine yönlendirilirsiniz. Ziyaret ettiğiniz her sitenin gizlilik politikasını
+                            incelemenizi şiddetle tavsiye ederim. Herhangi bir üçüncü taraf site veya hizmetin içeriği,
+                            gizlilik politikaları veya uygulamaları üzerinde hiçbir kontrolüm veya sorumluluğum
+                            yoktur.</p>
+
+                        <h2>Güvenlik</h2>
+                        <p>Kişisel bilgilerinizin güvenliği benim için önemlidir, ancak internet üzerinden hiçbir
+                            aktarım yönteminin ve elektronik depolama yönteminin %100 güvenli olmadığını unutmayın.
+                            Herhangi bir kişisel bilgi toplamasam da mutlak güvenliğini garanti edemem.</p>
+
+                        <h2>Bu Gizlilik Politikasındaki Değişiklikler</h2>
+                        <p>Bu gizlilik politikasını zaman zaman güncelleyebilirim. Bu sayfada yeni gizlilik politikasını
+                            yayınlayarak, değişiklikler hakkında sizi bilgilendireceğim. Değişikliklerden haberdar için,
+                            bu gizlilik politikasını periyodik olarak gözden geçirmenizi tavsiye ederim. Bu gizlilik
+                            politikasında yapılan değişiklikler bu sayfada yayınlandıklarında geçerlidir.</p>
+
+                        <h2>İletişim bilgileri</h2>
+                        <p>Bu gizlilik politikasıyla ilgili herhangi bir soru veya endişeniz için lütfen benimle <a
+                                href="https://www.ermanergoz.com/index_tr.html#contact">
+                            iletişime geçin</a>.</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    setupGrid('div', 400, "background-grid-cell", 'gridContainer');
+    setLanguage();
+</script>
+
+</body>
+</html>

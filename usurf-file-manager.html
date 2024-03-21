@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>USurf File Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/page-default.css" id="page-stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+
+</head>
+
+<body>
+<!-- Nav Bar Start -->
+<nav class="auto-hide navbar fixed-top navbar-expand-lg bg-dark navbar-dark" id="navbar">
+    <!-- Logo Start -->
+    <a href="index.html" class="navbar-brand">ERMAN ERGOZ</a>
+    <!-- Logo End -->
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a href="index.html#portfolio" class="nav-item nav-link active">Home</a>
+            <div class="d-lg-none d-md-block">
+                <br>
+                <a href="usurf-file-manager_tr.html" class="nav-item nav-link">Türkçe | English</a>
+            </div>
+        </div>
+        <div class="ml-auto d-none d-lg-block">
+            <button onclick="location.href='usurf-file-manager_tr.html';" type="button" class="btn btn-primary">
+                Türkçe | English
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Nav Bar End -->
+
+<div data-toggle="collapse" data-target=".navbar-collapse.show">
+    <!-- Project Details Start -->
+    <div class="project-details" id="project-details">
+        <section class="container">
+            <h2><img class="logo" src="img/logo/usurf-logo.png" alt="Logo">&ensp;USurf File Manager</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Carousel Start -->
+                    <div class="project-carousel">
+                        <div class="container">
+                            <div class="owl-carousel">
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss1.jpg" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss2.jpg" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss3.jpg" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss4.jpg" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss5.jpg" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="img/screenshot/usurf/ss6.jpg" alt="Image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel End -->
+                </div>
+                <div class="col-lg-6">
+                    <p>USurf File Manager is a simple open sourced Android file manager application that lets users
+                        browse their files, find their downloads, manage their storage space, move things around,and a
+                        lot more. The goal of this application is to provide trustable service to the users without any
+                        shady background operations and advertisement-free user experience.</p>
+                    <a href="https://play.google.com/store/apps/details?id=com.erman.usurf">
+                        <img class="store-badge" src="img/badge/google-play-badge.png" alt="Google Play badge">
+                    </a>
+                </div>
+            </div>
+            <h4>Features</h4>
+            <p><i class="fa fa-circle">&emsp;</i>Basic features like cut, copy, delete etc.<br>
+                <i class="fa fa-circle">&emsp;</i>File transfer over WI-FI using FTP<br>
+                <i class="fa fa-circle">&emsp;</i>Device-wide, keyword based file search<br>
+                <i class="fa fa-circle">&emsp;</i>Support to copy–paste multiple files to multiple places multiple times
+                <br>
+                <i class="fa fa-circle">&emsp;</i>Access to root files if the device is rooted<br>
+                <i class="fa fa-circle">&emsp;</i>Compress / extract files (Supported formats: 7z, BZIP2, GZIP, TAR,
+                WIM, XZ, zip)<br>
+                <i class="fa fa-circle">&emsp;</i>Support to add / remove shortcuts to home screen<br>
+                <i class="fa fa-circle">&emsp;</i>Navigation drawer for easy navigation<br>
+                <i class="fa fa-circle">&emsp;</i>Dark theme support<br>
+                <i class="fa fa-circle">&emsp;</i>No ads or in-app purchases</p>
+            <br>
+            <h4>Build & Run</h4>
+            <p>Clone git repository:</p>
+            <p>&emsp;git clone https://github.com/ermanergoz/USurf-file-manager.git</p>
+            <p>Import the project into Android Studio:<br>
+                Open Android Studio. After that Click on “Open an existing Android Studio project”. If Android Studio is
+                already open, click on File and then Click on Open.
+                Select the location of the cloned repository and then Click OK.
+                After Gradle operations are finished, the application will be ready to run.</p>
+            <br>
+            <h4>Application Architecture & Dependencies</h4>
+            <p><i class="fa fa-circle">&emsp;</i>MVVM architecture<br>
+                <i class="fa fa-circle">&emsp;</i>Data binding<br>
+                <i class="fa fa-circle">&emsp;</i>Navigation component<br>
+                <i class="fa fa-circle">&emsp;</i>Lifecycle<br>
+                <i class="fa fa-circle">&emsp;</i>Coroutines<br>
+                <i class="fa fa-circle">&emsp;</i>Apache FTP server<br>
+                <i class="fa fa-circle">&emsp;</i>Apache MINA<br>
+                <i class="fa fa-circle">&emsp;</i>Realm<br>
+                <i class="fa fa-circle">&emsp;</i>RootTools<br>
+                <i class="fa fa-circle">&emsp;</i>Koin Data Injection<br>
+                <i class="fa fa-circle">&emsp;</i>P7Zip</p>
+            <br>
+            <button type="button" class="btn btn-primary"
+                    onclick="window.open('https://github.com/ermanergoz/USurf-file-manager','_blank');">
+                <i class="fa-brands fa-github fa-3x fa-fw"></i>&emsp;GitHub repository
+            </button>
+        </section>
+    </div>
+    <!-- Project Details End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <button class="btn btn-primary" type="button" onclick="location.href='#project-details';"><i
+                class="fa fa-angle-up"></i>
+            To the top
+        </button>
+        <p class="copyright">&copy; 2021 - <span id="copyright"></span> Yusuf Erman ERGÖZ&nbsp;&nbsp;&nbsp;&nbsp;<button
+                type="button" class="btn btn-primary" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
+            policy
+        </button>
+
+            <!-- The Modal -->
+        <div class="modal" id="privacyPolicyModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title">Privacy Policy</h1>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Last updated: August 25, 2022</p>
+                        <br>
+                        <p>I take your privacy seriously. To better protect your privacy, I provide this privacy policy
+                            notice explaining the way your personal information is collected and used.</p>
+
+                        <h2>Collection of Information</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not track any information about
+                            its visitors.</p>
+
+                        <h2>Cookies</h2>
+                        This website (ermanergoz.com a.k.a ermanergoz.github.io) does not use cookies.
+
+                        <h2>Advertisement and Other Third Parties</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not display advertisements and
+                            does not use any third party Advertising partners. I have no control over and assume no
+                            responsibility for the content, privacy policies or practices of any third-party sites or
+                            services.</p>
+
+                        <h2>Links to Third-Party Websites</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) may contain links to other websites
+                            that are not operated by me. If you click on a third-party link, you will be directed to
+                            that third-party's site. I strongly advise you to review the privacy policy of every site
+                            you visit. I have no control over and assume no responsibility for the content, privacy
+                            policies, or practices of any third-party sites or services.</p>
+
+                        <h2>Security</h2>
+                        <p>The security of your personal information is important to me, but remember that no method of
+                            transmission over the Internet, or method of electronic storage, is 100% secure. While I do
+                            not collect any personal information, I cannot guarantee its absolute security.</p>
+
+                        <h2>Changes To This Privacy Policy</h2>
+                        <p>I may update this privacy policy from time to time. I will notify you of any changes by
+                            posting the new privacy policy on this page. You are advised to review this privacy policy
+                            periodically for any changes. Changes to this privacy policy are effective when they are
+                            posted on this page.</p>
+
+                        <h2>Contact Information</h2>
+                        <p>For any questions or concerns regarding the privacy policy, please <a
+                                href="https://www.ermanergoz.com/#contact">
+                            contact me</a>.</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+<script> initializeProjectCarousal(); </script>
+
+</body>
+</html>

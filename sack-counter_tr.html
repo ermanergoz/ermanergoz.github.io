@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sack Counter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/page-default.css" id="page-stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Nav Bar Start -->
+<nav class="auto-hide navbar fixed-top navbar-expand-lg bg-dark navbar-dark" id="navbar">
+    <!-- Logo Start -->
+    <a href="index_tr.html" class="navbar-brand">ERMAN ERGOZ</a>
+    <!-- Logo End -->
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a href="index_tr.html#portfolio" class="nav-item nav-link active">Ana Sayfa</a>
+            <div class="d-lg-none d-md-block">
+                <br>
+                <a href="sack-counter.html" class="nav-item nav-link">English | Türkçe</a>
+            </div>
+        </div>
+        <div class="ml-auto d-none d-lg-block">
+            <button onclick="location.href='sack-counter.html';" type="button" class="btn btn-primary">
+                English | Türkçe
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Nav Bar End -->
+
+<div data-toggle="collapse" data-target=".navbar-collapse.show">
+    <!-- Project Details Start -->
+    <div class="project-details" id="project-details">
+        <section class="container">
+            <h2><img class="logo" src="img/logo/sack-counter-logo.png" alt="Logo"> Çuval Sayacı</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- App demo Start -->
+                    <img src="https://i.imgur.com/KNoOVfM.gif" alt="Sack Counter demonstration">
+                    <!-- App demo End -->
+                </div>
+                <div class="col-lg-8">
+                    <p>Çuval Sayacı, Teknikcell SeoWarp Yazılım Eğitim Danışmanlık Tic. Paz. Ltd.
+                        Şti.'de çalışırken, Ankara'da bulunan bir şeker fabrikası için yaptığım bir uygulamadır.
+                        Bu uygulama, ML-Kit kullanılarak Orange Pi üzerinde çalıştırılmak üzere yapılmıştır.</p>
+                    <br>
+                    <h4>Hakkında</h4>
+                    <p>Bu proje, bir şeker fabrikası için bir çuval sayacı oluşturmakla ilgiliydi. Daha önce böyle bir
+                        sisteme sahiplerdi, ancak ellerindeki sistem birbirine yakın iki çuvalı tespit edememekteydi.
+                        Görevim, kameralar bağlı Orange Pi üzerinde çalıştırılacak bir Android uygulaması oluşturmak,
+                        çuvalları doğru şekilde saymak ve Wi-Fi üzerinden sunucuya sayılan çuvalların sayısını
+                        bildirmek için bir API çağrısı yapmaktı.</p>
+
+                    <p>Bu görevi yerine getirmek için, CameraX ile Ml-Kit nesne algılama ve izleme kütüphanelerini
+                        kullandım. Uygulama, Android SDK seviye 21 (Android 5.0) ve üzerini destekler. Çuvalların kesin
+                        bir şekli olmadığı için TensorFlow Lite kullanarak özel bir AI modeli eğitmek zorunda
+                        kaldım.</p>
+
+                    <p>Doğru sonuçlar sağlayan özel bir makine öğrenimi modeli oluşturabilmek için farklı aydınlatma,
+                        açı ve renklere sahip çuvalların ve kutuların görüntülerini içeren büyük bir veri seti toplamam
+                        gerekti (Yaklaşık 900 çuval görüntüsü ve 600 kutu resmi). Görüntüleri topladıktan sonra,
+                        doğruluktan ödün vermeden eğitim sürecini daha hızlı hale getirmek için onları yeniden
+                        boyutlandırmak için UNIX terminalini kullandım.
+                    </p>
+                </div>
+            </div>
+
+            <p>Özel eğitilmiş TensorFlow Lite modelini uygulamaya ekledikten sonra, algılanan öğeleri izlemek için
+                CameraX kütüphanesini kullandım. Çuval, üretim hattındaki kameranın kapsamına girdiğinde algılanır,
+                izlenir ve bir id atanır. Hatalı bir çuval/kutu olması durumunda, bir işçi onu üretim hattından çıkarır
+                ve uygulama tarafından sayılmaz. Aksi takdirde çuval kameranın kapsamı dışına çıkar ve sayaç birer birer
+                artar.</p>
+
+            <p>Uygulama, sayılan çuval sayısını sunucuya bildirmek için her beş dakikada
+                bir API çağrısı yapar. Sunucu adı ayarlardan düzenlenebilir. Wi-Fi sinyal kaybı veya beklenmedik bir
+                yeniden başlama durumunda, veri kaybını önlemek için cihaz tekrar Wi-Fi'ye bağlanır bağlanmaz veya cihaz
+                açılır açılmaz uygulama bir API çağrısı yapar. Yalnızca başarılı bir API çağrısı durumunda sayaç
+                sıfırlanır.</p>
+
+            <br>
+            <h4>Mimarisi & Bağımlılıkları</h4>
+            <p><i class="fa fa-circle">&emsp;</i>ML-Kit<br>
+                <i class="fa fa-circle">&emsp;</i>CameraX<br>
+                <i class="fa fa-circle">&emsp;</i>Retrofit<br>
+                <i class="fa fa-circle">&emsp;</i>Firebase<br>
+        </section>
+    </div>
+    <!-- Project Details End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <button class="btn btn-primary" type="button" onclick="location.href='#project-details';"><i
+                class="fa fa-angle-up"></i>
+            Başa dön
+        </button>
+        <p class="copyright">&copy; 2021 - <span id="copyright"></span> Yusuf Erman ERGÖZ&nbsp;&nbsp;&nbsp;&nbsp;<button
+                type="button" class="btn btn-primary" data-toggle="modal" data-target="#privacyPolicyModal">Gizlilik
+            politikası
+        </button>
+
+            <!-- The Modal -->
+        <div class="modal" id="privacyPolicyModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title">Gizlilik Politikası</h1>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Son güncelleme: 25 Ağustos 2022</p>
+                        <br>
+                        <p>Gizliliğinizi ciddiye alıyorum. Gizliliğinizi daha iyi korumak için, kişisel bilgilerinizin
+                            toplanma ve kullanılma şeklini açıklayan bu gizlilik politikasının bildirimini
+                            sağlıyorum.</p>
+
+                        <h2>Bilgilerin Toplanması</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) ziyaretçileri üzerinde izleyici
+                            kullanmaz ve veri toplamaz.</p>
+
+                        <h2>Çerezler</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) çerez kullanmaz.</p>
+
+                        <h2>Reklamlar ve Diğer Üçüncü Taraflar</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io) reklam göstermez ve herhangi bir
+                            üçüncü taraf reklam ortakları kullanmaz. Herhangi bir üçüncü taraf site veya hizmetin
+                            içeriği, gizlilik politikaları veya uygulamaları üzerinde hiçbir kontrolüm veya sorumluluğum
+                            yoktur.</p>
+
+                        <h2>Üçüncü Taraf Web Sitelerine Bağlantılar</h2>
+                        <p>Bu web sitesi (ermanergoz.com veya ermanergoz.github.io), tarafımca işletilmeyen diğer web
+                            sitelerine bağlantılar içerebilir. Bir üçüncü taraf bağlantısına tıklarsanız, o üçüncü
+                            tarafın sitesine yönlendirilirsiniz. Ziyaret ettiğiniz her sitenin gizlilik politikasını
+                            incelemenizi şiddetle tavsiye ederim. Herhangi bir üçüncü taraf site veya hizmetin içeriği,
+                            gizlilik politikaları veya uygulamaları üzerinde hiçbir kontrolüm veya sorumluluğum
+                            yoktur.</p>
+
+                        <h2>Güvenlik</h2>
+                        <p>Kişisel bilgilerinizin güvenliği benim için önemlidir, ancak internet üzerinden hiçbir
+                            aktarım yönteminin ve elektronik depolama yönteminin %100 güvenli olmadığını unutmayın.
+                            Herhangi bir kişisel bilgi toplamasam da mutlak güvenliğini garanti edemem.</p>
+
+                        <h2>Bu Gizlilik Politikasındaki Değişiklikler</h2>
+                        <p>Bu gizlilik politikasını zaman zaman güncelleyebilirim. Bu sayfada yeni gizlilik politikasını
+                            yayınlayarak, değişiklikler hakkında sizi bilgilendireceğim. Değişikliklerden haberdar için,
+                            bu gizlilik politikasını periyodik olarak gözden geçirmenizi tavsiye ederim. Bu gizlilik
+                            politikasında yapılan değişiklikler bu sayfada yayınlandıklarında geçerlidir.</p>
+
+                        <h2>İletişim bilgileri</h2>
+                        <p>Bu gizlilik politikasıyla ilgili herhangi bir soru veya endişeniz için lütfen benimle <a
+                                href="https://www.ermanergoz.com/index_tr.html#contact">
+                            iletişime geçin</a>.</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

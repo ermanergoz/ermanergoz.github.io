@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Sack Counter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/page-default.css" id="page-stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Nav Bar Start -->
+<nav class="auto-hide navbar fixed-top navbar-expand-lg bg-dark navbar-dark" id="navbar">
+    <!-- Logo Start -->
+    <a href="index.html" class="navbar-brand">ERMAN ERGOZ</a>
+    <!-- Logo End -->
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a href="index.html#portfolio" class="nav-item nav-link active">Home</a>
+            <div class="d-lg-none d-md-block">
+                <br>
+                <a href="sack-counter_tr.html" class="nav-item nav-link">Türkçe | English</a>
+            </div>
+        </div>
+        <div class="ml-auto d-none d-lg-block">
+            <button onclick="location.href='sack-counter_tr.html';" type="button" class="btn btn-primary">
+                Türkçe | English
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Nav Bar End -->
+
+<div data-toggle="collapse" data-target=".navbar-collapse.show">
+    <!-- Project Details Start -->
+    <div class="project-details" id="project-details">
+        <section class="container">
+            <h2><img class="logo" src="img/logo/sack-counter-logo.png" alt="Logo"> Sack Counter</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- App demo Start -->
+                    <img src="https://i.imgur.com/KNoOVfM.gif" alt="Sack Counter demonstration">
+                    <!-- App demo End -->
+                </div>
+                <div class="col-lg-8">
+                    <p>Sack Counter is an application I made for a sugar factory line located in Ankara/Turkey while I
+                        worked for Teknikcell SeoWarp Yazılım Eğitim Danışmanlık Tic. Paz. Ltd. Şti. This
+                        application is made to be run on Orange Pi with cameras attached to it using ML-Kit by
+                        Google.</p>
+                    <br>
+                    <h4>About</h4>
+                    <p>The job was about creating a sack counter for a sugar factory line. They already had such a
+                        system before but, due to the poor implementation, it did not detect two sacks that are too
+                        close to each other. The task was to create an Android application to be run on Orange Pi with
+                        cameras attached to it, count the sacks properly, and make an API call using Wi-Fi to report the
+                        number of sacks counted to the server.</p>
+
+                    <p>To accomplish this task, I used Ml Kit object detection and tracking with Camera X. The
+                        application supports Android SDK level 21 (Android 5.0) and above. Since the sacks don’t have an
+                        exact shape and fixed properties, I had to train a custom AI model using TensorFlow Lite.</p>
+
+                    <p>To be able to build a custom machine learning model that provides accurate results and to avoid
+                        the underfitting, I had to gather a large dataset containing the images of the sacks and the
+                        boxes with different lighting, angles, and colors (About 900 images of sacks and 600 images of
+                        boxes). After I gathered the images, I used the UNIX terminal to resize them to make the
+                        training process faster without sacrificing accuracy.</p>
+                </div>
+            </div>
+
+            <p>After I applied the custom trained TensorFlow Lite model to the application, I used CameraX library to
+                track the detected items. When a sack enters the scope of the camera on the production line, it is
+                detected, being tracked, and is assigned an id. In case of a defective sack/box, a worker removes it
+                from the production line, and it won’t be counted. Otherwise, the sack gets out of the scope of the
+                camera, and the counter is increased by one.</p>
+
+            <p>The application makes an API call every five minutes to report the number sacks
+                counted to the server. The hostname can be edited from the
+                settings. In case of a Wi-Fi loss or an unexpected reboot, the application makes an API call as soon as
+                the device connects to Wi-Fi again or as soon as the device boots to prevent data loss. Only in case of
+                a successful API call, the counter is reset.</p>
+
+            <br>
+            <h4>Application Architecture & Dependencies</h4>
+            <p><i class="fa fa-circle">&emsp;</i>ML-Kit<br>
+                <i class="fa fa-circle">&emsp;</i>CameraX<br>
+                <i class="fa fa-circle">&emsp;</i>Retrofit<br>
+                <i class="fa fa-circle">&emsp;</i>Firebase<br>
+        </section>
+    </div>
+    <!-- Project Details End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <button class="btn btn-primary" type="button" onclick="location.href='#project-details';"><i
+                class="fa fa-angle-up"></i>
+            To the top
+        </button>
+        <p class="copyright">&copy; 2021 - <span id="copyright"></span> Yusuf Erman ERGÖZ&nbsp;&nbsp;&nbsp;&nbsp;<button
+                type="button" class="btn btn-primary" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
+            policy
+        </button>
+
+            <!-- The Modal -->
+        <div class="modal" id="privacyPolicyModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title">Privacy Policy</h1>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Last updated: August 25, 2022</p>
+                        <br>
+                        <p>I take your privacy seriously. To better protect your privacy, I provide this privacy policy
+                            notice explaining the way your personal information is collected and used.</p>
+
+                        <h2>Collection of Information</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not track any information about
+                            its visitors.</p>
+
+                        <h2>Cookies</h2>
+                        This website (ermanergoz.com a.k.a ermanergoz.github.io) does not use cookies.
+
+                        <h2>Advertisement and Other Third Parties</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not display advertisements and
+                            does not use any third party Advertising partners. I have no control over and assume no
+                            responsibility for the content, privacy policies or practices of any third-party sites or
+                            services.</p>
+
+                        <h2>Links to Third-Party Websites</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) may contain links to other websites
+                            that are not operated by me. If you click on a third-party link, you will be directed to
+                            that third-party's site. I strongly advise you to review the privacy policy of every site
+                            you visit. I have no control over and assume no responsibility for the content, privacy
+                            policies, or practices of any third-party sites or services.</p>
+
+                        <h2>Security</h2>
+                        <p>The security of your personal information is important to me, but remember that no method of
+                            transmission over the Internet, or method of electronic storage, is 100% secure. While I do
+                            not collect any personal information, I cannot guarantee its absolute security.</p>
+
+                        <h2>Changes To This Privacy Policy</h2>
+                        <p>I may update this privacy policy from time to time. I will notify you of any changes by
+                            posting the new privacy policy on this page. You are advised to review this privacy policy
+                            periodically for any changes. Changes to this privacy policy are effective when they are
+                            posted on this page.</p>
+
+                        <h2>Contact Information</h2>
+                        <p>For any questions or concerns regarding the privacy policy, please <a
+                                href="https://www.ermanergoz.com/#contact">
+                            contact me</a>.</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

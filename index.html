@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Erman ERGOZ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/page-default.css" id="page-stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Nav Bar Start -->
+<nav class="auto-hide navbar fixed-top navbar-expand-lg bg-dark navbar-dark" id="navbar">
+    <!-- Logo Start -->
+    <a href="index.html" class="navbar-brand">ERMAN ERGOZ</a>
+    <!-- Logo End -->
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a href="#home" class="nav-item nav-link active">Home</a>
+            <a href="#about" class="nav-item nav-link">About Me</a>
+            <!--<a href="#portfolio" class="nav-item nav-link">My Works</a>-->
+            <a href="#contact" class="nav-item nav-link">Contact Me</a>
+            <div class="d-lg-none d-md-block">
+                <br>
+                <a href="index_tr.html" class="nav-item nav-link">Türkçe | English</a>
+            </div>
+        </div>
+        <div class="ml-auto d-none d-lg-block">
+            <button onclick="location.href='index_tr.html';" type="button" class="btn btn-primary">
+                Türkçe | English
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- Nav Bar End -->
+
+<div data-toggle="collapse" data-target=".navbar-collapse.show">
+    <!-- Home Start -->
+    <div class="home" id="home">
+        <section class="container">
+            <h2>Hello! My name is Erman,</h2>
+            <h5>I am an application developer and an enthusiastic contributor to open-source projects, driven by a
+                passion for creating exceptional applications.</h5>
+            <!--
+            <h5>an application developer by trade<br>
+                In open source realms, my skills displayed<br>
+                Crafting software with utmost care,<br>
+                Excellence my goal, beyond compare</h5>
+                -->
+            <button class="btn btn-primary" type="button" onclick="location.href='#about';">
+                <i class="fa fa-angle-down"></i> More
+            </button>
+        </section>
+        <div class="background-grid-container" id="gridContainer"></div>
+    </div>
+    <!-- Home End -->
+
+    <!-- About Me Start -->
+    <div class="about" id="about">
+        <section class="container">
+            <h2>About Me</h2>
+            <p>I have various experiences working with clients from across the globe. I offer my services as an
+                iOS/Android developer for hire to work with businesses of all sizes, start-ups,
+                individuals, and other freelancers/developers. I ensure every project will be well-documented and
+                maintainable, so you can make changes to the application as your business evolves.</p>
+            <p>I have a Computer Science degree from Eötvös Loránd University in Budapest. I have a deep understanding
+                of algorithms & data structures and various programming concepts. Besides Kotlin and Swift, I am
+                confident in other programming technologies such as Java and C++. I am open to new experiences.
+                Depending on your expectations, I can be highly cooperative with projects that are outside my
+                spectrum.</p>
+        </section>
+    </div>
+    <!-- About Me End -->
+
+    <!-- Portfolio Start
+    <div class="portfolio" id="portfolio">
+        <section class="container">
+            <h2>My Works</h2>
+            <h4><a href="usurf-file-manager.html">USurf File Manager&ensp;<i class="fa-brands fa-android"></i></a></h4>
+            <p>USurf File Manager is a simple open sourced Android file manager application that lets users
+                browse their files, find their downloads, manage their storage space, move things around,and a
+                lot more. <a href="usurf-file-manager.html">Click for more.</a></p>
+            <br>
+            <h4>WSA-Android&ensp;<i class="fa-brands fa-android"></i></h4>
+            <p>I maintained and improved WSA-Android worker safety application while I worked at Mirum Agency in
+                Budapest as a contractor Android developer.</p>
+            <br>
+            <h4><a href="sack-counter.html">Sack Counter&ensp;<i class="fa-brands fa-android"></i></a></h4>
+            <p>A sack counter for a sugar factory line located in Ankara/Turkey. This application is made to be
+                run on Orange Pi with cameras attached to it using ML-Kit by Google.
+                <a href="sack-counter.html">Click for more.</a></p>
+            <br>
+            <h4><a href="https://ermanergoz.github.io/huzurevi">Nursing Home of Isparta&ensp;<i
+                    class="fa-solid fa-globe"></i></a></h4>
+            <p>A static website for Isparta Nursing Home Health Education & Solidarity Foundation and Isparta
+                Nursing Home Health Education & Solidarity Association.
+                <a href="https://ermanergoz.github.io/huzurevi">Click to visit the website.
+                    <i class="fas fa-external-link-alt"></i></a></p>
+            <br>
+            <h5>And many more!</h5>
+        </section>
+    </div>
+    Portfolio End -->
+
+    <!-- Contact Start -->
+    <div class="contact" id="contact">
+        <section class="container">
+            <h2>Contact Me</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>If you have a project in mind that you would like to discuss, lets get in touch!</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <p>E-mail:<br><i class="fa fa-envelope fa-fw email"></i><a
+                                href="mailto: erman.ergoz@gmail.com"
+                                target="_blank">&nbsp;erman.ergoz@gmail.com</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>Facebook:<br><i class="fa-brands fa-facebook-f fa-fw facebook"></i><a
+                                href="https://www.facebook.com/erman.ergoz" target="_blank">&nbsp;facebook.com/erman.ergoz</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>Instagram:<br><i class="fa-brands fa-instagram fa-fw instagram"></i><a
+                                href="https://www.instagram.com/ermanergz/" target="_blank">&nbsp;instagram.com/ermanergz</a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>LinkedIn:<br><i class="fa-brands fa-linkedin-in fa-fw linkedin"></i><a
+                                href="https://www.linkedin.com/in/ermanergoz/" target="_blank">&nbsp;linkedin.com/in/ermanergoz</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Contact End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <button class="btn btn-primary" type="button" onclick="location.href='#home';"><i class="fa fa-angle-up"></i>
+            To the top
+        </button>
+        <p class="copyright">&copy; 2021 - <span id="copyright"></span> Yusuf Erman ERGÖZ&nbsp;&nbsp;&nbsp;&nbsp;<button
+                type="button" class="btn btn-primary" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
+            policy
+        </button>
+
+            <!-- The Modal -->
+        <div class="modal" id="privacyPolicyModal">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title">Privacy Policy</h1>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Last updated: August 25, 2022</p>
+                        <br>
+                        <p>I take your privacy seriously. To better protect your privacy, I provide this privacy policy
+                            notice explaining the way your personal information is collected and used.</p>
+
+                        <h2>Collection of Information</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not track any information about
+                            its visitors.</p>
+
+                        <h2>Cookies</h2>
+                        This website (ermanergoz.com a.k.a ermanergoz.github.io) does not use cookies.
+
+                        <h2>Advertisement and Other Third Parties</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) does not display advertisements and
+                            does not use any third party Advertising partners. I have no control over and assume no
+                            responsibility for the content, privacy policies or practices of any third-party sites or
+                            services.</p>
+
+                        <h2>Links to Third-Party Websites</h2>
+                        <p>This website (ermanergoz.com a.k.a ermanergoz.github.io) may contain links to other websites
+                            that are not operated by me. If you click on a third-party link, you will be directed to
+                            that third-party's site. I strongly advise you to review the privacy policy of every site
+                            you visit. I have no control over and assume no responsibility for the content, privacy
+                            policies, or practices of any third-party sites or services.</p>
+
+                        <h2>Security</h2>
+                        <p>The security of your personal information is important to me, but remember that no method of
+                            transmission over the Internet, or method of electronic storage, is 100% secure. While I do
+                            not collect any personal information, I cannot guarantee its absolute security.</p>
+
+                        <h2>Changes To This Privacy Policy</h2>
+                        <p>I may update this privacy policy from time to time. I will notify you of any changes by
+                            posting the new privacy policy on this page. You are advised to review this privacy policy
+                            periodically for any changes. Changes to this privacy policy are effective when they are
+                            posted on this page.</p>
+
+                        <h2>Contact Information</h2>
+                        <p>For any questions or concerns regarding the privacy policy, please <a
+                                href="https://www.ermanergoz.com/#contact">
+                            contact me</a>.</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    setupGrid('div', 400, "background-grid-cell", 'gridContainer');
+    setLanguage();
+</script>
+
+</body>
+</html>
