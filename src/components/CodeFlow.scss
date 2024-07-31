@@ -1,0 +1,27 @@
+.code-flow {
+  height: 100vh;
+  overflow: hidden;
+  background: #1e1e1e;
+  z-index: -100;
+  position: fixed;
+}
+
+.code-content {
+  user-select: none;
+  animation: flow 240s linear infinite;
+  line-height: 1.5;
+}
+
+.code-line {
+	font-family: monaco,Consolas,Lucida Console,monospace; 
+  color: darkgreen;
+}
+
+@keyframes flow {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
