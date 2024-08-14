@@ -1,5 +1,5 @@
-import CodeFlow from "./components/CodeFlow";
-import "./styles/main.scss";
+import CodeFlow from "../components/CodeFlow";
+import "./app.css";
 
 function App() {
   return (

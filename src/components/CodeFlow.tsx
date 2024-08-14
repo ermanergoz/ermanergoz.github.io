@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import './CodeFlow.scss';
-import sourceCode from '../../source_code.txt';
+import { useEffect, useState } from "react";
+import "../styles/main.scss";
+import sourceCode from "../../source_code.txt";
 
 const CodeFlow = () => {
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>("");
 
   useEffect(() => {
     fetch(sourceCode)
@@ -17,8 +17,10 @@ const CodeFlow = () => {
   return (
     <div className="code-flow">
       <div className="code-content">
-        {content.split('\n').map((line, index) => (
-          <p key={index} className="code-line">{line}</p>
+        {content.split("\n").map((line, index) => (
+          <p key={index} className="code-line">
+            {line}
+          </p>
         ))}
       </div>
     </div>
