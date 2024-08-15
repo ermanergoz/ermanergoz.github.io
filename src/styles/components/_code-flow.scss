@@ -1,20 +1,15 @@
 .code-flow {
-  height: 100vh;
-  overflow: hidden;
-  background: #1e1e1e;
-  z-index: -100;
-  position: fixed;
+  @apply h-screen overflow-hidden fixed z-[-100];
+  background: $background-dark;
 }
 
 .code-content {
-  user-select: none;
-  animation: flow 240s linear infinite;
-  line-height: 1.5;
+  @apply select-none animate-flow leading-[1.5];
 }
 
 .code-line {
-	font-family: monaco,Consolas,Lucida Console,monospace; 
-  color: darkgreen;
+  font-family: $hero-banner;
+  color: $green-dark;
 }
 
 @keyframes flow {
@@ -23,5 +18,19 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  @variants responsive {
+    .animate-flow {
+      /* For mobile: */
+      animation: flow 840s linear infinite;
+
+      @media only screen and (min-width: 768px) {
+        /* For desktop: */
+        animation: flow 240s linear infinite;
+      }
+    }
   }
 }

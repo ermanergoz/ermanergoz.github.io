@@ -1,0 +1,15 @@
+.hero-banner {
+  @apply text-center pt-[35vh] space-y-16;
+  font-family: "Chakra Petch", sans-serif;
+
+  .text-wrapper {
+    @apply text-white m-0 space-y-8;
+
+    h1 {
+      @apply text-[34px];
+    }
+    h2 {
+      @apply text-[30px];
+    }
+  }
+}

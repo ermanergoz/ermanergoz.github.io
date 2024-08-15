@@ -1,14 +1,15 @@
 import CodeFlow from "./components/CodeFlow";
-import "./styles/main.scss";
+import HeroBanner from "./components/HeroBanner";
 
 function App() {
   return (
     <>
       <CodeFlow />
-      <div className="title-wrapper">
-        <h1>HELLO WORLD!</h1>
-        <h2><br />~ COMING SOON ~</h2>
-      </div>
+      <HeroBanner
+        title="HELLO WORLD"
+        introduction="~ Coming Soon ~"
+        onClick={() => console.log("More button clicked")}
+      />
     </>
   );
 }

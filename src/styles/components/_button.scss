@@ -1,0 +1,33 @@
+.button {
+  @apply border-2 rounded-lg;
+  border-color: $green;
+  padding: 16px 32px;
+
+  &.primary {
+    @apply bg-green-500 text-white;
+    background: $green;
+  }
+
+  /*
+  &.secondary {
+    
+  }
+  */
+
+  &.light {
+    @apply text-black;
+  }
+
+  &.dark {
+    @apply text-white;
+  }
+
+  &.wide {
+    @apply w-[90%] !important;
+  }
+
+  &:hover {
+    background: $green;
+    @apply text-white;
+  }
+}

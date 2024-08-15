@@ -2,21 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap");
-@import "../styles/components/code-flow";
+//Variables
+@import "../styles/base/colors", "../styles/base/fonts";
+
+//Components
+@import "../styles/components/code-flow", "../styles/components/hero-banner",
+  "../styles/components/button";
 
 body {
-  margin: 0;
-}
-
-.title-wrapper {
-  text-align: center;
-  padding-top: 45vh;
-  font-family: "Chakra Petch", sans-serif;
-
-  h1,
-  h2 {
-    margin: 0;
-    color: white;
-  }
+  @apply m-0;
 }
