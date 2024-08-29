@@ -17,13 +17,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    primary: false,
+    buttonType: 'primary',
     label: 'Button',
   },
 };
 
 export const Secondary: Story = {
   args: {
+    buttonType: 'secondary',
+    label: 'Button',
+  },
+};
+
+export const Inline: Story = {
+  args: {
+    buttonType: 'inline',
     label: 'Button',
   },
 };

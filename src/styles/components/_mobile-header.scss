@@ -1,0 +1,30 @@
+.mobile-header {
+  @apply z-[100] w-full sticky flex items-center justify-between px-4 py-4 lg:hidden;
+  background: $background-dark;
+  color: $text-dark;
+
+  .left-section {
+    @apply flex-shrink-0;
+
+    .drop-down-menu {
+      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden; // Add absolute positioning and place it directly under the header
+      background: $background-dark;
+
+      .menu-item {
+        @apply p-4 flex-none text-center;
+      }
+    }
+  }
+
+  .center-section {
+    @apply absolute left-1/2 transform -translate-x-1/2;
+
+    nav {
+      @apply flex space-x-16;
+    }
+  }
+
+  .right-section {
+    @apply flex-shrink-0;
+  }
+}

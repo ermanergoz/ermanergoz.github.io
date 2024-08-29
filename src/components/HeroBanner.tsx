@@ -16,7 +16,7 @@ const HeroBanner = (props: HeroBannerProps) => {
       </div>
       <Button
         label="MORE"
-        primary={false}
+        buttonType={"secondary"}
         theme="dark"
         isWide={true}
         onClick={props.onClick}

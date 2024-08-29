@@ -1,9 +1,10 @@
 .hero-banner {
-  @apply text-center pt-[35vh] space-y-16;
+  @apply text-center pt-[30vh] space-y-16;
   font-family: "Chakra Petch", sans-serif;
 
   .text-wrapper {
-    @apply text-white m-0 space-y-8;
+    @apply m-0 space-y-8;
+    color: $text-dark;
 
     h1 {
       @apply text-[34px];

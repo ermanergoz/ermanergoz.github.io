@@ -1,0 +1,20 @@
+.dektop-header {
+  @apply z-[100] w-full sticky items-center justify-between px-4 py-4 hidden lg:flex;
+  background: $background-dark;
+  
+  .left-section {
+    @apply flex-shrink-0;
+  }
+
+  .center-section {
+    @apply absolute left-1/2 transform -translate-x-1/2;
+
+    nav {
+      @apply flex space-x-16;
+    }
+  }
+
+  .right-section {
+    @apply flex-shrink-0;
+  }
+}

@@ -1,7 +1,7 @@
 import "../styles/main.scss";
 
 interface ButtonProps {
-  primary?: boolean;
+  buttonType?: "primary" | "secondary" | "inline";
   theme?: "light" | "dark";
   isWide?: boolean;
   label: string;
@@ -9,18 +9,17 @@ interface ButtonProps {
 }
 
 export const Button = ({
-  primary = false,
+  buttonType: buttonType = "primary",
   theme: theme = "light",
   isWide = false,
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? "primary" : "secondary";
   const isWideButton = isWide ? "wide" : "";
   return (
     <button
       type="button"
-      className={["button", `${theme} ${isWideButton}`, mode].join(" ")}
+      className={["button", `${theme} ${isWideButton}`, buttonType].join(" ")}
       {...props}
     >
       {label}
