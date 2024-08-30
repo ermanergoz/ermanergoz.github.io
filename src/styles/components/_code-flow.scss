@@ -1,9 +1,9 @@
 .code-flow {
-  @apply h-screen overflow-hidden fixed z-[-100];
+  @apply h-screen overflow-hidden absolute inset-0 z-[-100]; // Use inset-0 for full positioning and maintain the absolute positioning
   background: $background-dark;
 
   &__content {
-    @apply select-none animate-flow leading-[1.5];
+    @apply select-none animate-flow leading-[1.5] overflow-hidden; // Adding overflow-hidden to manage content overflow
   }
 
   &__line {
@@ -24,11 +24,9 @@
 @layer utilities {
   @variants responsive {
     .animate-flow {
-      /* For mobile: */
       animation: flow 840s linear infinite;
 
       @media only screen and (min-width: 768px) {
-        /* For desktop: */
         animation: flow 240s linear infinite;
       }
     }
