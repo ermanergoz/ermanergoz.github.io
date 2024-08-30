@@ -1,37 +1,37 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from '../components/Button';
+import { UiButton } from '../components/UiButton';
 
 const meta = {
-  title: 'Components/Button',
-  component: Button,
+  title: 'Components/UiButton',
+  component: UiButton,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof UiButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    buttonType: 'primary',
-    label: 'Button',
+    variant: 'primary',
+    label: 'UiButton',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    buttonType: 'secondary',
-    label: 'Button',
+    variant: 'secondary',
+    label: 'UiButton',
   },
 };
 
 export const Inline: Story = {
   args: {
-    buttonType: 'inline',
-    label: 'Button',
+    variant: 'inline',
+    label: 'UiButton',
   },
 };

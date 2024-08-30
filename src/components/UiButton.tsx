@@ -1,25 +1,24 @@
 import "../styles/main.scss";
 
-interface ButtonProps {
-  buttonType?: "primary" | "secondary" | "inline";
+interface UiButtonProps {
+  variant?: "primary" | "secondary" | "inline";
   theme?: "light" | "dark";
   isWide?: boolean;
   label: string;
   onClick?: () => void;
 }
 
-export const Button = ({
-  buttonType: buttonType = "primary",
+export const UiButton = ({
+  variant: variant = "primary",
   theme: theme = "light",
   isWide = false,
   label,
   ...props
-}: ButtonProps) => {
+}: UiButtonProps) => {
   const isWideButton = isWide ? "wide" : "";
   return (
     <button
-      type="button"
-      className={["button", `${theme} ${isWideButton}`, buttonType].join(" ")}
+      className={["ui-button", `ui-button--${theme} ui-button--${isWideButton}`, `ui-button__${variant}`].join(" ")}
       {...props}
     >
       {label}

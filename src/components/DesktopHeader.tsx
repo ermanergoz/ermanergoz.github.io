@@ -1,5 +1,5 @@
 import "../styles/main.scss";
-import { Button } from "../components/Button";
+import { UiButton } from "../components/UiButton";
 
 interface DesktopHeaderProps {
   onClick: (label: string) => () => void;
@@ -9,20 +9,20 @@ interface DesktopHeaderProps {
 
 const DesktopHeader = (props: DesktopHeaderProps) => {
   return (
-    <header className="dektop-header">
-      <div className="left-section">
+    <header className="desktop-header">
+      <div className="desktop-header__section">
         <a href="/">
           <img src={props.logo} alt="Logo" />
         </a>
       </div>
 
-      <div className="center-section">
-        <nav>
+      <div className="desktop-header__navigation">
+        <nav className="desktop-header__navigation__item">
           {props.navItems.map((buttonLabel) => (
-            <Button
+            <UiButton
               key={buttonLabel}
               label={buttonLabel}
-              buttonType="inline"
+              variant="inline"
               theme="dark"
               onClick={props.onClick(buttonLabel)}
             />
@@ -30,10 +30,10 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
         </nav>
       </div>
 
-      <div className="right-section">
-        <Button
+      <div className="desktop-header__language-selector">
+        <UiButton
           label="Tr | En"
-          buttonType="inline"
+          variant="inline"
           theme="dark"
           onClick={props.onClick("buttonLabel")}
         />

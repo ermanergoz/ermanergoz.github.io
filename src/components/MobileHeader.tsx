@@ -1,5 +1,5 @@
 import "../styles/main.scss";
-import { Button } from "../components/Button";
+import { UiButton } from "../components/UiButton";
 import { Sling as Hamburger } from "hamburger-react";
 import { useState } from "react";
 
@@ -14,16 +14,16 @@ const MobileHeader = (props: MobileHeaderProps) => {
 
   return (
     <header className="mobile-header">
-      <div className="left-section">
+      <div className="mobile-header__menu">
         <Hamburger toggled={isOpen} toggle={setOpen} />
         <nav
-          className={`drop-down-menu ${isOpen ? "max-h-96" : "max-h-0"}`}
+          className={`mobile-header__menu__drop-down ${isOpen ? "max-h-96" : "max-h-0"}`}
         >
           {props.navItems.map((buttonLabel) => (
-            <div className="menu-item" key={buttonLabel}>
-              <Button
+            <div className="mobile-header__menu__drop-down__item" key={buttonLabel}>
+              <UiButton
                 label={buttonLabel}
-                buttonType="inline"
+                variant="inline"
                 theme="dark"
                 onClick={props.onClick(buttonLabel)}
               />
@@ -32,16 +32,16 @@ const MobileHeader = (props: MobileHeaderProps) => {
         </nav>
       </div>
 
-      <div className="center-section">
+      <div className="mobile-header__logo">
         <a href="/">
           <img src={props.logo} alt="Logo" />
         </a>
       </div>
 
-      <div className="right-section">
-        <Button
+      <div className="mobile-header__language-selector">
+        <UiButton
           label="Tr | En"
-          buttonType="inline"
+          variant="inline"
           theme="dark"
           onClick={props.onClick("buttonLabel")}
         />

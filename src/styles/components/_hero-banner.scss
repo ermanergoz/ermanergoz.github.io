@@ -2,15 +2,14 @@
   @apply text-center pt-[30vh] space-y-16;
   font-family: "Chakra Petch", sans-serif;
 
-  .text-wrapper {
+  &__wrapper {
     @apply m-0 space-y-8;
     color: $text-dark;
-
-    h1 {
-      @apply text-[34px];
-    }
-    h2 {
-      @apply text-[30px];
-    }
+  }
+  &__title {
+    @apply text-[34px];
+  }
+  &__subtitle {
+    @apply text-[30px];
   }
 }

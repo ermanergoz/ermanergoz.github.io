@@ -1,36 +1,36 @@
-.button {
+.ui-button {
   @apply border-2 rounded-lg p-4 px-8;
   border-color: $green;
 
-  &.primary {
-    color: $text-dark;
+  &__primary {
+    color: $text-dark !important;
     background: $green;
   }
 
   /*
-  &.secondary {
+  &__secondary {
     
   }
   */
 
-  &.inline {
+  &__inline {
     @apply p-0 border-none;
 
     &:hover {
-      @apply bg-transparent;
-      color: $green;
+      background: transparent !important;
+      color: $green !important;
     }
   }
 
-  &.light {
+  &--light {
     color: $text-light
   }
 
-  &.dark {
+  &--dark {
     color: $text-dark
   }
 
-  &.wide {
+  &--wide {
     @apply w-[90%] !important;
   }
 

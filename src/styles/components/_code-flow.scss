@@ -1,15 +1,15 @@
 .code-flow {
   @apply h-screen overflow-hidden fixed z-[-100];
   background: $background-dark;
-}
 
-.code-content {
-  @apply select-none animate-flow leading-[1.5];
-}
+  &__content {
+    @apply select-none animate-flow leading-[1.5];
+  }
 
-.code-line {
-  font-family: $hero-banner;
-  color: $green-dark;
+  &__line {
+    font-family: $hero-banner;
+    color: $green-dark;
+  }
 }
 
 @keyframes flow {

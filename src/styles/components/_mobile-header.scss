@@ -3,28 +3,24 @@
   background: $background-dark;
   color: $text-dark;
 
-  .left-section {
+  &__menu {
     @apply flex-shrink-0;
 
-    .drop-down-menu {
-      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden; // Add absolute positioning and place it directly under the header
+    &__drop-down {
+      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden;
       background: $background-dark;
 
-      .menu-item {
+      &__item {
         @apply p-4 flex-none text-center;
       }
     }
   }
 
-  .center-section {
+  &__logo {
     @apply absolute left-1/2 transform -translate-x-1/2;
-
-    nav {
-      @apply flex space-x-16;
-    }
   }
 
-  .right-section {
+  &__language-selector {
     @apply flex-shrink-0;
   }
 }

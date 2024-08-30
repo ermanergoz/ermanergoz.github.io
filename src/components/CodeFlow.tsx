@@ -16,9 +16,9 @@ const CodeFlow = () => {
 
   return (
     <div className="code-flow">
-      <div className="code-content">
+      <div className="code-flow__content">
         {content.split("\n").map((line, index) => (
-          <p key={index} className="code-line">
+          <p key={index} className="code-flow__line">
             {line}
           </p>
         ))}

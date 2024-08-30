@@ -1,5 +1,5 @@
 import "../styles/main.scss";
-import { Button } from "./Button";
+import { UiButton } from "./UiButton";
 
 interface HeroBannerProps {
   onClick?: () => void;
@@ -10,13 +10,13 @@ interface HeroBannerProps {
 const HeroBanner = (props: HeroBannerProps) => {
   return (
     <div className="hero-banner">
-      <div className="text-wrapper">
-        <h1>{props.title}</h1>
-        <h2>{props.introduction}</h2>
+      <div className="hero-banner__wrapper">
+        <h1 className="hero-banner__title">{props.title}</h1>
+        <h2 className="hero-banner__subtitle">{props.introduction}</h2>
       </div>
-      <Button
+      <UiButton
         label="MORE"
-        buttonType={"secondary"}
+        variant={"secondary"}
         theme="dark"
         isWide={true}
         onClick={props.onClick}
