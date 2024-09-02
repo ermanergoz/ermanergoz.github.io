@@ -4,7 +4,7 @@ interface UiButtonProps {
   variant?: "primary" | "secondary" | "inline";
   theme?: "light" | "dark";
   isWide?: boolean;
-  label: string;
+  label: React.ReactNode;
   onClick?: () => void;
 }
 
