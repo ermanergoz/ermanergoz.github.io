@@ -1,14 +1,22 @@
-import CodeFlow from "./components/CodeFlow";
-import Layout from "./layouts/Layout";
-import HeroBanner from "./components/HeroBanner";
+import Home from "./pages/Home";
+import PrivacyPolicies from "./pages/PrivacyPolicies";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SiteMap from "./pages/SiteMap"
 
 function App() {
   return (
     <>
-    <CodeFlow />
-    <Layout children={[<HeroBanner />]} />
-    <Footer />
+      <BrowserRouter>
+      <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="privacy-policies" element={<PrivacyPolicies />} />
+          <Route path="site-map" element={<SiteMap />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </>
   );
 }

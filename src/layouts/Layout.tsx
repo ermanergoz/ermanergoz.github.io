@@ -1,4 +1,3 @@
-import Header from "../components/Header";
 import "../styles/layout/layout.scss";
 
 interface LayoutProps {
@@ -8,7 +7,6 @@ interface LayoutProps {
 function Layout(props: LayoutProps) {
   return (
     <>
-      <Header />
       <div className="layout">
         {props.children.map((s) => {
           return s;
