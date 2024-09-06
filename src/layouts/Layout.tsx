@@ -1,16 +1,14 @@
 import "../styles/layout/layout.scss";
 
 interface LayoutProps {
-  children: React.ReactNode[];
+  children: React.ReactNode;
 }
 
 function Layout(props: LayoutProps) {
   return (
     <>
       <div className="layout">
-        {props.children.map((s) => {
-          return s;
-        })}
+        {props.children}
       </div>
     </>
   );

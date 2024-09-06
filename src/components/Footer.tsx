@@ -48,13 +48,6 @@ const Footer = () => {
           theme="dark"
           onClick={handleButtonClick("privacy-policies")}
         />
-
-        <UiButton
-          label="Site map"
-          variant="inline"
-          theme="dark"
-          onClick={handleButtonClick("site-map")}
-        />
       </div>
     </footer>
   );

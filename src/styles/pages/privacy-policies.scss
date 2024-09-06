@@ -1,0 +1,11 @@
+.privacy-policies {
+  @apply mx-4;
+
+  &__page-title {
+    @apply text-[34px] font-bold mb-8;
+  }
+
+  &__list {
+    @apply space-y-2 mt-8 mb-8;
+  }
+}

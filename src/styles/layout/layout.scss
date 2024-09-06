@@ -1,4 +1,3 @@
 .layout {
-    max-width: 1280px;
-    margin-inline: auto;
+    @apply max-w-[1280px] mx-auto;
 }

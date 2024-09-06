@@ -1,5 +1,6 @@
 import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
+import Link from "../components/Link";
 
 interface DesktopHeaderProps {
   onClick: (label: string) => () => void;
@@ -11,9 +12,7 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
   return (
     <header className="desktop-header">
       <div className="desktop-header__section">
-        <a href="/">
-          <img src={props.logo} alt="Logo" />
-        </a>
+        <Link destination="/" children={<img src={props.logo} alt="Logo" />} />
       </div>
 
       <div className="desktop-header__navigation">

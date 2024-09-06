@@ -1,15 +1,13 @@
 .footer {
-    background: $background-dark;
-    color: $text-dark;
-    @apply pb-8 pt-4 text-center relative;
-    vertical-align: bottom;
-  
-    &__content {
-      @apply grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-16 justify-center items-center;
-  
-      &--wide {
-        @apply col-span-2 sm:col-span-3 text-center w-full;
-      }
+  background: $background-dark;
+  color: $text-dark;
+  @apply pb-8 pt-4;
+
+  &__content {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-8 text-center;
+
+    &--wide {
+      @apply col-span-1 lg:col-span-2 text-center w-full;
     }
   }
-  
+}

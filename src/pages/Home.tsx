@@ -4,7 +4,12 @@ import HeroBanner from "../components/HeroBanner";
 import Layout from "../layouts/Layout";
 
 function Home() {
-  return <Layout children={[<CodeFlow />, <HeroBanner />]} />;
+  return (
+    <Layout>
+      <CodeFlow />
+      <HeroBanner />
+    </Layout>
+  );
 }
 
 export default Home;
