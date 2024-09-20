@@ -23,11 +23,11 @@
   }
 
   &--light {
-    color: $text-light
+    color: $text-light;
   }
 
   &--dark {
-    color: $text-dark
+    color: $text-dark;
   }
 
   &--wide {
@@ -37,5 +37,14 @@
   &:hover {
     color: $text-dark;
     background: $green;
+  }
+
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid $green;
+    outline-offset: 4px;
   }
 }

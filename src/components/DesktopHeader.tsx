@@ -12,7 +12,11 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
   return (
     <header className="desktop-header">
       <div className="desktop-header__section">
-        <Link destination="/" children={<img src={props.logo} alt="Logo" />} />
+        <Link
+          destination="/"
+          title="Home"
+          children={<img src={props.logo} alt="Logo" />}
+        />
       </div>
 
       <div className="desktop-header__navigation">

@@ -9,26 +9,39 @@ interface DropdownSelectionProps {
   onFilterChange: (filter: string) => void;
 }
 
+import { useEffect, useRef } from "react";
+
 const DropdownSelectionComponent = (props: DropdownSelectionProps) => {
   const [isOpen, setOpen] = useState(false);
+  const firstOptionRef = useRef<HTMLInputElement | null>(null);
+  
+  useEffect(() => {
+    if (isOpen && firstOptionRef.current) {
+      firstOptionRef.current.focus();
+    }
+  }, [isOpen]);
 
   return (
     <div className="dropdown-selection">
       <UiButton
         variant="primary"
-        label={
-          <p>
-            Filter Policies&emsp;
-            <FontAwesomeIcon icon={faChevronDown} />
-          </p>
-        }
+        label="Filter Policies"
+        icon={<FontAwesomeIcon icon={faChevronDown} />}
         onClick={() => setOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls="dropdown-selection-options"
       />
 
-      <div className={`${isOpen ? "dropdown-selection--open" : "dropdown-selection--closed"}`}>
-        {props.options.map((option) => (
+      <div
+        id="dropdown-selection-options"
+        className={`${isOpen ? "dropdown-selection--open" : "dropdown-selection--closed"}`}
+        role="menu"
+        aria-hidden={!isOpen}
+      >
+        {props.options.map((option, index) => (
           <label key={option} className="dropdown-selection__option">
             <input
+              ref={index === 0 ? firstOptionRef : null}
               type="checkbox"
               checked={props.selectedFilters.includes(option)}
               onChange={() => props.onFilterChange(option)}

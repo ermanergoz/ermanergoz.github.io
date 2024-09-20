@@ -1,3 +1,8 @@
-.link {
-    @apply text-blue-600 hover:underline
+.link:focus {
+  outline: none;
+}
+
+.link:focus-visible {
+  outline: 2px solid $green;
+  outline-offset: 4px;
 }

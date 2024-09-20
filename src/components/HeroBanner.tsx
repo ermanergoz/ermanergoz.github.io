@@ -1,5 +1,7 @@
 import "../styles/main.scss";
 import { UiButton } from "./UiButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const HeroBanner = () => {
   const onMoreClicked =
@@ -16,6 +18,7 @@ const HeroBanner = () => {
       </div>
       <UiButton
         label="MORE"
+        icon={<FontAwesomeIcon icon={faChevronDown} />}
         variant={"secondary"}
         theme="dark"
         isWide={true}
