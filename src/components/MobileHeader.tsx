@@ -3,6 +3,7 @@ import { UiButton } from "../components/UiButton";
 import { Sling as Hamburger } from "hamburger-react";
 import { useState } from "react";
 import Link from "../components/Link";
+import Image from "../components/Image";
 
 interface MobileHeaderProps {
   onClick: (label: string) => () => void;
@@ -40,7 +41,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
         <Link
           destination="/"
           title="Home"
-          children={<img src={props.logo} alt="Logo" />}
+          children={<Image src={props.logo} alt="Logo" />}
         />
       </div>
 

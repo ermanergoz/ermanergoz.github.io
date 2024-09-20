@@ -1,6 +1,7 @@
 import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
 import Link from "../components/Link";
+import Image from "../components/Image";
 
 interface DesktopHeaderProps {
   onClick: (label: string) => () => void;
@@ -15,7 +16,7 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
         <Link
           destination="/"
           title="Home"
-          children={<img src={props.logo} alt="Logo" />}
+          children={<Image src={props.logo} alt="Logo" />}
         />
       </div>
 
