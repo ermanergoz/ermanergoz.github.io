@@ -1,15 +1,26 @@
 .hero-banner {
-  @apply h-[94vh] text-center pt-[20vh] space-y-16;
+  @apply h-[94vh] text-center pt-[16vh] space-y-32;
   font-family: "Chakra Petch", sans-serif;
 
-  &__wrapper {
-    @apply m-0 space-y-8;
-    color: $text-dark;
-  }
-  &__title {
-    @apply text-[34px];
-  }
-  &__subtitle {
-    @apply text-[30px];
+  &__chevron-animation {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,  
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
   }
 }

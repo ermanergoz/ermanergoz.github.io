@@ -2,6 +2,7 @@ import "../styles/main.scss";
 import { UiButton } from "./UiButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Greeting from "../components/Greeting";
 
 const HeroBanner = () => {
   const onMoreClicked =
@@ -12,13 +13,15 @@ const HeroBanner = () => {
 
   return (
     <div className="hero-banner">
-      <div className="hero-banner__wrapper">
-        <h1 className="hero-banner__title">{"HELLO WORLD!"}</h1>
-        <h2 className="hero-banner__subtitle">{"~Development in progress~"}</h2>
-      </div>
+      <Greeting />
       <UiButton
         label="MORE"
-        icon={<FontAwesomeIcon icon={faChevronDown} />}
+        icon={
+          <FontAwesomeIcon
+            className="hero-banner__chevron-animation"
+            icon={faChevronDown}
+          />
+        }
         variant={"secondary"}
         theme="dark"
         isWide={true}
