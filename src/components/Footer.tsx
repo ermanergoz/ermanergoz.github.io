@@ -2,7 +2,7 @@ import { UiButton } from "../components/UiButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import Link from "../components/Link";
 import WcagBanner from "../assets/banner-wcag.png";
 import GithubBanner from "../assets/banner-github.svg";

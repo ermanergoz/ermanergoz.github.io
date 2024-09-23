@@ -1,5 +1,5 @@
 import "../styles/main.scss";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import DesktopHeader from "./DesktopHeader";
 import MobileHeader from "./MobileHeader";
 
