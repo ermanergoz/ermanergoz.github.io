@@ -22,8 +22,9 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
 
       <div className="desktop-header__navigation">
         <nav className="desktop-header__navigation__item">
-          {props.navItems.map((buttonLabel) => (
+          {props.navItems.map((buttonLabel, i) => (
             <UiButton
+              key={i}
               label={buttonLabel}
               variant="inline"
               theme="dark"
