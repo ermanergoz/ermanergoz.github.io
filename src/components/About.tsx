@@ -5,7 +5,7 @@ const About = () => {
     <div className="about__wrapper">
       <RotatingPhone />
       <div className="about__content">
-        <h1 className="about__content__title">About Me</h1>
+        <h1>About Me</h1>
         <div className="about__content__text">
           <p>
             I’m a developer with expertise in creating mobile apps for Android,

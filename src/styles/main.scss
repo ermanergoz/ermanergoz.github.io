@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 //Variables
-@import "../styles/base/colors", "../styles/base/fonts";
+@import "../styles/base/colors", "../styles/base/fonts",
+  "../styles/base/typography";
 
 //Components
 @import "../styles/components/code-flow", "../styles/components/hero-banner",

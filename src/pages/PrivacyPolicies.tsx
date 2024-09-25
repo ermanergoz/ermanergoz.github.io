@@ -32,7 +32,7 @@ const PrivacyPolicies: React.FC = () => {
   return (
     <Layout>
       <div className="privacy-policies">
-        <h1 className="privacy-policies__page-title">Privacy Policies</h1>
+        <h1>Privacy Policies</h1>
         <DropdownSelectionComponent
           options={filterOptions}
           selectedFilters={selectedFilters}
