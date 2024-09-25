@@ -1,4 +1,3 @@
-import "../styles/main.scss";
 import { UiButton } from "./UiButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";

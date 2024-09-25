@@ -1,5 +1,5 @@
 .greeting {
-  @apply m-0 space-y-16 lg:space-y-32 align-middle px-4;
+  @apply m-0 space-y-16 lg:space-y-32 align-middle;
   color: $text-dark;
 
   &__title {

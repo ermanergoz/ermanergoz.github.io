@@ -1,0 +1,21 @@
+.about {
+  &__wrapper {
+    @apply lg:flex lg:flex-row;
+  }
+
+  &__content {
+    @apply my-auto;
+
+    &__title {
+      @apply text-[34px];
+    }
+
+    &__text {
+      @apply py-4;
+
+      p {
+        @apply pb-4;
+      }
+    }
+  }
+}
