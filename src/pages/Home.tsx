@@ -3,6 +3,7 @@ import "../styles/main.scss";
 import HeroBanner from "../components/HeroBanner";
 import Layout from "../layouts/Layout";
 import About from "../components/About";
+import WhatIDo from "../components/WhatIDo";
 
 function Home() {
   return (
@@ -10,6 +11,7 @@ function Home() {
       <CodeFlow />
       <HeroBanner />
       <About />
+      <WhatIDo />
     </Layout>
   );
 }

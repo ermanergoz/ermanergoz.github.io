@@ -1,0 +1,16 @@
+.card {
+  @apply p-4 mx-4 lg:mx-0 border border-customGreen rounded-lg w-auto min-h-fit lg:w-[300px] lg:min-h-[250px] relative transition-all ease-out duration-300 top-0;
+
+  &:hover {
+    @apply border-customGreen shadow-lg transition-all ease-out duration-200;
+    top: -4px;
+  }
+
+  &__title {
+    @apply flex pb-4 space-x-4 justify-center;
+
+    h1 {
+      @apply text-xl m-auto;
+    }
+  }
+}
