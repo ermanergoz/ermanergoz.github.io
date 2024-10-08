@@ -1,11 +1,9 @@
 import { UiButton } from "../components/UiButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import Link from "../components/Link";
 import WcagBanner from "../assets/banner-wcag.png";
-import GithubBanner from "../assets/banner-github.svg";
+import GithubBanner from "../assets/logo-github-white.svg";
 import Image from "../components/Image";
 
 const Footer = () => {
@@ -13,13 +11,6 @@ const Footer = () => {
 
   const handleButtonClick = (navigateTo: string) => () => {
     switch (navigateTo) {
-      case "to_the-top": {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        break;
-      }
       default: {
         navigate(navigateTo);
         break;
@@ -32,25 +23,14 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__content">
-        <div className="footer__content--wide">
-          <UiButton
-            label="To the top"
-            icon={<FontAwesomeIcon icon={faChevronUp} />}
-            variant="secondary"
-            theme="dark"
-            onClick={handleButtonClick("to_the-top")}
-          />
-        </div>
-
         <div className="footer__content__banner">
-          <Image src={Logo} alt="Logo" />
+          <Image src={Logo} alt="Logo" className="h-12 lg:h-20" />
           <p>&copy; 2021 - {getCurrentYear()} Yusuf Erman ERGÖZ</p>
         </div>
 
         <UiButton
           label="Privacy policies"
           variant="inline"
-          theme="dark"
           onClick={handleButtonClick("privacy-policies")}
         />
 
@@ -59,6 +39,7 @@ const Footer = () => {
             destination="https://github.com/ermanergoz/ermanergoz.github.io"
             title="GitHub repository"
             children={<Image src={GithubBanner} alt="GitHub banner" />}
+            external={true}
           />
           <Link
             destination="https://www.w3.org/WAI/WCAG2AA-Conformance"

@@ -1,17 +1,13 @@
 .footer {
   background: $background-dark;
   color: $text-dark;
-  @apply pb-8 pt-4 px-4;
+  @apply py-8 px-4;
 
   &__content {
-    @apply grid grid-cols-1 lg:grid-cols-3 gap-8 place-items-center text-center;
-
-    &--wide {
-      @apply col-span-1 lg:col-span-3 w-full text-center;
-    }
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-8;
 
     &__banner {
-      @apply flex items-center justify-center space-x-4;
+      @apply flex items-center justify-center lg:justify-end lg:mr-2 space-x-4;
     }
   }
 }

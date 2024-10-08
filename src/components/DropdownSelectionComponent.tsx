@@ -58,6 +58,7 @@ const DropdownSelectionComponent = (props: DropdownSelectionProps) => {
         aria-expanded={isOpen}
         aria-controls="dropdown-selection-options"
         aria-haspopup="true"
+        theme="light"
       />
 
       <div

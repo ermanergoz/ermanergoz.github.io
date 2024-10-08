@@ -21,9 +21,7 @@ const HeroBanner = () => {
             icon={faChevronDown}
           />
         }
-        variant={"secondary"}
-        theme="dark"
-        isWide={true}
+        variant={"hero"}
         onClick={onMoreClicked("More")}
       />
     </div>

@@ -1,20 +1,46 @@
 .ui-button {
-  @apply border-2 rounded-lg p-4 px-8;
+  @apply flex border rounded-lg p-4 px-4;
   border-color: $green;
+  justify-content: center !important;
+  align-items: center !important;
 
   &__primary {
     color: $text-dark !important;
-    background: $green;
+    background: $background-dark;
+
+    &:hover {
+      @apply transition-all ease-out duration-200;
+      color: $text-light !important;
+      background: #f6f6f6;
+    }
   }
 
-  /*
   &__secondary {
-    
+    color: $text-light !important;
+    background: #f6f6f6;
+
+    &:hover {
+      @apply transition-all ease-out duration-200;
+      background: $background-dark;
+      color: $text-dark !important;
+    }
   }
-  */
+
+  &__hero {
+    @apply mx-auto;
+    color: $text-dark !important;
+    background-color: rgba(0, 0, 0, 0.4);
+    @apply w-[90%] !important;
+
+    &:hover {
+      @apply transition-all ease-out duration-200;
+      background: $background-dark;
+    }
+  }
 
   &__inline {
     @apply p-0 border-none;
+    color: $text-dark;
 
     &:hover {
       background: transparent !important;
@@ -22,30 +48,17 @@
     }
   }
 
-  &--light {
-    color: $text-light;
-  }
-
-  &--dark {
-    color: $text-dark;
-  }
-
-  &--wide {
-    @apply w-[90%] !important;
-    background-color:rgba(0, 0, 0, 0.4);
-  }
-
-  &:hover {
-    color: $text-dark;
-    background: $green;
-  }
-
   &:focus {
     outline: none;
   }
-  
+
   &:focus-visible {
     outline: 2px solid $green;
     outline-offset: 4px;
+  }
+
+  span {
+    @apply inline-flex;
+    align-items: center;
   }
 }

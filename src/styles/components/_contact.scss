@@ -1,0 +1,15 @@
+.contact {
+  @apply py-16;
+
+  &__email-wrapper {
+    @apply flex justify-center pt-4;
+  }
+
+  &__card-container {
+    @apply lg:mx-48 grid grid-cols-2 lg:grid-cols-4 gap-4;
+
+    .ui-button {
+      @apply w-full;
+    }
+  }
+}

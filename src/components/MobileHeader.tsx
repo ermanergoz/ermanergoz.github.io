@@ -29,7 +29,6 @@ const MobileHeader = (props: MobileHeaderProps) => {
               <UiButton
                 label={buttonLabel}
                 variant="inline"
-                theme="dark"
                 onClick={props.onClick(buttonLabel)}
               />
             </div>
@@ -41,7 +40,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
         <Link
           destination="/"
           title="Home"
-          children={<Image src={props.logo} alt="Logo" />}
+          children={<Image src={props.logo} alt="Logo" className="h-12" />}
         />
       </div>
 
@@ -49,7 +48,6 @@ const MobileHeader = (props: MobileHeaderProps) => {
         <UiButton
           label="Tr | En"
           variant="inline"
-          theme="dark"
           onClick={props.onClick("buttonLabel")}
         />
       </div>

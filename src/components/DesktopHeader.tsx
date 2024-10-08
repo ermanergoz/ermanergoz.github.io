@@ -16,7 +16,7 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
         <Link
           destination="/"
           title="Home"
-          children={<Image src={props.logo} alt="Logo" />}
+          children={<Image src={props.logo} alt="Logo" className="h-12" />}
         />
       </div>
 
@@ -27,7 +27,6 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
               key={i}
               label={buttonLabel}
               variant="inline"
-              theme="dark"
               onClick={props.onClick(buttonLabel)}
             />
           ))}
@@ -38,7 +37,6 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
         <UiButton
           label="Tr | En"
           variant="inline"
-          theme="dark"
           onClick={props.onClick("buttonLabel")}
         />
       </div>
