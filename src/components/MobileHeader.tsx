@@ -14,12 +14,20 @@ interface MobileHeaderProps {
 const MobileHeader = (props: MobileHeaderProps) => {
   const [isOpen, setOpen] = useState(false);
 
+  const handleNavClick = (label: string) => {
+    const clickAction = props.onClick(label);
+    clickAction();
+    setOpen(false);
+  };
+
   return (
     <header className="mobile-header">
       <div className="mobile-header__menu">
         <Hamburger toggled={isOpen} toggle={setOpen} />
         <nav
-          className={`mobile-header__menu__drop-down ${isOpen ? "max-h-96" : "max-h-0"}`}
+          className={`mobile-header__menu__drop-down ${
+            isOpen ? "max-h-96" : "max-h-0"
+          }`}
         >
           {props.navItems.map((buttonLabel) => (
             <div
@@ -29,7 +37,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
               <UiButton
                 label={buttonLabel}
                 variant="inline"
-                onClick={props.onClick(buttonLabel)}
+                onClick={() => handleNavClick(buttonLabel)}
               />
             </div>
           ))}
@@ -48,7 +56,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
         <UiButton
           label="Tr | En"
           variant="inline"
-          onClick={props.onClick("buttonLabel")}
+          onClick={() => handleNavClick("Tr | En")}
         />
       </div>
     </header>

@@ -4,11 +4,17 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Greeting from "../components/Greeting";
 
 const HeroBanner = () => {
-  const onMoreClicked =
-    (buttonLabel: string = "") =>
-    () => {
-      console.log(`${buttonLabel} is clicked`);
-    };
+  const onMoreClicked = () => () => {
+    const section = document.getElementById("about");
+    const headerOffset = 100;
+    const elementPosition = section ? section.getBoundingClientRect().top : 0;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className="hero-banner">
@@ -22,7 +28,7 @@ const HeroBanner = () => {
           />
         }
         variant={"hero"}
-        onClick={onMoreClicked("More")}
+        onClick={onMoreClicked()}
       />
     </div>
   );

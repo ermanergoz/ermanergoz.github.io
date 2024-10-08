@@ -1,5 +1,5 @@
 .mobile-header {
-  @apply z-[100] w-full sticky flex items-center justify-between px-4 py-4 lg:hidden;
+  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden;
   background: $background-dark;
   color: $text-dark;
 

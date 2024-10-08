@@ -9,11 +9,19 @@ import Contact from "../components/Contact";
 function Home() {
   return (
     <Layout>
-      <CodeFlow />
-      <HeroBanner />
-      <About />
-      <WhatIDo />
-      <Contact />
+      <section id="home">
+        <CodeFlow />
+        <HeroBanner />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="whatIDo">
+        <WhatIDo />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
     </Layout>
   );
 }
