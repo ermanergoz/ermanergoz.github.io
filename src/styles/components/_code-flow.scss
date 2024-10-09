@@ -3,32 +3,23 @@
   background: $background-dark;
 
   &__content {
-    @apply select-none animate-flow leading-[1.5] overflow-hidden;
+    @apply select-none leading-[1.5] overflow-hidden;
+    transform: translateY(0); // This will be updated by JS
   }
 
   &__line {
     font-family: $hero-banner;
     color: $green-dark;
   }
-}
 
-@keyframes flow {
-  0% {
-    transform: translateY(-50%);
+  &__fps-display {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: $green;
+    padding: 2px;
+    z-index: 1;
   }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@layer utilities {
-  @variants responsive {
-    .animate-flow {
-      animation: flow 4000s linear infinite;
-
-      @media only screen and (min-width: 768px) {
-        animation: flow 1000s linear infinite;
-      }
-    }
-  }
+  
 }
