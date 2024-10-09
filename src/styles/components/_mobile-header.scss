@@ -1,14 +1,11 @@
 .mobile-header {
-  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden;
-  background: $background-dark;
-  color: $text-dark;
+  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
 
   &__menu {
     @apply flex-shrink-0;
 
     &__drop-down {
-      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden;
-      background: $background-dark;
+      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden bg-customDarkBackground;
 
       &__item {
         @apply p-4 flex-none text-center;

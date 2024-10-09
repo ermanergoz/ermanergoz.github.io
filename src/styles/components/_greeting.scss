@@ -1,6 +1,5 @@
 .greeting {
-  @apply m-0 space-y-16 lg:space-y-32 align-middle;
-  color: $text-dark;
+  @apply m-0 space-y-16 lg:space-y-32 align-middle text-white;
 
   &__title {
     @apply text-[34px] flex flex-row justify-center space-x-2 lg:space-x-4;

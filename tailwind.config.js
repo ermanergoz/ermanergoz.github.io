@@ -6,6 +6,8 @@ export default {
       colors: {
         customGreen: "#4faf53",
         customDarkGreen: "#096917",
+        customDarkBackground: "#202124",
+        buttonBackground: "#f6f6f6",
       },
     },
   },

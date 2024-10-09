@@ -20,8 +20,10 @@ const Footer = () => {
 
   const getCurrentYear = (): number => new Date().getFullYear();
 
-  return (
-    <footer className="footer">
+  return (    
+    <footer>
+    <div className="outer"></div>
+      <div className="footer">
       <div className="footer__content">
         <div className="footer__content__banner">
           <Image src={Logo} alt="Logo" className="h-12 lg:h-20" />
@@ -53,6 +55,7 @@ const Footer = () => {
             }
           />
         </div>
+      </div>
       </div>
     </footer>
   );

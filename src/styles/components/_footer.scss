@@ -1,7 +1,5 @@
 .footer {
-  background: $background-dark;
-  color: $text-dark;
-  @apply py-8 px-4;
+  @apply py-8 px-4 text-white bg-customDarkBackground;
 
   &__content {
     @apply grid grid-cols-1 lg:grid-cols-3 gap-8;

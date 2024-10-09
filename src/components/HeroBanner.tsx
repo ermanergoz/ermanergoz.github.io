@@ -19,7 +19,10 @@ const HeroBanner = () => {
   return (
     <div className="hero-banner">
       <Greeting />
+      <div className="hero-banner__button-holder">
       <UiButton
+              theme="light"
+
         label="MORE"
         icon={
           <FontAwesomeIcon
@@ -27,9 +30,10 @@ const HeroBanner = () => {
             icon={faChevronDown}
           />
         }
-        variant={"hero"}
+        variant={"inline"}
         onClick={onMoreClicked()}
       />
+      </div>
     </div>
   );
 };

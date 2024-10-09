@@ -3,13 +3,15 @@
   background: $background-dark;
 
   &__content {
-    @apply select-none leading-[1.5] overflow-hidden;
-    display: flex;
-    flex-direction: column;
+    @apply select-none leading-[1.5] overflow-hidden flex flex-col;
   }
 
   &__line {
     font-family: $hero-banner;
     color: $green-dark;
   }
+}
+
+.inner {
+  @apply absolute lg:h-40 h-36 bg-white w-full bottom-[-80px] rounded-t-[50%];
 }

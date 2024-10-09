@@ -66,6 +66,7 @@ const CodeFlow = () => {
           </p>
         ))}
       </div>
+      <div className="inner"></div>
     </div>
   );
 };

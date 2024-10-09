@@ -1,46 +1,37 @@
 .ui-button {
-  @apply flex border rounded-lg p-4 px-4;
-  border-color: $green;
-  justify-content: center !important;
-  align-items: center !important;
+  @apply flex border rounded-lg p-4 px-4 border-customGreen justify-center;
+  align-items: center !important; //leave it as it is
 
   &__primary {
+    @apply bg-customDarkBackground;
     color: $text-dark !important;
-    background: $background-dark;
 
     &:hover {
-      @apply transition-all ease-out duration-200;
+      @apply transition-all ease-out duration-200 bg-buttonBackground;
       color: $text-light !important;
-      background: #f6f6f6;
     }
   }
 
   &__secondary {
+    @apply bg-buttonBackground;
     color: $text-light !important;
-    background: #f6f6f6;
 
     &:hover {
-      @apply transition-all ease-out duration-200;
-      background: $background-dark;
+      @apply transition-all ease-out duration-200 bg-customDarkBackground;
       color: $text-dark !important;
     }
   }
 
-  &__hero {
-    @apply mx-auto;
-    color: $text-dark !important;
-    background-color: rgba(0, 0, 0, 0.4);
-    @apply w-[90%] !important;
+  &--light {
+    @apply text-black;
+  }
 
-    &:hover {
-      @apply transition-all ease-out duration-200;
-      background: $background-dark;
-    }
+  &--dark {
+    @apply text-white;
   }
 
   &__inline {
     @apply p-0 border-none;
-    color: $text-dark;
 
     &:hover {
       background: transparent !important;
@@ -49,16 +40,15 @@
   }
 
   &:focus {
-    outline: none;
+    @apply outline-none;
   }
 
   &:focus-visible {
-    outline: 2px solid $green;
-    outline-offset: 4px;
+    @apply outline-2 outline-customGreen outline-offset-4;
   }
 
   span {
-    @apply inline-flex;
-    align-items: center;
+    @apply inline-flex align-middle;
+    align-items: center;  //leave it as it is
   }
 }
