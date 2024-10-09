@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout";
 import About from "../components/About";
 import WhatIDo from "../components/WhatIDo";
 import Contact from "../components/Contact";
+import AnimatedSection from "../components/AnimatedSection";
 
 function Home() {
   return (
@@ -16,12 +17,12 @@ function Home() {
       <section id="about">
         <About />
       </section>
-      <section id="whatIDo">
+      <AnimatedSection id="whatIDo">
         <WhatIDo />
-      </section>
-      <section id="contact">
+      </AnimatedSection>
+      <AnimatedSection id="contact">
         <Contact />
-      </section>
+      </AnimatedSection>
     </Layout>
   );
 }
