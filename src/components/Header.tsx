@@ -2,6 +2,8 @@ import "../styles/main.scss";
 import Logo from "../assets/logo.png";
 import DesktopHeader from "./DesktopHeader";
 import MobileHeader from "./MobileHeader";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const scrollToSection = (sectionId: string) => {
@@ -15,30 +17,38 @@ const Header = () => {
       behavior: "smooth",
     });
   };
-
-  const handleButtonClick =
-    (buttonLabel: string = "") =>
-    () => {
-      switch (buttonLabel) {
-        case "Home": {
-          scrollToSection("home");
-          break;
-        }
-        case "About Me": {
-          scrollToSection("about");
-          break;
-        }
-        case "What I Do": {
-          scrollToSection("whatIDo");
-          break;
-        }
-        case "Contact Me": {
-          scrollToSection("contact");
-          break;
+  
+  const handleButtonClick = (buttonLabel: string = "") => {
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+    const sectionMap: { [key: string]: { path: string; sectionId: string } } = {
+      "Home": { path: "/", sectionId: "home" },
+      "About Me": { path: "/#about", sectionId: "about" },
+      "What I Do": { path: "/#whatIDo", sectionId: "whatIDo" },
+      "Contact Me": { path: "/#contact", sectionId: "contact" },
+    };
+  
+    const { path, sectionId } = sectionMap[buttonLabel] || {};
+  
+    useEffect(() => {
+      if (location.hash) {
+        const targetSection = location.hash.substring(1); // Remove "#" from hash
+        scrollToSection(targetSection);
+      }
+    }, [location]);
+  
+    return () => {
+      if (path && sectionId) {
+        if (window.location.pathname === "/") {
+          scrollToSection(sectionId);
+        } else {
+          navigate(path);
         }
       }
     };
-
+  };
+  
   const navItems = ["Home", "About Me", "What I Do", "Contact Me"];
 
   return (
