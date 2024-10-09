@@ -41,7 +41,7 @@ const Contact = () => {
                 <Image
                   src={LinkedInLogo}
                   alt="My LinkedIn profile"
-                  className="h-10"
+                  className="h-6"
                 />
               }
             />
@@ -58,7 +58,7 @@ const Contact = () => {
                 <Image
                   src={GithubLogo}
                   alt="My GitHub profile"
-                  className="h-10"
+                  className="h-6"
                 />
               }
             />
@@ -75,7 +75,7 @@ const Contact = () => {
                 <Image
                   src={FacebookLogo}
                   alt="My Facebook profile"
-                  className="h-10"
+                  className="h-6"
                 />
               }
             />
@@ -92,7 +92,7 @@ const Contact = () => {
                 <Image
                   src={InstagramLogo}
                   alt="My Instagram profile"
-                  className="h-10"
+                  className="h-6"
                 />
               }
             />
