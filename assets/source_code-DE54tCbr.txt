@@ -702,7 +702,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
   return (
     <header className="mobile-header">
       <div className="mobile-header__menu">
-        <Hamburger toggled={isOpen} toggle={setOpen} />
+        <Hamburger toggled={isOpen} toggle={setOpen} aria-label="Hamburger Button"/>
         <nav
           className={`mobile-header__menu__drop-down ${
             isOpen ? "max-h-96" : "max-h-0"
@@ -939,7 +939,9 @@ import Layout from "../layouts/Layout";
 import About from "../components/About";
 import WhatIDo from "../components/WhatIDo";
 import Contact from "../components/Contact";
-import AnimatedSection from "../components/AnimatedSection";
+{
+  /*import AnimatedSection from "../components/AnimatedSection";*/
+}
 
 function Home() {
   return (
@@ -951,12 +953,16 @@ function Home() {
       <section id="about">
         <About />
       </section>
-      <AnimatedSection id="whatIDo">
+      <section id="whatIDo">
+        {/*<AnimatedSection id="whatIDo">*/}
         <WhatIDo />
-      </AnimatedSection>
-      <AnimatedSection id="contact">
+        {/*</AnimatedSection>*/}
+      </section>
+      <section id="contact">
+        {/*<AnimatedSection id="contact">*/}
         <Contact />
-      </AnimatedSection>
+        {/*</AnimatedSection>*/}
+      </section>
     </Layout>
   );
 }
