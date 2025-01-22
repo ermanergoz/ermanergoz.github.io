@@ -1166,7 +1166,7 @@ $text-dark: #ffffff;
 $text-light: #000000;
 
 $green: #4faf53;
-$green-dark: #00580c;
+$green-dark: #00490a;
 @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap");
 $hero-banner: monaco,Consolas,Lucida Console,monospace;h1 {
   @apply text-[34px] font-bold;
@@ -1496,7 +1496,7 @@ onmessage = (event: MessageEvent<WorkerMessage>) => {
 
     case "start":
       const updatePosition = () => {
-        position -= 4;
+        position -= 2;
 
         if (position <= -scrollHeight + 950) {
           position = 0;
