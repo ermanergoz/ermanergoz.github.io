@@ -117,60 +117,64 @@ import { useEffect, useRef, useState } from "react";
 import "../styles/main.scss";
 import sourceCode from "../../source_code.txt";
 
+interface WorkerUpdateMessage {
+  type: "update";
+  position: number;
+}
+
 const CodeFlow = () => {
   const [content, setContent] = useState<string[]>([]);
-  const scrollRef = useRef<HTMLDivElement>(null); // Reference to the scrollable content
-  const positionRef = useRef(0); // Store the current Y position of the content
-  const animationFrameRef = useRef<number | null>(null); // To store the animation frame ID
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
-    // Fetch the text content
     fetch(sourceCode)
       .then((response) => response.text())
       .then((text) => {
-        const extendedContent = text.split("\n"); // No need to repeat here
+        const extendedContent = text.split("\n");
         setContent(extendedContent);
       });
 
-    // Cleanup on component unmount (cancel any running animation)
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (workerRef.current) {
+        workerRef.current.terminate();
       }
     };
   }, []);
 
   useEffect(() => {
-    if (content.length === 0) return; // Ensure content is loaded
+    if (content.length === 0) return;
 
-    const animate = () => {
-      const scrollElement = scrollRef.current;
-      if (!scrollElement) return;
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
 
-      // Update the position for smooth scrolling (reverse direction)
-      positionRef.current -= 6; // Move upward by decreasing positionRef
+    workerRef.current = new Worker(
+      new URL("../utils/codeFlowWorker.ts", import.meta.url)
+    );
 
-      // When it scrolls past the top, reset to the bottom
-      if (positionRef.current <= -scrollElement.scrollHeight + 950) {
-        positionRef.current = 0; // Reset when content scrolls out of view
+    workerRef.current.postMessage({
+      type: "init",
+      scrollHeight: scrollElement.scrollHeight,
+    });
+
+    workerRef.current.postMessage({ type: "start" });
+
+    workerRef.current.onmessage = (
+      event: MessageEvent<WorkerUpdateMessage>
+    ) => {
+      if (event.data.type === "update") {
+        const { position } = event.data;
+        scrollElement.style.transform = `translateY(${position}px)`;
       }
-
-      scrollElement.style.transform = `translateY(${positionRef.current}px)`; // Reverse direction
-
-      // Request the next frame of the animation
-      animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    // Start the animation loop
-    animationFrameRef.current = requestAnimationFrame(animate);
-
-    // Cleanup on unmount
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (workerRef.current) {
+        workerRef.current.terminate();
+        ˇ;
       }
     };
-  }, [content]); // Only re-run when content changes
+  }, [content]);
 
   return (
     <div className="code-flow">
@@ -702,7 +706,11 @@ const MobileHeader = (props: MobileHeaderProps) => {
   return (
     <header className="mobile-header">
       <div className="mobile-header__menu">
-        <Hamburger toggled={isOpen} toggle={setOpen} aria-label="Hamburger Button"/>
+        <Hamburger
+          toggled={isOpen}
+          toggle={setOpen}
+          label="Toggle navigation menu"
+        />
         <nav
           className={`mobile-header__menu__drop-down ${
             isOpen ? "max-h-96" : "max-h-0"
@@ -1469,4 +1477,43 @@ body {
     @apply space-y-2 mt-8 mb-8;
   }
 }
+let position = 0;
+let scrollHeight = 0;
+
+interface WorkerInitMessage {
+  type: "init";
+  scrollHeight: number;
+}
+
+interface WorkerStartMessage {
+  type: "start";
+}
+
+type WorkerMessage = WorkerInitMessage | WorkerStartMessage;
+
+onmessage = (event: MessageEvent<WorkerMessage>) => {
+  switch (event.data.type) {
+    case "init":
+      scrollHeight = event.data.scrollHeight;
+      break;
+
+    case "start":
+      const updatePosition = () => {
+        position -= 6;
+
+        if (position <= -scrollHeight + 950) {
+          position = 0;
+        }
+
+        postMessage({ type: "update", position });
+        setTimeout(updatePosition, 16);
+      };
+
+      updatePosition();
+      break;
+
+    default:
+      break;
+  }
+};
 /// <reference types="vite/client" />
