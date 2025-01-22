@@ -159,9 +159,7 @@ const CodeFlow = () => {
 
     workerRef.current.postMessage({ type: "start" });
 
-    workerRef.current.onmessage = (
-      event: MessageEvent<WorkerUpdateMessage>
-    ) => {
+    workerRef.current.onmessage = (event: MessageEvent<WorkerUpdateMessage>) => {
       if (event.data.type === "update") {
         const { position } = event.data;
         scrollElement.style.transform = `translateY(${position}px)`;
@@ -171,7 +169,6 @@ const CodeFlow = () => {
     return () => {
       if (workerRef.current) {
         workerRef.current.terminate();
-        ˇ;
       }
     };
   }, [content]);
@@ -1499,7 +1496,7 @@ onmessage = (event: MessageEvent<WorkerMessage>) => {
 
     case "start":
       const updatePosition = () => {
-        position -= 6;
+        position -= 4;
 
         if (position <= -scrollHeight + 950) {
           position = 0;
