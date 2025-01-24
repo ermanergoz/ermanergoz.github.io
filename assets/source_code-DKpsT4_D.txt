@@ -178,7 +178,7 @@ const Contact = () => {
     <div className="contact">
       <h1>Contact</h1>
       <p>
-        If you have a project in mind that you would like to discuss, lets get
+        If you have a project in mind that you would like to discuss, let's get
         in touch! Shoot me an e-mail:
       </p>
       <div className="contact__email-wrapper">
@@ -187,6 +187,7 @@ const Contact = () => {
             <UiButton
               theme="light"
               label="erman.ergoz@gmail.com"
+              isFocusable={false}
               icon={<FontAwesomeIcon icon={faEnvelope} />}
             />
           }
@@ -202,6 +203,7 @@ const Contact = () => {
             <UiButton
               theme="light"
               label="LinkedIn"
+              isFocusable={false}
               icon={
                 <Image
                   src={LinkedInLogo}
@@ -219,6 +221,7 @@ const Contact = () => {
             <UiButton
               theme="light"
               label="GitHub"
+              isFocusable={false}
               icon={
                 <Image
                   src={GithubLogo}
@@ -236,6 +239,7 @@ const Contact = () => {
             <UiButton
               theme="light"
               label="Facebook"
+              isFocusable={false}
               icon={
                 <Image
                   src={FacebookLogo}
@@ -253,6 +257,7 @@ const Contact = () => {
             <UiButton
               theme="light"
               label="Instagram"
+              isFocusable={false}
               icon={
                 <Image
                   src={InstagramLogo}
@@ -263,19 +268,6 @@ const Contact = () => {
             />
           }
         />
-        {/*
-        <Link
-          destination="https://medium.com/@yusufermanergz"
-          external={true}
-          children={
-            <UiButton
-              theme="light"
-              label="Medium"
-              icon={<Image src={MediumLogo} alt="My MediumLogo profile" />}
-            />
-          }
-        />
-        */}
       </div>
     </div>
   );
@@ -822,10 +814,12 @@ interface UiButtonProps {
   isWide?: boolean;
   label: string;
   icon?: React.ReactNode;
+  isFocusable?: boolean;
   onClick?: () => void;
 }
 
 export const UiButton = ({
+  isFocusable = true,
   variant = "primary",
   theme = "dark",
   isWide = false,
@@ -834,6 +828,7 @@ export const UiButton = ({
   ...props
 }: UiButtonProps) => {
   const isWideButton = isWide ? "wide" : "";
+  
   return (
     <button
       className={[
@@ -843,6 +838,7 @@ export const UiButton = ({
         `ui-button__${variant}`,
       ].join(" ")}
       aria-label={label}
+      tabIndex={isFocusable ? 0 : -1}
       {...props}
     >
       {icon && <span>{icon}&emsp;&emsp;</span>}
