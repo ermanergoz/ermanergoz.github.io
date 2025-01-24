@@ -1,18 +1,22 @@
-import Home from "./pages/Home";
-import PrivacyPolicies from "./pages/PrivacyPolicies";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+const Home = lazy(() => import("./pages/Home"));
+const PrivacyPolicies = lazy(() => import("./pages/PrivacyPolicies"));
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="privacy-policies" element={<PrivacyPolicies />} />
-        </Routes>
+        <Suspense>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="privacy-policies" element={<PrivacyPolicies />} />
+          </Routes>
+        </Suspense>
         <Footer />
       </BrowserRouter>
     </>
@@ -20,6 +24,65 @@ function App() {
 }
 
 export default App;
+import RotatingPhone from "../components/RotatingPhone";
+
+const About = () => {
+  return (
+    <div className="about__wrapper">
+      <RotatingPhone />
+      <div className="about__content">
+        <h1>About Me</h1>
+        <div className="about__content__text">
+          <p>
+            I’m a developer with expertise in creating mobile apps for Android,
+            iOS, and web platforms, focusing on solutions that work seamlessly
+            across different devices. From building user-friendly mobile apps to
+            crafting visually appealing websites, I take pride in delivering
+            high-quality results that meet both functional and design
+            expectations.
+          </p>
+          <p>
+            With a solid understanding of mobile and web development, I’m able
+            to bring creative ideas to life in a way that’s practical and
+            efficient. My goal is to ensure that every project I work on
+            provides a smooth, engaging experience for users.
+          </p>
+          <p>
+            I approach each project with a focus on collaboration and delivering
+            tailored solutions that align with the needs and goals of the people
+            and businesses I work with.
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  );
+};
+
+export default About;
+import Image from "../components/Image";
+
+interface CardProps {
+  icon: string;
+  imgAlt: string;
+  title: string;
+  text: string;
+}
+
+const Card = (props: CardProps) => {
+  return (
+    <div className="card">
+      <div className="card__title">
+        <Image src={props.icon} alt={props.imgAlt} />
+        <h1>{props.title}</h1>
+      </div>
+
+      <p>{props.text}</p>
+    </div>
+  );
+};
+
+export default Card;
 import { useEffect, useRef, useState } from "react";
 import "../styles/main.scss";
 import sourceCode from "../../source_code.txt";
@@ -100,6 +163,125 @@ const CodeFlow = () => {
 };
 
 export default CodeFlow;
+import { UiButton } from "../components/UiButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Link from "../components/Link";
+import Image from "../components/Image";
+import FacebookLogo from "../assets/logo_facebook.png";
+import InstagramLogo from "../assets/logo_instagram.png";
+import LinkedInLogo from "../assets/logo_linkedin.png";
+import GithubLogo from "../assets/logo_github.png";
+
+const Contact = () => {
+  return (
+    <div className="contact">
+      <h1>Contact</h1>
+      <p>
+        If you have a project in mind that you would like to discuss, lets get
+        in touch! Shoot me an e-mail:
+      </p>
+      <div className="contact__email-wrapper">
+        <Link
+          children={
+            <UiButton
+              theme="light"
+              label="erman.ergoz@gmail.com"
+              icon={<FontAwesomeIcon icon={faEnvelope} />}
+            />
+          }
+          destination="mailto:erman.ergoz@gmail.com"
+        />
+      </div>
+      <p>Or find me at:</p>
+      <div className="contact__card-container">
+        <Link
+          destination="https://www.linkedin.com/in/ermanergoz/"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="LinkedIn"
+              icon={
+                <Image
+                  src={LinkedInLogo}
+                  alt="My LinkedIn profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://github.com/ermanergoz"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="GitHub"
+              icon={
+                <Image
+                  src={GithubLogo}
+                  alt="My GitHub profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://www.facebook.com/erman.ergoz"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="Facebook"
+              icon={
+                <Image
+                  src={FacebookLogo}
+                  alt="My Facebook profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://www.instagram.com/ermanergz/"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="Instagram"
+              icon={
+                <Image
+                  src={InstagramLogo}
+                  alt="My Instagram profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        {/*
+        <Link
+          destination="https://medium.com/@yusufermanergz"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="Medium"
+              icon={<Image src={MediumLogo} alt="My MediumLogo profile" />}
+            />
+          }
+        />
+        */}
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
 import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
 import Link from "../components/Link";
@@ -473,7 +655,14 @@ const Link = ({ destination, title = destination, children, external = false }: 
 };
 
 export default Link;
-import "../styles/main.scss";
+export default function Loading() {
+    return (
+      <div className="loading">
+        <div className="loading__spinner" role="status" />
+      </div>
+    );
+  }
+  import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
 import { Sling as Hamburger } from "hamburger-react";
 import { useState } from "react";
@@ -543,6 +732,88 @@ const MobileHeader = (props: MobileHeaderProps) => {
 };
 
 export default MobileHeader;
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { useLoader } from "@react-three/fiber";
+
+const PhoneModel = () => {
+    const obj = useLoader(OBJLoader, "/assets/phone.obj");
+  
+    return (
+      <primitive
+        object={obj}
+        scale={[0.006, 0.006, 0.006]}
+        position={[0, 0, 0]}
+      />
+    );
+  };
+
+  export default PhoneModel;
+  import { useRef, useEffect, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import PhoneModel from "./PhoneModel";
+import * as THREE from "three";
+
+const RotatingPhone = () => {
+  const [rotationY, setRotationY] = useState(Math.PI);
+  const aboutRef = useRef<HTMLDivElement>(null);
+
+  const minRotation = Math.PI;
+  const maxRotation = 0;
+
+  const earlyStartOffset = window.innerHeight / 5;
+  const calculateRotation = (scrollFraction: number) => {
+    return minRotation + scrollFraction * (maxRotation - minRotation);
+  };
+
+  const handleScroll = () => {
+    if (aboutRef.current) {
+      const aboutTop = aboutRef.current.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      const scrollFraction = Math.min(
+        Math.max(1 - (aboutTop - earlyStartOffset) / (windowHeight / 2), 0),
+        1
+      );
+
+      setRotationY(calculateRotation(scrollFraction));
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <div ref={aboutRef} className="rotating-phone">
+      <Canvas>
+        {/*<ambientLight intensity={0} />*/}
+        <directionalLight position={[10, 10, 5]} intensity={0.5} />
+        <Phone rotationY={rotationY} />
+      </Canvas>
+    </div>
+  );
+};
+
+const Phone = ({ rotationY }: { rotationY: number }) => {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = rotationY;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <PhoneModel />
+    </mesh>
+  );
+};
+
+export default RotatingPhone;
 import "../styles/main.scss";
 
 interface UiButtonProps {
@@ -579,6 +850,51 @@ export const UiButton = ({
     </button>
   );
 };
+import Card from "../components/Card";
+import AndroidIcon from "../assets/ic_android.svg";
+import AppleIcon from "../assets/ic_apple.svg";
+import MultiplatformIcon from "../assets/ic_multiplatform.svg";
+import FrontEndIcon from "../assets/ic_frontend.svg";
+
+const WhatIDo = () => {
+  return (
+    <div className="what-i-do">
+      <h1>What I do?</h1>
+      <div className="what-i-do__card-container">
+        <Card
+          icon={AndroidIcon}
+          imgAlt="Android icon"
+          title="Android"
+          text="I build native Android apps, using the latest technologies and best practices."
+        />
+        <Card
+          icon={AppleIcon}
+          imgAlt="Apple icon"
+          title="iOS"
+          text="I build high-quality iOS apps that are fast, reliable, and easy to use."
+        />
+        <Card
+          icon={MultiplatformIcon}
+          imgAlt="Multiplatform icon"
+          title="Multiplatform"
+          text="I develop multi-platform apps using frameworks like Kotlin Multiplatform, Flutter and React Native, allowing you to reach users on both Android and iOS with a single codebase."
+        />
+        <Card
+          icon={FrontEndIcon}
+          imgAlt="Front end Android icon"
+          title="Front End"
+          text="I design and develop responsive, user-friendly websites using modern web technologies."
+        />
+      </div>
+      <p>
+        I am highly adaptable and able to collaborate effectively on projects
+        outside of my spectrum, depending on your expectations.
+      </p>
+    </div>
+  );
+};
+
+export default WhatIDo;
 import "../styles/layout/layout.scss";
 
 interface LayoutProps {
@@ -605,17 +921,91 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
+import { useState, useEffect, Suspense, lazy } from "react";
 import CodeFlow from "../components/CodeFlow";
 import "../styles/main.scss";
 import HeroBanner from "../components/HeroBanner";
 import Layout from "../layouts/Layout";
+import Loading from "../components/Loading";
+
+const About = lazy(() => import("../components/About"));
+const WhatIDo = lazy(() => import("../components/WhatIDo"));
+const Contact = lazy(() => import("../components/Contact"));
 
 function Home() {
+  const [isAboutVisible, setAboutVisible] = useState(false);
+  const [isWhatIDoVisible, setWhatIDoVisible] = useState(false);
+  const [isContactVisible, setContactVisible] = useState(false);
+
+  useEffect(() => {
+    const options = {
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    const aboutObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setAboutVisible(true);
+      }
+    }, options);
+
+    const whatIDoObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setWhatIDoVisible(true);
+      }
+    }, options);
+
+    const contactObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setContactVisible(true);
+      }
+    }, options);
+
+    const aboutSection = document.getElementById("about");
+    const whatIDoSection = document.getElementById("whatIDo");
+    const contactSection = document.getElementById("contact");
+
+    if (aboutSection) aboutObserver.observe(aboutSection);
+    if (whatIDoSection) whatIDoObserver.observe(whatIDoSection);
+    if (contactSection) contactObserver.observe(contactSection);
+
+    return () => {
+      aboutObserver.disconnect();
+      whatIDoObserver.disconnect();
+      contactObserver.disconnect();
+    };
+  }, []);
+
   return (
     <Layout>
       <section id="home">
         <CodeFlow />
         <HeroBanner />
+      </section>
+
+      <section id="about">
+        {isAboutVisible && (
+          <Suspense fallback={<Loading />}>
+            <About />
+            <Loading />
+          </Suspense>
+        )}
+      </section>
+
+      <section id="whatIDo">
+        {isWhatIDoVisible && (
+          <Suspense fallback={<Loading />}>
+            <WhatIDo />
+          </Suspense>
+        )}
+      </section>
+
+      <section id="contact">
+        {isContactVisible && (
+          <Suspense fallback={<Loading />}>
+            <Contact />
+          </Suspense>
+        )}
       </section>
     </Layout>
   );
@@ -1003,7 +1393,13 @@ p {
 .link:focus-visible {
   @apply outline outline-customGreen outline-offset-4;
 }
-.mobile-header {
+.loading {
+    @apply flex items-center justify-center w-full;
+
+    &__spinner {
+        @apply inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-customGreen text-center;
+    }
+}.mobile-header {
   @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
 
   &__menu {
@@ -1098,16 +1494,16 @@ p {
 
 //Variables
 @import "../styles/base/colors", "../styles/base/fonts",
-  "../styles/base/typography";
+"../styles/base/typography";
 
 //Components
 @import "../styles/components/code-flow", "../styles/components/hero-banner",
-  "../styles/components/ui-button", "../styles/components/desktop-header",
-  "../styles/components/mobile-header", "../styles/components/footer",
-  "../styles/components/dropdown-selection", "../styles/components/link",
-  "../styles/components/greeting", "../styles/components/about",
-  "../styles/components/rotating-phone", "../styles/components/what-i-do",
-  "../styles/components/card", "../styles/components/contact";;
+"../styles/components/ui-button", "../styles/components/desktop-header",
+"../styles/components/mobile-header", "../styles/components/footer",
+"../styles/components/dropdown-selection", "../styles/components/link",
+"../styles/components/greeting", "../styles/components/about",
+"../styles/components/rotating-phone", "../styles/components/what-i-do",
+"../styles/components/card", "../styles/components/contact", "../styles//components/loading";
 
 //Pages
 @import "../styles/pages/privacy-policies";
@@ -1115,8 +1511,7 @@ p {
 body {
   font-family: "Chakra Petch", sans-serif;
   @apply m-0 select-none;
-}
-.privacy-policies {
+}.privacy-policies {
   @apply mx-4 space-y-8 py-16;
 
   &__list {
