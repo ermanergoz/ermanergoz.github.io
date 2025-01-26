@@ -685,9 +685,7 @@ const MobileHeader = (props: MobileHeaderProps) => {
           label="Toggle navigation menu"
         />
         <nav
-          className={`mobile-header__menu__drop-down ${
-            isOpen ? "max-h-96" : "max-h-0"
-          }`}
+          className={`mobile-header__menu__drop-down ${isOpen ? "open" : ""}`}
         >
           {props.navItems.map((buttonLabel) => (
             <div
@@ -1193,7 +1191,7 @@ p {
     @apply absolute left-1/2 transform -translate-x-1/2;
 
     &__item {
-      @apply flex space-x-16;
+      @apply flex space-x-160;
     }
   }
 
@@ -1314,12 +1312,25 @@ p {
     }
 }.mobile-header {
   @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
+  min-height: 64px; /* Ensure the header has a minimum height */
 
   &__menu {
-    @apply flex-shrink-0;
-
     &__drop-down {
-      @apply absolute left-0 right-0 top-full transition-[max-height] duration-500 ease-in-out overflow-hidden bg-customDarkBackground;
+      @apply absolute left-0 right-0 top-full overflow-hidden bg-customDarkBackground;
+      height: 0;
+      /* Explicit collapsed height */
+      transition: height 0.5s ease-in-out;
+      /* Change to 'height' for better control */
+
+      &.open {
+        height: 24rem;
+        /* Replace max-h-96 with a specific height value */
+      }
+
+      &__item {
+        @apply p-4 flex-none text-center;
+      }
+
 
       &__item {
         @apply p-4 flex-none text-center;
@@ -1329,13 +1340,16 @@ p {
 
   &__logo {
     @apply absolute left-1/2 transform -translate-x-1/2;
+    width: 48px;
+    /* Match the logo image's size */
+    height: 48px;
+    /* Match the logo image's size */
   }
 
   &__language-selector {
     @apply flex-shrink-0;
   }
-}
-.ui-button {
+}.ui-button {
   @apply flex border rounded-[25px] p-3 px-5 border-customGreen justify-center;
   align-items: center !important; //leave it as it is
 
