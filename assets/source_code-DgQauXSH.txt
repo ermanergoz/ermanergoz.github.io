@@ -647,14 +647,7 @@ const Link = ({ destination, title = destination, children, external = false }: 
 };
 
 export default Link;
-export default function Loading() {
-    return (
-      <div className="loading">
-        <div className="loading__spinner" role="status" />
-      </div>
-    );
-  }
-  import "../styles/main.scss";
+import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
 import { Sling as Hamburger } from "hamburger-react";
 import { useState } from "react";
@@ -833,61 +826,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
-import { useState, useEffect, Suspense, lazy } from "react";
 import CodeFlow from "../components/CodeFlow";
 import "../styles/main.scss";
 import HeroBanner from "../components/HeroBanner";
 import Layout from "../layouts/Layout";
-import Loading from "../components/Loading";
-
-const About = lazy(() => import("../components/About"));
-const WhatIDo = lazy(() => import("../components/WhatIDo"));
-const Contact = lazy(() => import("../components/Contact"));
+import About from "../components/About";
+import WhatIDo from "../components/WhatIDo";
+import Contact from "../components/Contact";
 
 function Home() {
-  const [isAboutVisible, setAboutVisible] = useState(false);
-  const [isWhatIDoVisible, setWhatIDoVisible] = useState(false);
-  const [isContactVisible, setContactVisible] = useState(false);
-
-  useEffect(() => {
-    const options = {
-      rootMargin: "0px",
-      threshold: 0.5,
-    };
-
-    const aboutObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setAboutVisible(true);
-      }
-    }, options);
-
-    const whatIDoObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setWhatIDoVisible(true);
-      }
-    }, options);
-
-    const contactObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setContactVisible(true);
-      }
-    }, options);
-
-    const aboutSection = document.getElementById("about");
-    const whatIDoSection = document.getElementById("whatIDo");
-    const contactSection = document.getElementById("contact");
-
-    if (aboutSection) aboutObserver.observe(aboutSection);
-    if (whatIDoSection) whatIDoObserver.observe(whatIDoSection);
-    if (contactSection) contactObserver.observe(contactSection);
-
-    return () => {
-      aboutObserver.disconnect();
-      whatIDoObserver.disconnect();
-      contactObserver.disconnect();
-    };
-  }, []);
-
   return (
     <Layout>
       <section id="home">
@@ -895,25 +842,13 @@ function Home() {
         <HeroBanner />
       </section>
       <section id="about">
-        {isAboutVisible && (
-          <Suspense fallback={<Loading />}>
-            <About />
-          </Suspense>
-        )}
+        <About />
       </section>
       <section id="whatIDo">
-        {isWhatIDoVisible && (
-          <Suspense fallback={<Loading />}>
-            <WhatIDo />
-          </Suspense>
-        )}
+        <WhatIDo />
       </section>
       <section id="contact">
-        {isContactVisible && (
-          <Suspense fallback={<Loading />}>
-            <Contact />
-          </Suspense>
-        )}
+        <Contact />
       </section>
     </Layout>
   );
@@ -1144,7 +1079,7 @@ p {
   }
 
   &__image {
-    @apply max-w-sm mx-auto sm:max-h-60 lg:max-h-none;
+    @apply max-w-sm mx-auto max-h-56 lg:max-h-80;
   }
 
   &__content {
@@ -1327,13 +1262,7 @@ p {
 .link:focus-visible {
   @apply outline outline-customGreen outline-offset-4;
 }
-.loading {
-    @apply flex items-center justify-center w-full py-8;
-
-    &__spinner {
-        @apply inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] text-customGreen text-center;
-    }
-}.mobile-header {
+.mobile-header {
   @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
 
   &__menu {
@@ -1435,7 +1364,7 @@ p {
 "../styles/components/mobile-header", "../styles/components/footer",
 "../styles/components/dropdown-selection", "../styles/components/link",
 "../styles/components/greeting", "../styles/components/about", "../styles/components/what-i-do",
-"../styles/components/card", "../styles/components/contact", "../styles//components/loading";
+"../styles/components/card", "../styles/components/contact";
 
 //Pages
 @import "../styles/pages/privacy-policies";
