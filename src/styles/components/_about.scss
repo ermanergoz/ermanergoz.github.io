@@ -1,0 +1,13 @@
+.about {
+  &__wrapper {
+    @apply lg:flex lg:flex-row;
+  }
+
+  &__image {
+    @apply max-w-sm mx-auto max-h-56 lg:max-h-80;
+  }
+
+  &__content {
+    @apply my-auto;
+  }
+}

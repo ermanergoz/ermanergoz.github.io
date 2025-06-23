@@ -1,0 +1,30 @@
+.hero-banner {
+  @apply h-[94vh] text-center pt-[14vh] space-y-16;
+
+  &__button-holder {
+    position: absolute;
+    @apply bottom-16 font-bold mx-auto w-24 left-0 right-0;
+  }
+
+  &__chevron-animation {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+  }
+}

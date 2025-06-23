@@ -1,0 +1,16 @@
+.code-flow {
+  @apply h-screen overflow-hidden absolute inset-0 z-[-100];
+  background: $background-dark;
+
+  &__content {
+    @apply select-none leading-tight overflow-hidden flex flex-col px-4;
+  }
+
+  &__line {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+    font-family: $hero-banner;
+    color: $green-dark;
+  }
+}

@@ -1,0 +1,13 @@
+.dropdown-selection {
+  &--open {
+    @apply block;
+  }
+
+  &--closed {
+    @apply hidden;
+  }
+
+  &__option {
+    @apply flex space-x-2;
+  }
+}

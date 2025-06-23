@@ -1,0 +1,7 @@
+.link:focus {
+  @apply outline-none;
+}
+
+.link:focus-visible {
+  @apply outline outline-customGreen outline-offset-4;
+}

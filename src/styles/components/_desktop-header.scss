@@ -1,0 +1,19 @@
+.desktop-header {
+  @apply z-[100] w-full sticky top-0 items-center justify-between px-4 py-4 hidden lg:flex bg-customDarkBackground;
+
+  &__logo {
+    @apply flex-shrink-0 h-10;
+  }
+
+  &__navigation {
+    @apply absolute left-1/2 transform -translate-x-1/2;
+
+    &__item {
+      @apply flex space-x-16;
+    }
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0;
+  }
+}

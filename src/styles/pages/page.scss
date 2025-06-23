@@ -1,0 +1,7 @@
+.page {
+    @apply flex flex-col min-h-screen;
+    
+    &__content {
+        @apply flex-1;
+    }
+}

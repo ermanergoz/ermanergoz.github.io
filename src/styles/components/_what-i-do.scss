@@ -1,0 +1,7 @@
+.what-i-do {
+    @apply pt-16;
+
+    &__card-container {
+        @apply lg:flex justify-between pt-8 space-y-4 lg:space-y-0;
+    }
+}

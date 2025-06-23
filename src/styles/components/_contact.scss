@@ -1,0 +1,15 @@
+.contact {
+  @apply pt-16 pb-40 mx-auto;
+
+  &__email-wrapper {
+    @apply flex justify-center pt-4;
+  }
+
+  &__card-container {
+    @apply grid grid-cols-2 gap-4 lg:flex lg:space-x-2 lg:align-middle lg:justify-center;
+
+    .ui-button {
+      @apply w-full;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.greeting {
+  @apply m-0 space-y-16 lg:space-y-32 align-middle text-white;
+
+  &__title {
+    @apply text-[34px] flex flex-row justify-center space-x-2 lg:space-x-4;
+
+    &__wave {
+      animation-name: wave-animation;
+      animation-duration: 2.5s;
+      animation-iteration-count: infinite;
+      transform-origin: 70% 70%;
+    }
+
+    @keyframes wave-animation {
+      0% {
+        transform: rotate(0deg);
+      }
+      10% {
+        transform: rotate(14deg);
+      }
+      20% {
+        transform: rotate(-8deg);
+      }
+      30% {
+        transform: rotate(14deg);
+      }
+      40% {
+        transform: rotate(-4deg);
+      }
+      50% {
+        transform: rotate(10deg);
+      }
+      60% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  &__subtitle {
+    @apply text-[20px] lg:text-[24px];
+  }
+}

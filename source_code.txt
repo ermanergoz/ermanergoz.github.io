@@ -1,0 +1,1184 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+
+const Home = lazy(() => import("./pages/Home"));
+const PrivacyPolicies = lazy(() => import("./pages/PrivacyPolicies"));
+
+function App() {
+  return (
+    <div className="page">
+      <BrowserRouter>
+        <Header />
+        <Suspense>
+          <div className="page__content">
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="privacy-policies" element={<PrivacyPolicies />} />
+            </Routes>
+          </div>
+        </Suspense>
+        <Footer />
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
+import Image from "./Image";
+import AboutMeImage from "../assets/about.png";
+
+const About = () => {
+  return (
+    <div className="about__wrapper">
+      <Image src={AboutMeImage} alt="About me image" className="about__image"/>
+      <div className="about__content">
+        <h1>About Me</h1>
+        <div className="about__content__text">
+          <p>
+            I’m a developer with expertise in creating mobile apps for Android,
+            iOS, and web platforms, focusing on solutions that work seamlessly
+            across different devices. From building user-friendly mobile apps to
+            crafting visually appealing websites, I take pride in delivering
+            high-quality results that meet both functional and design
+            expectations.
+          </p>
+          <p>
+            With a solid understanding of mobile and web development, I’m able
+            to bring creative ideas to life in a way that’s practical and
+            efficient. My goal is to ensure that every project I work on
+            provides a smooth, engaging experience for users.
+          </p>
+          <p>
+            I approach each project with a focus on collaboration and delivering
+            tailored solutions that align with the needs and goals of the people
+            and businesses I work with.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default About;
+import Image from "../components/Image";
+
+interface CardProps {
+  icon: string;
+  imgAlt: string;
+  title: string;
+  text: string;
+}
+
+const Card = (props: CardProps) => {
+  return (
+    <div className="card">
+      <div className="card__title">
+        <Image src={props.icon} alt={props.imgAlt} />
+        <h1>{props.title}</h1>
+      </div>
+
+      <p>{props.text}</p>
+    </div>
+  );
+};
+
+export default Card;
+import { useEffect, useRef, useState } from "react";
+import "../styles/main.scss";
+import sourceCode from "../../source_code.txt";
+
+interface WorkerUpdateMessage {
+  type: "update";
+  position: number;
+}
+
+const CodeFlow = () => {
+  const [content, setContent] = useState<string[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const workerRef = useRef<Worker | null>(null);
+
+  useEffect(() => {
+    fetch(sourceCode)
+      .then((response) => response.text())
+      .then((text) => {
+        const extendedContent = text.split("\n");
+        setContent(extendedContent);
+      });
+
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (content.length === 0) return;
+
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
+
+    workerRef.current = new Worker(
+      new URL("../utils/codeFlowWorker.ts", import.meta.url)
+    );
+
+    workerRef.current.postMessage({
+      type: "init",
+      scrollHeight: scrollElement.scrollHeight,
+    });
+
+    workerRef.current.postMessage({ type: "start" });
+
+    workerRef.current.onmessage = (event: MessageEvent<WorkerUpdateMessage>) => {
+      if (event.data.type === "update") {
+        const { position } = event.data;
+        scrollElement.style.transform = `translateY(${position}px)`;
+      }
+    };
+
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate(); // Cleanup the worker
+      }
+    };
+  }, [content]);
+
+  return (
+    <div className="code-flow">
+      <div ref={scrollRef} className="code-flow__content">
+        {content.map((line, index) => (
+          <p key={index} className="code-flow__line">
+            {line}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CodeFlow;
+import { UiButton } from "../components/UiButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Link from "../components/Link";
+import Image from "../components/Image";
+import FacebookLogo from "../assets/logo_facebook.png";
+import InstagramLogo from "../assets/logo_instagram.png";
+import LinkedInLogo from "../assets/logo_linkedin.png";
+import GithubLogo from "../assets/logo_github.png";
+
+const Contact = () => {
+  return (
+    <div className="contact">
+      <h1>Contact</h1>
+      <p>
+        If you have a project in mind that you would like to discuss, let's get
+        in touch! Shoot me an e-mail:
+      </p>
+      <div className="contact__email-wrapper">
+        <Link
+          children={
+            <UiButton
+              theme="light"
+              label="erman.ergoz@gmail.com"
+              isFocusable={false}
+              icon={<FontAwesomeIcon icon={faEnvelope} />}
+            />
+          }
+          destination="mailto:erman.ergoz@gmail.com"
+        />
+      </div>
+      <p>Or find me at:</p>
+      <div className="contact__card-container">
+        <Link
+          destination="https://www.linkedin.com/in/ermanergoz/"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="LinkedIn"
+              isFocusable={false}
+              icon={
+                <Image
+                  src={LinkedInLogo}
+                  alt="My LinkedIn profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://github.com/ermanergoz"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="GitHub"
+              isFocusable={false}
+              icon={
+                <Image
+                  src={GithubLogo}
+                  alt="My GitHub profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://www.facebook.com/erman.ergoz"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="Facebook"
+              isFocusable={false}
+              icon={
+                <Image
+                  src={FacebookLogo}
+                  alt="My Facebook profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+        <Link
+          destination="https://www.instagram.com/ermanergz/"
+          external={true}
+          children={
+            <UiButton
+              theme="light"
+              label="Instagram"
+              isFocusable={false}
+              icon={
+                <Image
+                  src={InstagramLogo}
+                  alt="My Instagram profile"
+                  className="h-6"
+                />
+              }
+            />
+          }
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
+import "../styles/main.scss";
+import { UiButton } from "../components/UiButton";
+import Link from "../components/Link";
+import Image from "../components/Image";
+
+interface DesktopHeaderProps {
+  onClick: (label: string) => () => void;
+  navItems: string[];
+  logo: string;
+}
+
+const DesktopHeader = (props: DesktopHeaderProps) => {
+  return (
+    <header className="desktop-header">
+      <div className="desktop-header__logo">
+        <Link
+          destination="/"
+          title="Home"
+          children={<Image src={props.logo} alt="Logo" className="h-12" />}
+        />
+      </div>
+
+      <div className="desktop-header__navigation">
+        <nav className="desktop-header__navigation__item">
+          {props.navItems.map((buttonLabel, i) => (
+            <UiButton
+              key={i}
+              label={buttonLabel}
+              variant="inline"
+              onClick={props.onClick(buttonLabel)}
+            />
+          ))}
+        </nav>
+      </div>
+
+      <div className="desktop-header__language-selector">
+        <UiButton
+          label="Tr | En"
+          variant="inline"
+          onClick={props.onClick("buttonLabel")}
+        />
+      </div>
+    </header>
+  );
+};
+
+export default DesktopHeader;
+import { UiButton } from "../components/UiButton";
+import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
+import Link from "../components/Link";
+import WcagBanner from "../assets/banner-wcag.png";
+import GithubBanner from "../assets/logo-github-white.svg";
+import Image from "../components/Image";
+import { useLocation } from "react-router-dom";
+
+const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isPolicyPage = location.pathname === "/privacy-policies";
+  const targetPath = isPolicyPage ? "/" : "/privacy-policies";
+  const buttonLabel = isPolicyPage ? "Home" : "Privacy Policies";
+
+  const handleButtonClick = (navigateTo: string) => () => {
+    switch (navigateTo) {
+      default: {
+        navigate(navigateTo);
+        break;
+      }
+    }
+  };
+
+  const getCurrentYear = (): number => new Date().getFullYear();
+
+  return (
+    <footer className="footer">
+      <div className="footer__content">
+        <Image src={Logo} alt="Logo" className="footer__content__logo" />
+        <p className="footer__content__copyright">
+          &copy; 2021 - {getCurrentYear()} Yusuf Erman ERGÖZ
+        </p>
+        <UiButton
+          label={buttonLabel}
+          variant="inline"
+          onClick={handleButtonClick(targetPath)}
+        />
+        <div className="footer__content__banner">
+          <Link
+            destination="https://github.com/ermanergoz/ermanergoz.github.io"
+            title="GitHub repository"
+            children={<Image src={GithubBanner} alt="GitHub repository" />}
+            external={true}
+          />
+          <Link
+            destination="https://www.w3.org/WAI/WCAG2AA-Conformance"
+            title="Explanation of WCAG 2 Level AA conformance"
+            children={
+              <Image
+                src={WcagBanner}
+                alt="Level AA conformance,
+  W3C WAI Web Content Accessibility Guidelines 2.1"
+              />
+            }
+          />
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+import "../styles/main.scss";
+import Image from "../components/Image";
+import Hand from "../assets/ic_greeting.svg";
+
+const Greeting = () => {
+  return (
+    <div className="greeting">
+      <div className="greeting__title">
+        <Image className="greeting__title__wave" src={Hand} alt="Vawing hand" />
+        <h1>{"Hello! My name is Erman"}</h1>
+      </div>
+      <h2 className="greeting__subtitle">
+        {
+          "I am an application developer and an enthusiastic contributor to open-source projects, driven by a passion for creating exceptional applications."
+        }
+      </h2>
+    </div>
+  );
+};
+
+export default Greeting;
+import "../styles/main.scss";
+import Logo from "../assets/logo.png";
+import DesktopHeader from "./DesktopHeader";
+import MobileHeader from "./MobileHeader";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    const headerOffset = 100;
+    const elementPosition = section ? section.getBoundingClientRect().top : 0;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
+
+  const handleButtonClick = (buttonLabel: string = "") => {
+    return () => {
+      const sectionMap: { [key: string]: { path: string; sectionId: string } } = {
+        "Home": { path: "/", sectionId: "home" },
+        "About Me": { path: "/#about", sectionId: "about" },
+        "What I Do": { path: "/#whatIDo", sectionId: "whatIDo" },
+        "Contact Me": { path: "/#contact", sectionId: "contact" },
+      };
+  
+      const { path, sectionId } = sectionMap[buttonLabel] || {};
+  
+      if (path && sectionId) {
+        if (window.location.pathname === "/") {
+          scrollToSection(sectionId);
+        } else {
+          navigate(path);
+        }
+      }
+    };
+  };
+  
+  useEffect(() => {
+    if (location.hash) {
+      const targetSection = location.hash.substring(1);
+      scrollToSection(targetSection);
+    }
+  }, [location]);
+  const navItems = ["Home", "About Me", "What I Do", "Contact Me"];
+
+  return (
+    <>
+      <DesktopHeader
+        onClick={handleButtonClick}
+        navItems={navItems}
+        logo={Logo}
+      />
+      <MobileHeader
+        onClick={handleButtonClick}
+        navItems={navItems}
+        logo={Logo}
+      />
+    </>
+  );
+};
+
+export default Header;
+import { UiButton } from "./UiButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Greeting from "../components/Greeting";
+
+const HeroBanner = () => {
+  const onMoreClicked = () => () => {
+    const section = document.getElementById("about");
+    const headerOffset = 100;
+    const elementPosition = section ? section.getBoundingClientRect().top : 0;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="hero-banner">
+      <Greeting />
+      <div className="hero-banner__button-holder">
+        <UiButton
+          theme="dark"
+          label="MORE"
+          icon={
+            <FontAwesomeIcon
+              className="hero-banner__chevron-animation"
+              icon={faChevronDown}
+            />
+          }
+          variant={"inline"}
+          onClick={onMoreClicked()}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default HeroBanner;
+import "../styles/main.scss";
+
+interface ImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+const Image = (props: ImageProps) => {
+  return (
+    <img
+      className={`${props.className}`}
+      src={props.src}
+      alt={props.alt}
+      aria-label={props.alt}
+      loading="lazy"
+    />
+  );
+};
+
+export default Image;
+import "../styles/main.scss";
+
+interface LinkProps {
+  destination: string;
+  title?: string;
+  children: React.ReactNode;
+  external?: boolean;
+}
+
+const Link = ({ destination, title = destination, children, external = false }: LinkProps) => {
+  const isExternalLink = external || destination.startsWith("http");
+
+  return (
+    <a
+      className="link"
+      href={destination}
+      title={title}
+      aria-label={title}
+      {...(isExternalLink && { rel: "noopener noreferrer", target: "_blank" })}
+    >
+      {children}
+    </a>
+  );
+};
+
+export default Link;
+import "../styles/main.scss";
+import { UiButton } from "../components/UiButton";
+import { Sling as Hamburger } from "hamburger-react";
+import { useState } from "react";
+import Link from "../components/Link";
+import Image from "../components/Image";
+
+interface MobileHeaderProps {
+  onClick: (label: string) => () => void;
+  navItems: string[];
+  logo: string;
+}
+
+const MobileHeader = (props: MobileHeaderProps) => {
+  const [isOpen, setOpen] = useState(false);
+
+  const handleNavClick = (label: string) => {
+    const clickAction = props.onClick(label);
+    clickAction();
+    setOpen(false);
+  };
+
+  return (
+    <header className="mobile-header">
+      <div className="mobile-header__menu">
+        <Hamburger
+          toggled={isOpen}
+          toggle={setOpen}
+          label="Toggle navigation menu"
+        />
+        <nav
+          className={`mobile-header__menu__drop-down ${isOpen ? "open" : ""}`}
+        >
+          {props.navItems.map((buttonLabel) => (
+            <div
+              className="mobile-header__menu__drop-down__item"
+              key={buttonLabel}
+            >
+              <UiButton
+                label={buttonLabel}
+                variant="inline"
+                onClick={() => handleNavClick(buttonLabel)}
+              />
+            </div>
+          ))}
+        </nav>
+      </div>
+
+      <div className="mobile-header__logo">
+        <Link
+          destination="/"
+          title="Home"
+          children={<Image src={props.logo} alt="Logo" className="h-12" />}
+        />
+      </div>
+
+      <div className="mobile-header__language-selector">
+        <UiButton
+          label="Tr | En"
+          variant="inline"
+          onClick={() => handleNavClick("Tr | En")}
+        />
+      </div>
+    </header>
+  );
+};
+
+export default MobileHeader;
+import "../styles/main.scss";
+
+interface UiButtonProps {
+  variant?: "primary" | "secondary" | "inline";
+  theme?: "light" | "dark";
+  isWide?: boolean;
+  label: string;
+  icon?: React.ReactNode;
+  isFocusable?: boolean;
+  onClick?: () => void;
+}
+
+export const UiButton = ({
+  isFocusable = true,
+  variant = "primary",
+  theme = "dark",
+  isWide = false,
+  label,
+  icon,
+  ...props
+}: UiButtonProps) => {
+  const isWideButton = isWide ? "wide" : "";
+  
+  return (
+    <button
+      className={[
+        "ui-button",
+        `ui-button--${theme}`,
+        `ui-button--${isWideButton}`,
+        `ui-button__${variant}`,
+      ].join(" ")}
+      aria-label={label}
+      tabIndex={isFocusable ? 0 : -1}
+      {...props}
+    >
+      {icon && <span>{icon}&emsp;&emsp;</span>}
+      {label}
+    </button>
+  );
+};
+import Card from "../components/Card";
+import AndroidIcon from "../assets/ic_android.svg";
+import AppleIcon from "../assets/ic_apple.svg";
+import MultiplatformIcon from "../assets/ic_multiplatform.svg";
+import FrontEndIcon from "../assets/ic_frontend.svg";
+
+const WhatIDo = () => {
+  return (
+    <div className="what-i-do">
+      <h1>What I do?</h1>
+      <div className="what-i-do__card-container">
+        <Card
+          icon={AndroidIcon}
+          imgAlt="Android icon"
+          title="Android"
+          text="I build native Android apps, using the latest technologies and best practices."
+        />
+        <Card
+          icon={AppleIcon}
+          imgAlt="Apple icon"
+          title="iOS"
+          text="I build high-quality iOS apps that are fast, reliable, and easy to use."
+        />
+        <Card
+          icon={MultiplatformIcon}
+          imgAlt="Multiplatform icon"
+          title="Multiplatform"
+          text="I develop multi-platform apps using frameworks like Kotlin Multiplatform, Flutter and React Native, allowing you to reach users on both Android and iOS with a single codebase."
+        />
+        <Card
+          icon={FrontEndIcon}
+          imgAlt="Front end Android icon"
+          title="Front End"
+          text="I design and develop responsive, user-friendly websites using modern web technologies."
+        />
+      </div>
+      <p>
+        I am highly adaptable and able to collaborate effectively on projects
+        outside of my spectrum, depending on your expectations.
+      </p>
+    </div>
+  );
+};
+
+export default WhatIDo;
+import "../styles/layout/layout.scss";
+
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+function Layout(props: LayoutProps) {
+  return (
+    <>
+      <div className="layout">
+        {props.children}
+      </div>
+    </>
+  );
+}
+
+export default Layout;
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+import CodeFlow from "../components/CodeFlow";
+import "../styles/main.scss";
+import HeroBanner from "../components/HeroBanner";
+import Layout from "../layouts/Layout";
+import About from "../components/About";
+import WhatIDo from "../components/WhatIDo";
+import Contact from "../components/Contact";
+
+function Home() {
+  return (
+    <Layout>
+      <section id="home">
+        <CodeFlow />
+        <HeroBanner />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="whatIDo">
+        <WhatIDo />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
+    </Layout>
+  );
+}
+
+export default Home;
+import React from "react";
+import "../styles/main.scss";
+import "../components/HeroBanner";
+import Layout from "../layouts/Layout";
+import policiesData from "../data/policies.json";
+import Link from "../components/Link";
+
+const PrivacyPolicies: React.FC = () => {
+  return (
+    <Layout>
+      <div className="privacy-policies">
+        <h1>Privacy Policies</h1>
+        <ul className="privacy-policies__list">
+          {policiesData.map((policy) => (
+            <li key={policy.id}>
+              <Link
+                destination={`policies/${policy.file}`}
+                children={policy.title}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Layout>
+  );
+};
+
+export default PrivacyPolicies;
+$background-dark: #202124;
+$background-light: #ffffff;
+
+$text-dark: #ffffff;
+$text-light: #000000;
+
+$green: #4faf53;
+$green-dark: #00490a;
+$hero-banner: monaco,Consolas,Lucida Console,monospace;
+
+@font-face {
+    font-family: "Chakra Petch";
+    src: url("/public/fonts/Chakra_Petch/ChakraPetch-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Chakra Petch";
+    src: url("/public/fonts/Chakra_Petch/ChakraPetch-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  h1 {
+  @apply text-[34px] font-bold;
+}
+
+p {
+  @apply pb-4 py-4;
+}
+.about {
+  &__wrapper {
+    @apply lg:flex lg:flex-row;
+  }
+
+  &__image {
+    @apply max-w-sm mx-auto max-h-56 lg:max-h-80;
+  }
+
+  &__content {
+    @apply my-auto;
+  }
+}.card {
+  @apply p-4 mx-4 lg:mx-0 border border-customGreen rounded-lg w-auto min-h-fit lg:w-[300px] lg:min-h-[250px] relative transition-all ease-out duration-300 top-0;
+
+  &:hover {
+    @apply border-customGreen shadow-lg transition-all ease-out duration-200;
+    top: -4px;
+  }
+
+  &__title {
+    @apply flex pb-4 space-x-4 justify-center;
+
+    h1 {
+      @apply text-xl m-auto;
+    }
+  }
+}
+.code-flow {
+  @apply h-screen overflow-hidden absolute inset-0 z-[-100];
+  background: $background-dark;
+
+  &__content {
+    @apply select-none leading-tight overflow-hidden flex flex-col px-4;
+  }
+
+  &__line {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+    font-family: $hero-banner;
+    color: $green-dark;
+  }
+}.contact {
+  @apply pt-16 pb-40 mx-auto;
+
+  &__email-wrapper {
+    @apply flex justify-center pt-4;
+  }
+
+  &__card-container {
+    @apply grid grid-cols-2 gap-4 lg:flex lg:space-x-2 lg:align-middle lg:justify-center;
+
+    .ui-button {
+      @apply w-full;
+    }
+  }
+}
+.desktop-header {
+  @apply z-[100] w-full sticky top-0 items-center justify-between px-4 py-4 hidden lg:flex bg-customDarkBackground;
+
+  &__logo {
+    @apply flex-shrink-0 h-10;
+  }
+
+  &__navigation {
+    @apply absolute left-1/2 transform -translate-x-1/2;
+
+    &__item {
+      @apply flex space-x-16;
+    }
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0;
+  }
+}
+.dropdown-selection {
+  &--open {
+    @apply block;
+  }
+
+  &--closed {
+    @apply hidden;
+  }
+
+  &__option {
+    @apply flex space-x-2;
+  }
+}
+.footer {
+  @apply py-8 px-4 text-white bg-customDarkBackground w-full;
+
+  &__content {
+    @apply grid grid-cols-1 lg:grid-cols-4 gap-8;
+
+    &__copyright {
+      @apply pt-7 mx-auto;
+    }
+
+    &__logo {
+      @apply flex items-center h-16 lg:h-20 mx-auto;
+    }
+
+    &__banner {
+      @apply flex items-center lg:justify-end space-x-4 h-16 lg:h-20 mx-auto w-36;
+    }
+  }
+}.greeting {
+  @apply m-0 space-y-16 lg:space-y-32 align-middle text-white;
+
+  &__title {
+    @apply text-[34px] flex flex-row justify-center space-x-2 lg:space-x-4;
+
+    &__wave {
+      animation-name: wave-animation;
+      animation-duration: 2.5s;
+      animation-iteration-count: infinite;
+      transform-origin: 70% 70%;
+    }
+
+    @keyframes wave-animation {
+      0% {
+        transform: rotate(0deg);
+      }
+      10% {
+        transform: rotate(14deg);
+      }
+      20% {
+        transform: rotate(-8deg);
+      }
+      30% {
+        transform: rotate(14deg);
+      }
+      40% {
+        transform: rotate(-4deg);
+      }
+      50% {
+        transform: rotate(10deg);
+      }
+      60% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  &__subtitle {
+    @apply text-[20px] lg:text-[24px];
+  }
+}
+.hero-banner {
+  @apply h-[94vh] text-center pt-[14vh] space-y-16;
+
+  &__button-holder {
+    position: absolute;
+    @apply bottom-16 font-bold mx-auto w-24 left-0 right-0;
+  }
+
+  &__chevron-animation {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+  }
+}
+.link:focus {
+  @apply outline-none;
+}
+
+.link:focus-visible {
+  @apply outline outline-customGreen outline-offset-4;
+}
+.mobile-header {
+  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
+
+  &__menu {
+    &__drop-down {
+      @apply absolute left-0 right-0 top-full overflow-hidden bg-customDarkBackground h-0;
+
+      &.open {
+        @apply h-60
+      }
+
+      &__item {
+        @apply p-4 flex-none text-center;
+      }
+    }
+  }
+
+  &__logo {
+    @apply absolute left-1/2 transform -translate-x-1/2 h-10;
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0 w-12;
+  }
+}.ui-button {
+  @apply flex border rounded-[25px] p-3 px-5 border-customGreen justify-center;
+  align-items: center !important; //leave it as it is
+
+  &__primary {
+    @apply bg-customDarkBackground;
+    color: $text-dark !important;
+
+    &:hover {
+      @apply transition-all ease-out duration-200 bg-buttonBackground;
+      color: $text-light !important;
+    }
+  }
+
+  &__secondary {
+    @apply bg-buttonBackground;
+    color: $text-light !important;
+
+    &:hover {
+      @apply transition-all ease-out duration-200 bg-customDarkBackground;
+      color: $text-dark !important;
+    }
+  }
+
+  &--light {
+    @apply text-black;
+  }
+
+  &--dark {
+    @apply text-white;
+  }
+
+  &__inline {
+    @apply p-0 border-none;
+    mix-blend-mode: difference;
+    color: white !important;
+
+    &:hover {
+      background: transparent !important;
+      color: $green !important;
+    }
+  }
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:focus-visible {
+    @apply outline-2 outline-customGreen outline-offset-4;
+  }
+
+  span {
+    @apply inline-flex align-middle;
+    align-items: center;  //leave it as it is
+  }
+}
+.what-i-do {
+    @apply pt-16;
+
+    &__card-container {
+        @apply lg:flex justify-between pt-8 space-y-4 lg:space-y-0;
+    }
+}.layout {
+    @apply max-w-[1280px] mx-auto px-4;
+}@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+//Pages
+@import "../styles/pages/page", "../styles/pages/privacy-policies";
+
+//Variables
+@import "../styles/base/colors", "../styles/base/fonts",
+"../styles/base/typography";
+
+//Components
+@import "../styles/components/code-flow", "../styles/components/hero-banner",
+"../styles/components/ui-button", "../styles/components/desktop-header",
+"../styles/components/mobile-header", "../styles/components/footer",
+"../styles/components/dropdown-selection", "../styles/components/link",
+"../styles/components/greeting", "../styles/components/about", "../styles/components/what-i-do",
+"../styles/components/card", "../styles/components/contact";
+
+body {
+  font-family: "Chakra Petch", sans-serif;
+  @apply m-0 select-none;
+}.page {
+    @apply flex flex-col min-h-screen;
+    
+    &__content {
+        @apply flex-1;
+    }
+}.privacy-policies {
+  @apply mx-4 space-y-8 py-16;
+
+  &__list {
+    @apply space-y-2 mt-8 mb-8;
+  }
+}
+let position = 0;
+let scrollHeight = 0;
+
+// Define the types of messages exchanged
+interface WorkerInitMessage {
+  type: "init";
+  scrollHeight: number;
+}
+
+interface WorkerStartMessage {
+  type: "start";
+}
+
+type WorkerMessage = WorkerInitMessage | WorkerStartMessage;
+
+onmessage = (event: MessageEvent<WorkerMessage>) => {
+  switch (event.data.type) {
+    case "init":
+      scrollHeight = event.data.scrollHeight;
+      break;
+
+    case "start":
+      const updatePosition = () => {
+        position -= 6; // Move upward by decreasing position
+
+        if (position <= -scrollHeight + 950) {
+          position = 0; // Reset when content scrolls out of view
+        }
+
+        // Send the updated position to the main thread
+        postMessage({ type: "update", position });
+
+        setTimeout(updatePosition, 16); // Roughly 60 FPS
+      };
+
+      updatePosition();
+      break;
+
+    default:
+      break;
+  }
+};
+/// <reference types="vite/client" />

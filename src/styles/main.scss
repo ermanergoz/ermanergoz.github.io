@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+//Pages
+@import "../styles/pages/page", "../styles/pages/privacy-policies";
+
+//Variables
+@import "../styles/base/colors", "../styles/base/fonts",
+"../styles/base/typography";
+
+//Components
+@import "../styles/components/code-flow", "../styles/components/hero-banner",
+"../styles/components/ui-button", "../styles/components/desktop-header",
+"../styles/components/mobile-header", "../styles/components/footer",
+"../styles/components/dropdown-selection", "../styles/components/link",
+"../styles/components/greeting", "../styles/components/about", "../styles/components/what-i-do",
+"../styles/components/card", "../styles/components/contact";
+
+body {
+  font-family: "Chakra Petch", sans-serif;
+  @apply m-0 select-none;
+}
