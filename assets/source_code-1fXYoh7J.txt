@@ -8,18 +8,20 @@ const PrivacyPolicies = lazy(() => import("./pages/PrivacyPolicies"));
 
 function App() {
   return (
-    <>
+    <div className="page">
       <BrowserRouter>
         <Header />
         <Suspense>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="privacy-policies" element={<PrivacyPolicies />} />
-          </Routes>
+          <div className="page__content">
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="privacy-policies" element={<PrivacyPolicies />} />
+            </Routes>
+          </div>
         </Suspense>
         <Footer />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
@@ -87,7 +89,6 @@ import { useEffect, useRef, useState } from "react";
 import "../styles/main.scss";
 import sourceCode from "../../source_code.txt";
 
-// Define the types of messages from the worker
 interface WorkerUpdateMessage {
   type: "update";
   position: number;
@@ -99,7 +100,6 @@ const CodeFlow = () => {
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
-    // Fetch the text content
     fetch(sourceCode)
       .then((response) => response.text())
       .then((text) => {
@@ -109,32 +109,28 @@ const CodeFlow = () => {
 
     return () => {
       if (workerRef.current) {
-        workerRef.current.terminate(); // Cleanup the worker on unmount
+        workerRef.current.terminate();
       }
     };
   }, []);
 
   useEffect(() => {
-    if (content.length === 0) return; // Ensure content is loaded
+    if (content.length === 0) return;
 
     const scrollElement = scrollRef.current;
     if (!scrollElement) return;
 
-    // Initialize the worker
     workerRef.current = new Worker(
       new URL("../utils/codeFlowWorker.ts", import.meta.url)
     );
 
-    // Send initialization data to the worker
     workerRef.current.postMessage({
       type: "init",
       scrollHeight: scrollElement.scrollHeight,
     });
 
-    // Start the worker
     workerRef.current.postMessage({ type: "start" });
 
-    // Listen for position updates from the worker
     workerRef.current.onmessage = (event: MessageEvent<WorkerUpdateMessage>) => {
       if (event.data.type === "update") {
         const { position } = event.data;
@@ -321,93 +317,6 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
 };
 
 export default DesktopHeader;
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { UiButton } from "../components/UiButton";
-import { useEffect, useRef, useState } from "react";
-
-interface DropdownSelectionProps {
-  options: string[];
-  selectedFilters: string[];
-  onFilterChange: (filter: string) => void;
-}
-
-interface DropdownSelectionProps {
-  options: string[];
-  selectedFilters: string[];
-  onFilterChange: (option: string) => void;
-}
-
-const DropdownSelectionComponent = (props: DropdownSelectionProps) => {
-  const [isOpen, setOpen] = useState(false);
-  const firstOptionRef = useRef<HTMLInputElement | null>(null);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  
-  // Handle key events for keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      e.preventDefault();
-      const focusableOptions = dropdownRef.current?.querySelectorAll(
-        "input[type='checkbox']"
-      );
-      const index = Array.from(focusableOptions!).indexOf(document.activeElement as HTMLElement);
-
-      if (e.key === "ArrowDown" && index < focusableOptions!.length - 1) {
-        (focusableOptions![index + 1] as HTMLElement).focus();
-      } else if (e.key === "ArrowUp" && index > 0) {
-        (focusableOptions![index - 1] as HTMLElement).focus();
-      }
-    }
-
-    if (e.key === "Escape") {
-      setOpen(false);
-    }
-  };
-
-  // Focus first option when dropdown opens
-  useEffect(() => {
-    if (isOpen && firstOptionRef.current) {
-      firstOptionRef.current.focus();
-    }
-  }, [isOpen]);
-
-  return (
-    <div className="dropdown-selection" onKeyDown={handleKeyDown}>
-      <UiButton
-        variant="primary"
-        label="Filter Policies"
-        icon={<FontAwesomeIcon icon={faChevronDown} />}
-        onClick={() => setOpen(!isOpen)}
-        aria-expanded={isOpen}
-        aria-controls="dropdown-selection-options"
-        aria-haspopup="true"
-        theme="light"
-      />
-
-      <div
-        id="dropdown-selection-options"
-        ref={dropdownRef}
-        className={`${isOpen ? "dropdown-selection--open" : "dropdown-selection--closed"}`}
-        role="menu"
-        aria-hidden={!isOpen}
-      >
-        {props.options.map((option, index) => (
-          <label key={option} className="dropdown-selection__option">
-            <input
-              ref={index === 0 ? firstOptionRef : null}
-              type="checkbox"
-              checked={props.selectedFilters.includes(option)}
-              onChange={() => props.onFilterChange(option)}
-            />
-            <span>{option}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default DropdownSelectionComponent;
 import { UiButton } from "../components/UiButton";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
@@ -415,9 +324,15 @@ import Link from "../components/Link";
 import WcagBanner from "../assets/banner-wcag.png";
 import GithubBanner from "../assets/logo-github-white.svg";
 import Image from "../components/Image";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isPolicyPage = location.pathname === "/privacy-policies";
+  const targetPath = isPolicyPage ? "/" : "/privacy-policies";
+  const buttonLabel = isPolicyPage ? "Home" : "Privacy Policies";
 
   const handleButtonClick = (navigateTo: string) => () => {
     switch (navigateTo) {
@@ -438,9 +353,9 @@ const Footer = () => {
           &copy; 2021 - {getCurrentYear()} Yusuf Erman ERGÖZ
         </p>
         <UiButton
-          label="Privacy policies"
+          label={buttonLabel}
           variant="inline"
-          onClick={handleButtonClick("privacy-policies")}
+          onClick={handleButtonClick(targetPath)}
         />
         <div className="footer__content__banner">
           <Link
@@ -496,8 +411,8 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const navigate = useNavigate(); // Move these hooks into the component's body
-  const location = useLocation(); // Move these hooks into the component's body
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -524,23 +439,20 @@ const Header = () => {
   
       if (path && sectionId) {
         if (window.location.pathname === "/") {
-          scrollToSection(sectionId); // Scroll to section on the current page
+          scrollToSection(sectionId);
         } else {
-          navigate(path); // Navigate to another page
+          navigate(path);
         }
       }
     };
   };
   
-
-  // Handle scrolling to the correct section when the hash changes
   useEffect(() => {
     if (location.hash) {
-      const targetSection = location.hash.substring(1); // Remove "#" from hash
+      const targetSection = location.hash.substring(1);
       scrollToSection(targetSection);
     }
-  }, [location]); // This runs whenever the location changes
-
+  }, [location]);
   const navItems = ["Home", "About Me", "What I Do", "Contact Me"];
 
   return (
@@ -855,49 +767,20 @@ function Home() {
 }
 
 export default Home;
-import React, { useState } from "react";
+import React from "react";
 import "../styles/main.scss";
 import "../components/HeroBanner";
 import Layout from "../layouts/Layout";
-import DropdownSelectionComponent from "../components/DropdownSelectionComponent";
 import policiesData from "../data/policies.json";
 import Link from "../components/Link";
 
 const PrivacyPolicies: React.FC = () => {
-  const filterOptions = ["Android", "iOS", "Web"];
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-
-  const handleFilterChange = (filter: string) => {
-    setSelectedFilters((prevFilters) =>
-      prevFilters.includes(filter)
-        ? prevFilters.filter((f) => f !== filter)
-        : [...prevFilters, filter]
-    );
-  };
-
-  const filteredPolicies = selectedFilters.length
-    ? (
-        policiesData as {
-          id: number;
-          title: string;
-          file: string;
-          type: string;
-        }[]
-      ).filter((policy) => selectedFilters.includes(policy.type))
-    : policiesData;
-
   return (
     <Layout>
       <div className="privacy-policies">
         <h1>Privacy Policies</h1>
-        <DropdownSelectionComponent
-          options={filterOptions}
-          selectedFilters={selectedFilters}
-          onFilterChange={handleFilterChange}
-        />
-
         <ul className="privacy-policies__list">
-          {filteredPolicies.map((policy) => (
+          {policiesData.map((policy) => (
             <li key={policy.id}>
               <Link
                 destination={`policies/${policy.file}`}
@@ -912,135 +795,6 @@ const PrivacyPolicies: React.FC = () => {
 };
 
 export default PrivacyPolicies;
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { UiButton } from '../components/UiButton';
-
-const meta = {
-  title: 'Components/UiButton',
-  component: UiButton,
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
-  args: { onClick: fn() },
-} satisfies Meta<typeof UiButton>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-    label: 'UiButton',
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    label: 'UiButton',
-  },
-};
-
-export const Inline: Story = {
-  args: {
-    variant: 'inline',
-    label: 'UiButton',
-  },
-};
-import Header from "../components/DesktopHeader";
-import Logo from "../assets/logo.svg";
-import { Meta, StoryObj } from "@storybook/react";
-
-const meta = {
-  title: "Components/Header",
-  component: Header,
-  argTypes: {
-    onClick: { action: "clicked" },
-  },
-  tags: ["autodocs"],
-} satisfies Meta<typeof Header>;
-
-export default meta;
-type Default = StoryObj<typeof meta>;
-
-export const Default: Default = {
-  args: {
-    navItems: ["About", "Services", "Portfolio", "Contact"],
-    logo: Logo,
-    onClick: (label: string) => () => console.log(`Clicked on ${label}`),
-  },
-};
-import { Meta, StoryObj } from "@storybook/react";
-import HeroBanner from "../components/HeroBanner";
-
-const meta = {
-  title: "Components/HeroBanner",
-  component: HeroBanner,
-  parameters: {
-    backgrounds: {
-      default: "default",
-      values: [
-        {
-          name: "default",
-          value: "#1e1f22",
-        },
-      ],
-    },
-  },
-  argTypes: {
-    title: { control: "text" },
-    introduction: { control: "text" },
-    onClick: { action: "clicked" },
-  },
-  tags: ["autodocs"],
-} satisfies Meta<typeof HeroBanner>;
-
-export default meta;
-type Default = StoryObj<typeof meta>;
-
-export const Default: Default = {
-  args: {
-    title: "SOME TITLE",
-    introduction: "A fancy introduction",
-  },
-};
-import type { Meta, StoryObj } from "@storybook/react";
-import App from "../App";
-
-const meta = {
-  title: "Ermanergoz/App",
-  component: App,
-  parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
-    layout: "fullscreen",
-  },
-} satisfies Meta<typeof App>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-export const DefaultState: Story = {};
-
-{
-  /*
-export const LoggedOut: Story = {};
-
-// More on interaction testing: https://storybook.js.org/docs/writing-tests/interaction-testing
-export const LoggedIn: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const loginButton = canvas.getByRole('button', { name: /Log in/i });
-    await expect(loginButton).toBeInTheDocument();
-    await userEvent.click(loginButton);
-    await expect(loginButton).not.toBeInTheDocument();
-
-    const logoutButton = canvas.getByRole('button', { name: /Log out/i });
-    await expect(logoutButton).toBeInTheDocument();
-  },
-};
-*/
-}
 $background-dark: #202124;
 $background-light: #ffffff;
 
@@ -1354,6 +1108,9 @@ p {
 @tailwind components;
 @tailwind utilities;
 
+//Pages
+@import "../styles/pages/page", "../styles/pages/privacy-policies";
+
 //Variables
 @import "../styles/base/colors", "../styles/base/fonts",
 "../styles/base/typography";
@@ -1366,12 +1123,15 @@ p {
 "../styles/components/greeting", "../styles/components/about", "../styles/components/what-i-do",
 "../styles/components/card", "../styles/components/contact";
 
-//Pages
-@import "../styles/pages/privacy-policies";
-
 body {
   font-family: "Chakra Petch", sans-serif;
   @apply m-0 select-none;
+}.page {
+    @apply flex flex-col min-h-screen;
+    
+    &__content {
+        @apply flex-1;
+    }
 }.privacy-policies {
   @apply mx-4 space-y-8 py-16;
 
