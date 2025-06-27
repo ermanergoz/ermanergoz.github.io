@@ -293,7 +293,10 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
       </div>
 
       <div className="desktop-header__navigation">
-        <nav className="desktop-header__navigation__item">
+        <nav
+          className="desktop-header__navigation__item"
+          aria-label="Main navigation"
+        >
           {props.navItems.map((buttonLabel, i) => (
             <UiButton
               key={i}
@@ -513,51 +516,58 @@ const HeroBanner = () => {
 
 export default HeroBanner;
 import "../styles/main.scss";
+import { ImgHTMLAttributes } from "react";
 
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt, className = "", ...rest }) => (
-  <img
-    className={className}
-    src={src}
-    alt={alt}
-    loading="lazy"
-    {...rest}
-  />
-);
-import "../styles/main.scss";
+function Image({ src, alt, className = "", ...rest }: ImageProps) {
+  return (
+    <img className={className} src={src} alt={alt} loading="lazy" {...rest} />
+  );
+}
 
-interface LinkProps {
+export default Image;
+import "../styles/main.scss";
+import { AnchorHTMLAttributes, ReactNode } from "react";
+
+interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   destination: string;
   title?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   external?: boolean;
 }
 
-const Link = ({ destination, title = destination, children, external = false }: LinkProps) => {
+function Link({
+  destination,
+  title,
+  children,
+  external = false,
+  ...rest
+}: LinkProps) {
   const isExternalLink = external || destination.startsWith("http");
 
   return (
     <a
       className="link"
       href={destination}
-      title={title}
-      aria-label={title}
-      {...(isExternalLink && { rel: "noopener noreferrer", target: "_blank" })}
+      title={title ?? destination}
+      rel={isExternalLink ? "noopener noreferrer" : undefined}
+      target={isExternalLink ? "_blank" : undefined}
+      {...rest}
     >
       {children}
     </a>
   );
-};
+}
 
 export default Link;
 import "../styles/main.scss";
 import { UiButton } from "../components/UiButton";
 import { Sling as Hamburger } from "hamburger-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "../components/Link";
 import Image from "../components/Image";
 
@@ -569,6 +579,64 @@ interface MobileHeaderProps {
 
 const MobileHeader = (props: MobileHeaderProps) => {
   const [isOpen, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen && hamburgerRef.current) {
+      hamburgerRef.current.focus();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const menuNode = menuRef.current;
+    if (!menuNode) return;
+
+    const focusableSelectors = [
+      "button:not([disabled])",
+      "[href]",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(",");
+
+    const focusableEls =
+      menuNode.querySelectorAll<HTMLElement>(focusableSelectors);
+    const firstEl = focusableEls[0];
+    const lastEl = focusableEls[focusableEls.length - 1];
+
+    firstEl?.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Tab") {
+        if (focusableEls.length === 0) return;
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      } else if (e.key === "Escape") {
+        setOpen(false);
+      }
+    }
+
+    menuNode.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      menuNode.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   const handleNavClick = (label: string) => {
     const clickAction = props.onClick(label);
@@ -579,13 +647,20 @@ const MobileHeader = (props: MobileHeaderProps) => {
   return (
     <header className="mobile-header">
       <div className="mobile-header__menu">
-        <Hamburger
-          toggled={isOpen}
-          toggle={setOpen}
-          label="Toggle navigation menu"
-        />
+        <button
+          ref={hamburgerRef}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
+          className="mobile-header__hamburger"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <Hamburger toggled={isOpen} toggle={setOpen} size={24} />
+        </button>
         <nav
+          ref={menuRef}
           className={`mobile-header__menu__drop-down ${isOpen ? "open" : ""}`}
+          aria-label="Mobile navigation"
+          tabIndex={-1}
         >
           {props.navItems.map((buttonLabel) => (
             <div
@@ -623,45 +698,48 @@ const MobileHeader = (props: MobileHeaderProps) => {
 
 export default MobileHeader;
 import "../styles/main.scss";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface UiButtonProps {
+interface UiButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "inline";
   theme?: "light" | "dark";
   isWide?: boolean;
   label: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   isFocusable?: boolean;
-  onClick?: () => void;
 }
 
-export const UiButton = ({
+export function UiButton({
   isFocusable = true,
   variant = "primary",
   theme = "dark",
   isWide = false,
   label,
   icon,
+  onClick,
   ...props
-}: UiButtonProps) => {
+}: UiButtonProps) {
   const isWideButton = isWide ? "wide" : "";
-  
+
   return (
     <button
       className={[
         "ui-button",
         `ui-button--${theme}`,
-        `ui-button--${isWideButton}`,
+        isWideButton && `ui-button--wide`,
         `ui-button__${variant}`,
-      ].join(" ")}
-      aria-label={label}
+      ]
+        .filter(Boolean)
+        .join(" ")}
       tabIndex={isFocusable ? 0 : -1}
+      onClick={onClick}
       {...props}
     >
-      {icon && <span>{icon}&emsp;&emsp;</span>}
+      {icon && <span aria-hidden="true">{icon}&emsp;&emsp;</span>}
       {label}
     </button>
   );
-};
+}
 import Card from "../components/Card";
 import AndroidIcon from "../assets/ic_android.svg";
 import AppleIcon from "../assets/ic_apple.svg";
