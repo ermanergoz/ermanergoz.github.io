@@ -620,7 +620,6 @@ const MobileHeader = (props: MobileHeaderProps) => {
             lastEl.focus();
           }
         } else {
-          // Tab
           if (document.activeElement === lastEl) {
             e.preventDefault();
             firstEl.focus();
@@ -649,12 +648,15 @@ const MobileHeader = (props: MobileHeaderProps) => {
       <div className="mobile-header__menu">
         <button
           ref={hamburgerRef}
-          aria-label="Toggle navigation menu"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isOpen}
           className="mobile-header__hamburger"
           onClick={() => setOpen((v) => !v)}
+          type="button"
         >
-          <Hamburger toggled={isOpen} toggle={setOpen} size={24} />
+          <span aria-hidden="true">
+            <Hamburger toggled={isOpen} size={24} />
+          </span>
         </button>
         <nav
           ref={menuRef}
@@ -678,11 +680,9 @@ const MobileHeader = (props: MobileHeaderProps) => {
       </div>
 
       <div className="mobile-header__logo">
-        <Link
-          destination="/"
-          title="Home"
-          children={<Image src={props.logo} alt="Logo" className="h-12" />}
-        />
+        <Link destination="/" title="Home">
+          <Image src={props.logo} alt="Logo" className="h-12" />
+        </Link>
       </div>
 
       <div className="mobile-header__language-selector">
