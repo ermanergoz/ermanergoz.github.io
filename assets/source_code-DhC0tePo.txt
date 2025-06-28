@@ -351,7 +351,13 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__content">
-        <Image src={Logo} alt="Logo" className="footer__content__logo" />
+        <Image
+          src={Logo}
+          alt="Logo"
+          className="footer__content__logo"
+          width="220"
+          height="85"
+        />
         <p className="footer__content__copyright">
           &copy; 2021 - {getCurrentYear()} Yusuf Erman ERGÖZ
         </p>
@@ -364,7 +370,14 @@ const Footer = () => {
           <Link
             destination="https://github.com/ermanergoz/ermanergoz.github.io"
             title="GitHub repository"
-            children={<Image src={GithubBanner} alt="GitHub repository" />}
+            children={
+              <Image
+                src={GithubBanner}
+                alt="GitHub repository"
+                width="40"
+                height="40"
+              />
+            }
             external={true}
           />
           <Link
@@ -375,6 +388,8 @@ const Footer = () => {
                 src={WcagBanner}
                 alt="Level AA conformance,
   W3C WAI Web Content Accessibility Guidelines 2.1"
+                width="95"
+                height="35"
               />
             }
           />
