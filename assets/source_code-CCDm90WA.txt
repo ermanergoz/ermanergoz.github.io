@@ -362,6 +362,7 @@ const Footer = () => {
           &copy; 2021 - {getCurrentYear()} Yusuf Erman ERGÖZ
         </p>
         <UiButton
+          className="footer__content__button"
           label={buttonLabel}
           variant="inline"
           onClick={handleButtonClick(targetPath)}
@@ -1021,6 +1022,10 @@ p {
 
     &__banner {
       @apply flex items-center lg:justify-end space-x-4 h-16 lg:h-20 mx-auto w-36;
+    }
+
+    &__button {
+      @apply min-w-[120]
     }
   }
 }.greeting {
