@@ -32,8 +32,7 @@ import AboutMeImage from "../assets/about.png";
 const About = () => {
   return (
     <div className="about__wrapper">
-      <Image src={AboutMeImage} alt="About me image" className="about__image" width="50"
-                height="50"/>
+      <Image src={AboutMeImage} alt="About me image" className="about__image" />
       <div className="about__content">
         <h1>About Me</h1>
         <div className="about__content__text">
