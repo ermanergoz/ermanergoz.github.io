@@ -32,7 +32,13 @@ import AboutMeImage from "../assets/about.png";
 const About = () => {
   return (
     <div className="about__wrapper">
-      <Image src={AboutMeImage} alt="About me image" className="about__image"/>
+      <Image
+        src={AboutMeImage}
+        alt="About me image"
+        className="about__image"
+        width="260"
+        height="250"
+      />
       <div className="about__content">
         <h1>About Me</h1>
         <div className="about__content__text">
@@ -75,7 +81,7 @@ const Card = (props: CardProps) => {
   return (
     <div className="card">
       <div className="card__title">
-        <Image src={props.icon} alt={props.imgAlt} />
+        <Image src={props.icon} alt={props.imgAlt} width="40" height="40" />
         <h1>{props.title}</h1>
       </div>
 
@@ -288,7 +294,15 @@ const DesktopHeader = (props: DesktopHeaderProps) => {
         <Link
           destination="/"
           title="Home"
-          children={<Image src={props.logo} alt="Logo" className="h-12" />}
+          children={
+            <Image
+              src={props.logo}
+              alt="Logo"
+              className="h-12"
+              width="155"
+              height="55"
+            />
+          }
         />
       </div>
 
@@ -409,7 +423,13 @@ const Greeting = () => {
   return (
     <div className="greeting">
       <div className="greeting__title">
-        <Image className="greeting__title__wave" src={Hand} alt="Vawing hand" />
+        <Image
+          className="greeting__title__wave"
+          src={Hand}
+          alt="Vawing hand"
+          width="50"
+          height="50"
+        />
         <h1>{"Hello! My name is Erman"}</h1>
       </div>
       <h2 className="greeting__subtitle">
@@ -697,7 +717,13 @@ const MobileHeader = (props: MobileHeaderProps) => {
 
       <div className="mobile-header__logo">
         <Link destination="/" title="Home">
-          <Image src={props.logo} alt="Logo" className="h-12" />
+          <Image
+            src={props.logo}
+            alt="Logo"
+            className="h-12"
+            width="150"
+            height="50"
+          />
         </Link>
       </div>
 
@@ -990,7 +1016,7 @@ p {
   }
 
   &__language-selector {
-    @apply flex-shrink-0;
+    @apply flex-shrink-0 min-w-[50];
   }
 }
 .dropdown-selection {
