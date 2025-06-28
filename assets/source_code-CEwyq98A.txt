@@ -338,6 +338,10 @@ const Footer = () => {
   const buttonLabel = isPolicyPage ? "Home" : "Privacy Policies";
 
   const handleButtonClick = (navigateTo: string) => () => {
+    if (navigateTo == "/") {
+      window.location.hash = "";
+      console.log("dfdsfsf")
+    }
     switch (navigateTo) {
       default: {
         navigate(navigateTo);
@@ -530,7 +534,7 @@ function Image({ src, alt, className = "", ...rest }: ImageProps) {
 }
 
 export default Image;
-import "../styles/main.scss";
+import { Link as RouterLink } from "react-router-dom";
 import { AnchorHTMLAttributes, ReactNode } from "react";
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -548,18 +552,32 @@ function Link({
   ...rest
 }: LinkProps) {
   const isExternalLink = external || destination.startsWith("http");
+  const isHtmlFile = destination.endsWith(".html");
+
+  if (isExternalLink || isHtmlFile) {
+    return (
+      <a
+        className="link"
+        href={destination}
+        title={title ?? destination}
+        rel={isExternalLink ? "noopener noreferrer" : undefined}
+        target={isExternalLink ? "_blank" : undefined}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
-    <a
+    <RouterLink
       className="link"
-      href={destination}
+      to={destination}
       title={title ?? destination}
-      rel={isExternalLink ? "noopener noreferrer" : undefined}
-      target={isExternalLink ? "_blank" : undefined}
       {...rest}
     >
       {children}
-    </a>
+    </RouterLink>
   );
 }
 
@@ -819,7 +837,7 @@ import About from "../components/About";
 import WhatIDo from "../components/WhatIDo";
 import Contact from "../components/Contact";
 
-function Home() {
+function Home() {  
   return (
     <Layout>
       <section id="home">
@@ -1092,6 +1110,10 @@ p {
 
 .link:focus-visible {
   @apply outline outline-customGreen outline-offset-4;
+}
+
+.link:hover {
+  @apply text-customGreen;
 }
 .mobile-header {
   @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
