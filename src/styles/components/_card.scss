@@ -1,0 +1,27 @@
+.card {
+  @apply p-6 mx-4 md:mx-0 rounded-xl w-auto min-h-fit lg:w-[300px] lg:min-h-[250px] relative overflow-hidden bg-customGreen;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  &__bg-icon {
+    @apply absolute inset-0 flex items-center justify-center pointer-events-none;
+
+    img {
+      width: 160px;
+      height: 160px;
+      opacity: 0.15;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &__content {
+    @apply relative;
+  }
+
+  &__title {
+    @apply text-xl font-bold pb-4 text-white text-center;
+  }
+
+  p {
+    @apply text-white/90 font-medium;
+  }
+}

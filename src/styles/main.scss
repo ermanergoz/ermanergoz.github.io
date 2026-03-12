@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Base
+@import "../styles/base/fonts";
+@import "../styles/base/typography";
+
+// Components
+@import "../styles/components/button";
+@import "../styles/components/external-link";
+@import "../styles/components/card";
+@import "../styles/components/code-flow";
+@import "../styles/components/hero-banner";
+@import "../styles/components/desktop-header";
+@import "../styles/components/mobile-header";
+@import "../styles/components/footer";
+@import "../styles/components/greeting";
+@import "../styles/components/about";
+@import "../styles/components/what-i-do";
+@import "../styles/components/contact";
+
+// Layout
+@import "../styles/layout/layout";
+@import "../styles/layout/app-layout";
+
+// Pages
+@import "../styles/pages/privacy-policies";
+
+:root {
+  --bg-body: theme("colors.white");
+  --text-primary: theme("colors.black");
+  --text-secondary: theme("colors.textSecondary");
+  --bg-button: theme("colors.buttonBackground");
+  --bg-button-hover: theme("colors.buttonHover");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-body: theme("colors.bodyDark");
+    --text-primary: theme("colors.white");
+    --text-secondary: theme("colors.textSecondaryDark");
+    --bg-button: theme("colors.buttonBackgroundDark");
+    --bg-button-hover: theme("colors.buttonHoverDark");
+  }
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  @apply m-0;
+}
+
+.page-loader {
+  @apply min-h-[50vh];
+}
+
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+.skip-link {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+
+  &:focus {
+    @apply fixed top-4 left-4 z-[200] w-auto h-auto p-3 px-5 m-0 overflow-visible bg-customDarkBackground text-white rounded-lg;
+    clip: auto;
+  }
+}

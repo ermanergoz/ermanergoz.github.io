@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Home",
+    "aboutMe": "About Me",
+    "whatIDo": "What I Do",
+    "contactMe": "Contact"
+  },
+  "greeting": {
+    "title": "Hello! My name is Erman",
+    "subtitle": "I'm a mobile application developer with strong problem-solving skills, committed to delivering quality in every project.",
+    "more": "MORE"
+  },
+  "about": {
+    "title": "About Me",
+    "paragraph1": "I'm a developer experienced in building applications for Android, iOS, and the web, and I focus on delivering solutions that run smoothly across different devices. From developing user-friendly mobile apps to designing visually strong websites, I care about delivering high-quality results that meet both functional and design expectations.",
+    "paragraph2": "With a solid understanding of mobile and web development, I bring creative ideas to life in a practical and efficient way. My goal is to ensure that every project I work on provides a smooth and engaging experience for users.",
+    "paragraph3": "I approach each project with a focus on collaboration and deliver tailored solutions that align with the needs and goals of the people and businesses I work with."
+  },
+  "whatIDo": {
+    "title": "What I Do",
+    "android": {
+      "title": "Android",
+      "text": "I develop native Android apps using modern technologies and best practices."
+    },
+    "ios": {
+      "title": "iOS",
+      "text": "I develop high-quality iOS apps that are fast, reliable, and easy to use."
+    },
+    "multiplatform": {
+      "title": "Multiplatform",
+      "text": "I develop multiplatform apps using technologies like Kotlin Multiplatform, and React Native. With a single codebase, I help you reach both Android and iOS users."
+    },
+    "frontEnd": {
+      "title": "Front End",
+      "text": "I design and develop mobile-first, user-friendly websites using modern web technologies."
+    },
+    "footer": "Depending on your expectations, I can also collaborate effectively on projects outside my main area of expertise."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "If there's a project you'd like to discuss, let's get in touch! Send me an email:",
+    "orFindMe": "Or find me here:",
+    "copied": "Email copied to clipboard!"
+  },
+  "privacyPolicies": {
+    "title": "Privacy Policies"
+  },
+  "sections": {
+    "welcome": "Welcome",
+    "about": "About me",
+    "whatIDo": "Services and skills",
+    "contact": "Contact information"
+  },
+  "footer": {
+    "privacyPolicies": "Privacy Policies"
+  }
+}

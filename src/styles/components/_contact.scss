@@ -1,0 +1,11 @@
+.contact {
+  @apply pt-8 md:pt-20 pb-20 md:pb-40 mx-auto;
+
+  &__email-wrapper {
+    @apply flex justify-center items-stretch pt-4 gap-2;
+  }
+
+  &__card-container {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 lg:flex lg:space-x-2 lg:align-middle lg:justify-center;
+  }
+}

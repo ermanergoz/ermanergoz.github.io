@@ -1,0 +1,31 @@
+.mobile-header {
+  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
+
+  &__menu {
+    &-dropdown {
+      @apply absolute left-0 right-0 top-full bg-customDarkBackground transition-[max-height,visibility] duration-300 ease-out invisible overflow-hidden;
+      max-height: 0;
+
+      &--open {
+        @apply visible;
+        max-height: 25rem;
+      }
+
+      &-item {
+        @apply p-4 flex-none text-center;
+      }
+
+      ul {
+        @apply list-none p-0 m-0;
+      }
+    }
+  }
+
+  &__logo {
+    @apply absolute left-1/2 transform -translate-x-1/2 h-10;
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0 whitespace-nowrap;
+  }
+}

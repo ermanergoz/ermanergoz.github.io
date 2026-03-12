@@ -1,0 +1,23 @@
+h1,
+h2 {
+  @apply text-[24px] md:text-[28px] lg:text-[34px] font-bold;
+}
+
+h2 {
+  @apply inline-block pb-1 mb-4;
+  border-bottom: none;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    theme("colors.customGreen") 20%,
+    theme("colors.customGreen") 80%,
+    transparent
+  );
+  background-size: 100% 3px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+p {
+  @apply py-4;
+}
