@@ -1,0 +1,1661 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import Footer from "./components/Footer";
+import Header from "./components/header/Header";
+import PageLoader from "./components/ui/PageLoader";
+import ErrorBoundary from "./components/ui/ErrorBoundary";
+import HomePage from "./pages/HomePage";
+
+const PrivacyPoliciesPage = lazy(() => import("./pages/PrivacyPoliciesPage"));
+
+function App() {
+  return (
+    <BrowserRouter>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <div className="app-layout">
+        <Header />
+        <main id="main-content" className="app-layout__main">
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route
+                  path="/privacy-policies"
+                  element={<PrivacyPoliciesPage />}
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+import { Link } from "react-router-dom";
+import logo from "../assets/images/logo.webp";
+import Image from "./ui/Image";
+import { useTranslation } from "react-i18next";
+
+const CURRENT_YEAR = new Date().getFullYear();
+
+function Footer() {
+  const { t } = useTranslation();
+
+  return (
+    <footer className="footer" role="contentinfo">
+      <div className="footer__content">
+        <Image
+          src={logo}
+          alt="Erman Ergoz logo"
+          className="footer__content-logo"
+          width={240}
+          height={78}
+        />
+        <Link
+          to="/privacy-policies"
+          className="button button--dark button--inline self-center"
+        >
+          {t("footer.privacyPolicies")}
+        </Link>
+        <p className="footer__content-copyright">
+          &copy; 2021 - {CURRENT_YEAR} Yusuf Erman ERG&Ouml;Z
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+export default Footer;
+import { Link } from "react-router-dom";
+import { Button } from "../ui/Button";
+import Image from "../ui/Image";
+import type { NavItemKey } from "../../constants/navigation";
+import type { NavItem, NavItemProps } from "../../types/navigation";
+
+interface DesktopHeaderProps {
+  getNavItemProps: (key: NavItemKey) => NavItemProps;
+  onLanguageToggle: () => void;
+  navItems: NavItem[];
+  logo: string;
+  activeKey: NavItemKey | null;
+}
+
+function DesktopHeader({
+  getNavItemProps,
+  onLanguageToggle,
+  navItems,
+  logo,
+  activeKey,
+}: DesktopHeaderProps) {
+  return (
+    <header className="desktop-header">
+      <div className="desktop-header__logo">
+        <Link to="/" aria-label="Go to homepage">
+          <Image
+            src={logo}
+            alt="Erman Ergoz logo"
+            className="h-12 w-auto"
+            width={240}
+            height={78}
+            loading="eager"
+          />
+        </Link>
+      </div>
+
+      <nav aria-label="Desktop navigation" className="desktop-header__navigation">
+        <ul className="desktop-header__navigation-list" role="list">
+          {navItems.map((item) => {
+            const { to, onClick } = getNavItemProps(item.key);
+            return (
+              <li key={item.key}>
+                <Link
+                  to={to}
+                  onClick={onClick}
+                  className={`button button--dark button--inline${item.key === activeKey ? " button--active" : ""}`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <div className="desktop-header__language-selector">
+        <Button
+          label="Tr | En"
+          variant="inline"
+          onClick={onLanguageToggle}
+          ariaLabel="Tr | En, switch language"
+        />
+      </div>
+    </header>
+  );
+}
+
+export default DesktopHeader;
+import logo from "../../assets/images/logo.webp";
+import DesktopHeader from "./DesktopHeader";
+import MobileHeader from "./MobileHeader";
+import { useScrollToSection } from "../../hooks/useScrollToSection";
+import { useActiveSection } from "../../hooks/useActiveSection";
+import { useCallback, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../hooks/useLanguage";
+import { NAV_ITEM_KEYS, SECTION_MAP } from "../../constants/navigation";
+import type { NavItemKey } from "../../constants/navigation";
+import type { NavItemProps } from "../../types/navigation";
+
+function Header() {
+  const location = useLocation();
+  const scrollToSection = useScrollToSection();
+  const { t } = useTranslation();
+  const { toggleLanguage } = useLanguage();
+
+  const isHome = location.pathname === "/";
+  const activeKey = useActiveSection(isHome);
+
+  const getNavItemProps = useCallback(
+    (key: NavItemKey): NavItemProps => {
+      const sectionId = SECTION_MAP[key];
+      const path = sectionId === "home" ? "/" : `/#${sectionId}`;
+
+      return {
+        to: path,
+        onClick: isHome
+          ? (e) => {
+              e.preventDefault();
+              scrollToSection(sectionId);
+            }
+          : undefined,
+      };
+    },
+    [isHome, scrollToSection],
+  );
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      if (location.hash) {
+        scrollToSection(location.hash.slice(1));
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  }, [location.pathname, location.hash, scrollToSection]);
+
+  const navItems = useMemo(
+    () =>
+      NAV_ITEM_KEYS.map((key) => ({
+        key,
+        label: t(`nav.${key}`),
+      })),
+    [t],
+  );
+
+  return (
+    <>
+      <DesktopHeader
+        getNavItemProps={getNavItemProps}
+        onLanguageToggle={toggleLanguage}
+        navItems={navItems}
+        logo={logo}
+        activeKey={activeKey}
+      />
+      <MobileHeader
+        getNavItemProps={getNavItemProps}
+        onLanguageToggle={toggleLanguage}
+        navItems={navItems}
+        logo={logo}
+        activeKey={activeKey}
+      />
+    </>
+  );
+}
+
+export default Header;
+import { Link } from "react-router-dom";
+import { Button } from "../ui/Button";
+import { Sling as Hamburger } from "hamburger-react";
+import { useCallback, useState } from "react";
+import Image from "../ui/Image";
+import type { NavItemKey } from "../../constants/navigation";
+import type { NavItem, NavItemProps } from "../../types/navigation";
+
+interface MobileHeaderProps {
+  getNavItemProps: (key: NavItemKey) => NavItemProps;
+  onLanguageToggle: () => void;
+  navItems: NavItem[];
+  logo: string;
+  activeKey: NavItemKey | null;
+}
+
+function MobileHeader({
+  getNavItemProps,
+  onLanguageToggle,
+  navItems,
+  logo,
+  activeKey,
+}: MobileHeaderProps) {
+  const [isOpen, setOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
+
+  return (
+    <header className="mobile-header">
+      <div className="mobile-header__menu">
+        <Hamburger
+          toggled={isOpen}
+          toggle={setOpen}
+          label="Toggle navigation menu"
+        />
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          className={`mobile-header__menu-dropdown ${isOpen ? "mobile-header__menu-dropdown--open" : ""}`}
+        >
+          <ul role="list">
+            {navItems.map((item) => {
+              const { to, onClick } = getNavItemProps(item.key);
+              const handleClick = (
+                e: React.MouseEvent<HTMLAnchorElement>,
+              ) => {
+                onClick?.(e);
+                closeMenu();
+              };
+              return (
+                <li
+                  className="mobile-header__menu-dropdown-item"
+                  key={item.key}
+                >
+                  <Link
+                    to={to}
+                    onClick={handleClick}
+                    className={`button button--dark button--inline${item.key === activeKey ? " button--active" : ""}`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+
+      <div className="mobile-header__logo">
+        <Link to="/" aria-label="Go to homepage">
+          <Image
+            src={logo}
+            alt="Erman Ergoz logo"
+            className="h-12 w-auto"
+            width={240}
+            height={78}
+            loading="eager"
+          />
+        </Link>
+      </div>
+
+      <div className="mobile-header__language-selector">
+        <Button
+          label="Tr | En"
+          variant="inline"
+          onClick={() => {
+            onLanguageToggle();
+            closeMenu();
+          }}
+          ariaLabel="Tr | En, switch language"
+        />
+      </div>
+    </header>
+  );
+}
+
+export default MobileHeader;
+import Image from "../ui/Image";
+import aboutImage from "../../assets/images/about.webp";
+import { useTranslation } from "react-i18next";
+
+function About() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="about">
+      <div className="about__wrapper">
+        <Image
+          src={aboutImage}
+          alt="Mobile phones showcasing app development"
+          className="about__image"
+          width={767}
+          height={687}
+        />
+        <div className="about__content">
+          <h2>{t("about.title")}</h2>
+          <div className="about__content-text">
+            <p>{t("about.paragraph1")}</p>
+            <p>{t("about.paragraph2")}</p>
+            <p>{t("about.paragraph3")}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default About;
+import { useEffect, useRef, useState } from "react";
+import sourceCode from "../../../source_code.txt";
+import type { WorkerUpdateMessage } from "../../types/worker";
+
+function CodeFlow() {
+  const [content, setContent] = useState("");
+  const scrollRef = useRef<HTMLPreElement>(null);
+  const workerRef = useRef<Worker | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch(sourceCode, { signal: controller.signal })
+      .then((res) => res.text())
+      .then((text) => setContent(text))
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          console.error("Failed to load source code:", error);
+        }
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (!content) return;
+
+    const element = scrollRef.current;
+    if (!element) return;
+
+    const worker = new Worker(
+      new URL("../../workers/code-flow.worker.ts", import.meta.url),
+    );
+    workerRef.current = worker;
+
+    worker.postMessage({ type: "init", scrollHeight: element.scrollHeight });
+    worker.postMessage({ type: "start" });
+
+    worker.onmessage = (e: MessageEvent<WorkerUpdateMessage>) => {
+      if (e.data.type === "update") {
+        element.style.transform = `translateY(${e.data.position}px)`;
+      }
+    };
+
+    return () => {
+      worker.terminate();
+      workerRef.current = null;
+    };
+  }, [content]);
+
+  return (
+    <div
+      className="code-flow"
+      aria-hidden="true"
+      role="presentation"
+      tabIndex={-1}
+    >
+      <pre ref={scrollRef} className="code-flow__content code-flow__line">
+        {content}
+      </pre>
+    </div>
+  );
+}
+
+export default CodeFlow;
+import { Button } from "../ui/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faCopy, faCheck } from "@fortawesome/free-solid-svg-icons";
+import Image from "../ui/Image";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { EMAIL, SOCIAL_LINKS } from "../../constants/social";
+
+import facebookLogo from "../../assets/images/logo-facebook.webp";
+import githubLogo from "../../assets/images/logo-github.webp";
+import instagramLogo from "../../assets/images/logo-instagram.webp";
+import linkedinLogo from "../../assets/images/logo-linkedin.webp";
+
+const SOCIAL_ICONS: Record<(typeof SOCIAL_LINKS)[number]["key"], string> = {
+  linkedin: linkedinLogo,
+  github: githubLogo,
+  facebook: facebookLogo,
+  instagram: instagramLogo,
+};
+
+function Contact() {
+  const { t } = useTranslation();
+  const [showToast, setShowToast] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current);
+  }, []);
+
+  const copyEmail = useCallback(() => {
+    navigator.clipboard.writeText(EMAIL).catch(() => {});
+    setShowToast(true);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setShowToast(false), 2000);
+  }, []);
+
+  return (
+    <div className="contact">
+      <h2>{t("contact.title")}</h2>
+      <p>{t("contact.description")}</p>
+      <div className="contact__email-wrapper">
+        {showToast ? (
+          <span className="button button--light button--primary" role="status">
+            <span className="button__icon">
+              <FontAwesomeIcon icon={faCheck} aria-hidden="true" />
+            </span>
+            {t("contact.copied")}
+          </span>
+        ) : (
+          <Button
+            href={`mailto:${EMAIL}`}
+            theme="light"
+            label={EMAIL}
+            icon={<FontAwesomeIcon icon={faEnvelope} aria-hidden="true" />}
+          />
+        )}
+        <Button
+          theme="light"
+          label=""
+          onClick={copyEmail}
+          icon={<FontAwesomeIcon icon={faCopy} aria-hidden="true" />}
+          ariaLabel="Copy email to clipboard"
+        />
+      </div>
+      <p>{t("contact.orFindMe")}</p>
+      <div className="contact__card-container">
+        {SOCIAL_LINKS.map(({ key, label, href }) => (
+          <Button
+            key={key}
+            href={href}
+            external
+            theme="light"
+            label={label}
+            icon={
+              <Image
+                src={SOCIAL_ICONS[key]}
+                alt=""
+                className="h-6"
+                width={24}
+                height={24}
+              />
+            }
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Contact;
+import Image from "../ui/Image";
+import greetingIcon from "../../assets/icons/greeting.svg";
+import { useTranslation } from "react-i18next";
+
+function Greeting() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="greeting">
+      <div className="greeting__title">
+        <Image
+          className="greeting__title-wave"
+          src={greetingIcon}
+          alt="Waving hand"
+          width={40}
+          height={40}
+          loading="eager"
+        />
+        <h1>{t("greeting.title")}</h1>
+      </div>
+      <p className="greeting__subtitle">{t("greeting.subtitle")}</p>
+    </div>
+  );
+}
+
+export default Greeting;
+import { Button } from "../ui/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Greeting from "./Greeting";
+import { useScrollToSection } from "../../hooks/useScrollToSection";
+import { useTranslation } from "react-i18next";
+
+function HeroBanner() {
+  const scrollToSection = useScrollToSection();
+  const { t } = useTranslation();
+
+  return (
+    <div className="hero-banner">
+      <Greeting />
+      <div className="hero-banner__button-holder">
+        <Button
+          theme="dark"
+          label={t("greeting.more")}
+          icon={
+            <FontAwesomeIcon
+              className="hero-banner__chevron-animation"
+              icon={faChevronDown}
+              aria-hidden="true"
+            />
+          }
+          variant="inline"
+          onClick={() => scrollToSection("about")}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default HeroBanner;
+import Card from "../ui/Card";
+import androidIcon from "../../assets/icons/android.svg";
+import multiplatformIcon from "../../assets/icons/multiplatform.svg";
+import frontendIcon from "../../assets/icons/frontend.svg";
+import { useTranslation } from "react-i18next";
+
+function WhatIDo() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="what-i-do">
+      <h2>{t("whatIDo.title")}</h2>
+      <div className="what-i-do__card-container">
+        <Card
+          icon={androidIcon}
+          iconAlt="Android platform icon"
+          title={t("whatIDo.android.title")}
+          text={t("whatIDo.android.text")}
+        />
+        <Card
+          icon={multiplatformIcon}
+          iconAlt="Multiplatform development icon"
+          title={t("whatIDo.multiplatform.title")}
+          text={t("whatIDo.multiplatform.text")}
+        />
+        <Card
+          icon={frontendIcon}
+          iconAlt="Front-end development icon"
+          title={t("whatIDo.frontEnd.title")}
+          text={t("whatIDo.frontEnd.text")}
+        />
+      </div>
+      <p>{t("whatIDo.footer")}</p>
+    </div>
+  );
+}
+
+export default WhatIDo;
+import type { ReactNode, MouseEvent } from "react";
+import { isExternalUrl, externalLinkProps } from "../../utils/link";
+
+interface ButtonBaseProps {
+  variant?: "primary" | "secondary" | "inline";
+  theme?: "light" | "dark";
+  isWide?: boolean;
+  label: string;
+  icon?: ReactNode;
+  isFocusable?: boolean;
+  ariaLabel?: string;
+}
+
+interface ButtonAsButton extends ButtonBaseProps {
+  href?: never;
+  external?: never;
+  onClick?: () => void;
+}
+
+interface ButtonAsLink extends ButtonBaseProps {
+  href: string;
+  external?: boolean;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+function isLinkProps(props: ButtonProps): props is ButtonAsLink {
+  return "href" in props && props.href != null && props.href !== "";
+}
+
+function buildClassName(
+  theme: string,
+  variant: string,
+  isWide: boolean,
+  isIconOnly: boolean,
+): string {
+  const classes = ["button", `button--${theme}`, `button--${variant}`];
+  if (isWide) classes.push("button--wide");
+  if (isIconOnly) classes.push("button--icon-only");
+  return classes.join(" ");
+}
+
+export function Button(props: ButtonProps) {
+  const {
+    isFocusable = true,
+    variant = "primary",
+    theme = "dark",
+    isWide = false,
+    label,
+    icon,
+    ariaLabel,
+  } = props;
+
+  const iconOnly = icon != null && !label;
+  const className = buildClassName(theme, variant, isWide, iconOnly);
+  const tabIndex = isFocusable ? undefined : -1;
+
+  if (isLinkProps(props)) {
+    const { href, external = false, onClick } = props;
+    const isExternal = isExternalUrl(href, external);
+
+    return (
+      <a
+        href={href}
+        className={className}
+        aria-label={ariaLabel ?? label}
+        tabIndex={tabIndex}
+        onClick={onClick}
+        {...externalLinkProps(isExternal)}
+      >
+        {icon && <span className="button__icon">{icon}</span>}
+        {label}
+      </a>
+    );
+  }
+
+  const { onClick } = props as ButtonAsButton;
+
+  return (
+    <button
+      type="button"
+      className={className}
+      aria-label={ariaLabel ?? label}
+      tabIndex={tabIndex}
+      onClick={onClick}
+    >
+      {icon && <span className="button__icon">{icon}</span>}
+      {label}
+    </button>
+  );
+}
+import Image from "./Image";
+
+interface CardProps {
+  icon: string;
+  iconAlt: string;
+  title: string;
+  text: string;
+}
+
+function Card({ icon, iconAlt, title, text }: CardProps) {
+  return (
+    <article className="card">
+      <div className="card__bg-icon">
+        <Image src={icon} alt={iconAlt} width={120} height={120} />
+      </div>
+      <div className="card__content">
+        <h3 className="card__title">{title}</h3>
+        <p>{text}</p>
+      </div>
+    </article>
+  );
+}
+
+export default Card;
+import { Component } from "react";
+import type { ErrorInfo, ReactNode } from "react";
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("ErrorBoundary caught:", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div role="alert" style={{ padding: "2rem", textAlign: "center" }}>
+          <h2>Something went wrong.</h2>
+          <p>Please try refreshing the page.</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+import type { ReactNode } from "react";
+import { isExternalUrl, externalLinkProps } from "../../utils/link";
+
+interface ExternalLinkProps {
+  href: string;
+  title?: string;
+  children: ReactNode;
+  external?: boolean;
+}
+
+function ExternalLink({
+  href,
+  title = href,
+  children,
+  external = false,
+}: ExternalLinkProps) {
+  const isExternal = isExternalUrl(href, external);
+
+  return (
+    <a
+      className="external-link"
+      href={href}
+      title={title}
+      aria-label={title}
+      {...externalLinkProps(isExternal)}
+    >
+      {children}
+    </a>
+  );
+}
+
+export default ExternalLink;
+interface ImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
+}
+
+function Image({
+  src,
+  alt,
+  className,
+  width,
+  height,
+  loading = "lazy",
+  fetchPriority,
+}: ImageProps) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      width={width}
+      height={height}
+      loading={loading}
+      decoding="async"
+      {...(fetchPriority && { fetchPriority })}
+    />
+  );
+}
+
+export default Image;
+import type { ReactNode } from "react";
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+function Layout({ children }: LayoutProps) {
+  return <div className="layout">{children}</div>;
+}
+
+export default Layout;
+function PageLoader() {
+  return (
+    <div
+      className="page-loader"
+      role="status"
+      aria-label="Loading page content"
+    >
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+}
+
+export default PageLoader;
+export const NAV_ITEM_KEYS = ["home", "aboutMe", "whatIDo", "contactMe"] as const;
+
+export type NavItemKey = (typeof NAV_ITEM_KEYS)[number];
+
+export const SECTION_MAP: Record<NavItemKey, string> = {
+  home: "home",
+  aboutMe: "about",
+  whatIDo: "what-i-do",
+  contactMe: "contact",
+};
+
+export const HEADER_OFFSET_PX = 100;
+export const EMAIL = "erman.ergoz@gmail.com";
+
+export const SOCIAL_LINKS = [
+  { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/ermanergoz/" },
+  { key: "github", label: "GitHub", href: "https://github.com/ermanergoz" },
+  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/erman.ergoz" },
+  { key: "instagram", label: "Instagram", href: "https://www.instagram.com/ermanergz/" },
+] as const;
+import { useEffect, useRef, useState } from "react";
+import { NAV_ITEM_KEYS, SECTION_MAP } from "../constants/navigation";
+import type { NavItemKey } from "../constants/navigation";
+
+const SECTION_IDS = NAV_ITEM_KEYS.map((key) => SECTION_MAP[key]);
+
+const SECTION_ID_TO_NAV_KEY: Record<string, NavItemKey> = Object.fromEntries(
+  Object.entries(SECTION_MAP).map(([key, sectionId]) => [sectionId, key as NavItemKey]),
+);
+
+export function useActiveSection(isHome: boolean): NavItemKey | null {
+  const [activeKey, setActiveKey] = useState<NavItemKey | null>(
+    isHome ? "home" : null,
+  );
+  const visibleSections = useRef(new Set<string>());
+
+  useEffect(() => {
+    if (!isHome) {
+      setActiveKey(null);
+      return;
+    }
+
+    const updateActive = () => {
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.body.scrollHeight - 50;
+
+      if (atBottom) {
+        setActiveKey(NAV_ITEM_KEYS[NAV_ITEM_KEYS.length - 1]);
+        return;
+      }
+
+      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
+        if (visibleSections.current.has(SECTION_IDS[i])) {
+          setActiveKey(SECTION_ID_TO_NAV_KEY[SECTION_IDS[i]]);
+          return;
+        }
+      }
+
+      setActiveKey("home");
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visibleSections.current.add(entry.target.id);
+          } else {
+            visibleSections.current.delete(entry.target.id);
+          }
+        }
+        updateActive();
+      },
+      { rootMargin: "-40% 0px -60% 0px" },
+    );
+
+    for (const id of SECTION_IDS) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  return activeKey;
+}
+import { useEffect } from "react";
+
+const BASE_TITLE = "Yusuf Erman ERGÖZ | Mobile & Web Developer";
+
+export function useDocumentTitle(subtitle?: string) {
+  useEffect(() => {
+    document.title = subtitle ? `${subtitle} | Yusuf Erman ERGÖZ` : BASE_TITLE;
+    return () => {
+      document.title = BASE_TITLE;
+    };
+  }, [subtitle]);
+}
+import { useTranslation } from "react-i18next";
+import { useCallback, useEffect } from "react";
+import { normalizeLanguage } from "../i18n";
+
+export function useLanguage() {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    document.documentElement.lang = normalizeLanguage(i18n.language || "en");
+  }, [i18n.language]);
+
+  const toggleLanguage = useCallback(() => {
+    const currentLang = normalizeLanguage(i18n.language || "en");
+    const newLang = currentLang === "tr" ? "en" : "tr";
+    i18n.changeLanguage(newLang);
+  }, [i18n]);
+
+  return { toggleLanguage } as const;
+}
+import { useCallback } from "react";
+import { HEADER_OFFSET_PX } from "../constants/navigation";
+
+export function useScrollToSection() {
+  return useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (!element) return;
+
+    const top =
+      element.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET_PX;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, []);
+}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import enTranslations from "./locales/en.json";
+import trTranslations from "./locales/tr.json";
+
+type SupportedLanguage = "en" | "tr";
+
+const STORAGE_KEY = "i18nextLng";
+const SUPPORTED_LANGUAGES: SupportedLanguage[] = ["en", "tr"];
+
+export function normalizeLanguage(lang: string): SupportedLanguage {
+  const langCode = lang.split("-")[0].toLowerCase();
+  return langCode === "tr" ? "tr" : "en";
+}
+
+function getInitialLanguage(): SupportedLanguage {
+  const savedLang = localStorage.getItem(STORAGE_KEY);
+  if (savedLang) {
+    return normalizeLanguage(savedLang);
+  }
+
+  const browserLang =
+    navigator.language ||
+    (navigator as Navigator & { userLanguage?: string }).userLanguage ||
+    "en";
+  return normalizeLanguage(browserLang);
+}
+
+const initialLanguage = getInitialLanguage();
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: enTranslations },
+      tr: { translation: trTranslations },
+    },
+    lng: initialLanguage,
+    fallbackLng: "en",
+    supportedLngs: SUPPORTED_LANGUAGES,
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      order: ["localStorage"],
+      caches: ["localStorage"],
+      lookupLocalStorage: STORAGE_KEY,
+    },
+  });
+
+if (!localStorage.getItem(STORAGE_KEY)) {
+  localStorage.setItem(STORAGE_KEY, initialLanguage);
+}
+
+document.documentElement.lang = initialLanguage;
+
+export default i18n;
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./styles/main.scss";
+import "./i18n";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+import CodeFlow from "../components/sections/CodeFlow";
+import HeroBanner from "../components/sections/HeroBanner";
+import Layout from "../components/ui/Layout";
+import About from "../components/sections/About";
+import WhatIDo from "../components/sections/WhatIDo";
+import Contact from "../components/sections/Contact";
+import { useTranslation } from "react-i18next";
+import { SECTION_MAP } from "../constants/navigation";
+
+function HomePage() {
+  const { t } = useTranslation();
+
+  return (
+    <Layout>
+      <section id={SECTION_MAP.home} aria-label={t("sections.welcome")}>
+        <CodeFlow />
+        <HeroBanner />
+      </section>
+      <section id={SECTION_MAP.aboutMe} aria-label={t("sections.about")}>
+        <About />
+      </section>
+      <section id={SECTION_MAP.whatIDo} aria-label={t("sections.whatIDo")}>
+        <WhatIDo />
+      </section>
+      <section id={SECTION_MAP.contactMe} aria-label={t("sections.contact")}>
+        <Contact />
+      </section>
+    </Layout>
+  );
+}
+
+export default HomePage;
+import Layout from "../components/ui/Layout";
+import ExternalLink from "../components/ui/ExternalLink";
+import policiesData from "../data/policies.json";
+import { useTranslation } from "react-i18next";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import type { Policy } from "../types/policy";
+
+const policies: Policy[] = policiesData;
+
+function PrivacyPoliciesPage() {
+  const { t } = useTranslation();
+  useDocumentTitle(t("privacyPolicies.title"));
+
+  return (
+    <Layout>
+      <div className="privacy-policies">
+        <h1>{t("privacyPolicies.title")}</h1>
+        <ul className="privacy-policies__list">
+          {policies.map((policy) => (
+            <li key={policy.id}>
+              <ExternalLink
+                href={`policies/${policy.file}`}
+                title={policy.title}
+              >
+                {policy.title}
+              </ExternalLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Layout>
+  );
+}
+
+export default PrivacyPoliciesPage;
+$hero-banner: monaco,Consolas,Lucida Console,monospace;
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+  h1,
+h2 {
+  @apply text-[24px] md:text-[28px] lg:text-[34px] font-bold;
+}
+
+h2 {
+  @apply inline-block pb-1 mb-4;
+  border-bottom: none;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    theme("colors.customGreen") 20%,
+    theme("colors.customGreen") 80%,
+    transparent
+  );
+  background-size: 100% 3px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+p {
+  @apply py-4;
+}
+.about {
+  @apply pt-8 md:pt-20;
+
+  &__wrapper {
+    @apply md:flex md:flex-row md:gap-16 lg:gap-28;
+  }
+
+  &__image {
+    @apply mx-auto max-w-[14rem] md:max-w-[16rem] lg:max-w-[22rem] h-auto object-contain flex-shrink-0 mb-6 md:mb-0;
+  }
+
+  &__content {
+    @apply my-auto;
+
+    &-text {
+      @apply space-y-0;
+    }
+  }
+}
+.button {
+  @apply flex border-none rounded-lg p-3 px-5 justify-center items-center;
+
+  &--primary {
+    @apply bg-customDarkBackground text-white;
+
+    &:hover {
+      @apply transition-all ease-out duration-200 bg-buttonBackground text-black;
+    }
+  }
+
+  &--secondary {
+    @apply bg-buttonBackground text-black;
+
+    &:hover {
+      @apply transition-all ease-out duration-200 bg-customDarkBackground text-white;
+    }
+  }
+
+  &--light.button--primary {
+    @apply bg-customDarkBackground text-white;
+
+    &:hover {
+      @apply transition-all ease-out duration-200 text-white;
+      background-color: var(--bg-button-hover);
+    }
+  }
+
+  &--light.button--secondary {
+    background-color: var(--bg-button);
+    color: var(--text-primary);
+
+    &:hover {
+      @apply transition-all ease-out duration-200 bg-customDarkBackground text-white;
+    }
+  }
+
+  &--dark {
+    @apply text-white;
+  }
+
+  &--wide {
+    @apply min-w-[12rem];
+  }
+
+  &--inline {
+    @apply p-0 border-none;
+    mix-blend-mode: difference;
+    color: white;
+
+    &:hover {
+      @apply bg-transparent text-customGreen;
+    }
+  }
+
+  &--active {
+    @apply pb-1;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      theme("colors.customGreen") 20%,
+      theme("colors.customGreen") 80%,
+      transparent
+    );
+    background-size: 100% 2px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:focus-visible {
+    @apply outline-2 outline-customGreen outline-offset-4;
+  }
+
+  &__icon {
+    @apply inline-flex items-center mr-4;
+  }
+
+  &--icon-only {
+    @apply px-3;
+
+    .button__icon {
+      @apply mr-0;
+    }
+  }
+}
+.card {
+  @apply p-6 mx-4 md:mx-0 rounded-xl w-auto min-h-fit lg:w-[300px] lg:min-h-[250px] relative overflow-hidden bg-customGreen;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  &__bg-icon {
+    @apply absolute inset-0 flex items-center justify-center pointer-events-none;
+
+    img {
+      width: 160px;
+      height: 160px;
+      opacity: 0.15;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &__content {
+    @apply relative;
+  }
+
+  &__title {
+    @apply text-xl font-bold pb-4 text-white text-center;
+  }
+
+  p {
+    @apply text-white/90 font-medium;
+  }
+}
+.code-flow {
+  @apply h-screen overflow-hidden absolute inset-0 z-[-100] bg-customDarkBackground;
+
+  &__content {
+    @apply select-none leading-tight overflow-hidden flex flex-col px-4;
+  }
+
+  &__line {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+    font-family: $hero-banner;
+    color: theme("colors.customDarkGreen");
+  }
+}.contact {
+  @apply pt-8 md:pt-20 pb-20 md:pb-40 mx-auto;
+
+  &__email-wrapper {
+    @apply flex justify-center items-stretch pt-4 gap-2;
+  }
+
+  &__card-container {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 lg:flex lg:space-x-2 lg:align-middle lg:justify-center;
+  }
+}
+.desktop-header {
+  @apply z-[100] w-full sticky top-0 items-center justify-between px-4 py-4 hidden lg:flex bg-customDarkBackground;
+
+  &__logo {
+    @apply flex-shrink-0 h-10;
+  }
+
+  &__navigation {
+    @apply absolute left-1/2 transform -translate-x-1/2;
+
+    &-list {
+      @apply flex space-x-16 list-none;
+    }
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0;
+  }
+}
+.external-link:focus {
+  @apply outline-none;
+}
+
+.external-link:focus-visible {
+  @apply outline outline-customGreen outline-offset-4;
+}
+.footer {
+  @apply py-8 px-4 text-white bg-customDarkBackground w-full min-h-36;
+
+  &__content {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+
+    &-copyright {
+      @apply pt-7 mx-auto;
+    }
+
+    &-logo {
+      @apply block h-20 w-auto mx-auto;
+    }
+  }
+}
+.greeting {
+  @apply m-0 space-y-16 md:space-y-24 lg:space-y-32 align-middle text-white;
+
+  &__title {
+    @apply text-[24px] md:text-[28px] lg:text-[34px] flex flex-row justify-center;
+    min-height: 36px;
+
+    h1 {
+      min-height: 36px;
+      max-width: 200px;
+
+      @media (min-width: 768px) {
+        min-height: 42px;
+        max-width: none;
+      }
+
+      @media (min-width: 1024px) {
+        min-height: 48px;
+      }
+    }
+
+    &-wave {
+      animation: wave-animation 2.5s 2 forwards, wave-exit 1.5s 5s forwards;
+      transform-origin: 70% 70%;
+      margin-right: 0.5rem;
+
+      @media (min-width: 1024px) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__subtitle {
+    @apply text-[16px] md:text-[20px] lg:text-[24px];
+  }
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes wave-exit {
+  0% {
+    max-width: 40px;
+    opacity: 1;
+  }
+  100% {
+    max-width: 0;
+    margin-right: 0;
+    opacity: 0;
+  }
+}
+.hero-banner {
+  @apply h-[94vh] text-center pt-[10vh] md:pt-[14vh] space-y-10 md:space-y-16;
+
+  &__button-holder {
+    position: absolute;
+    @apply bottom-16 font-bold mx-auto w-40 sm:w-48 left-0 right-0;
+  }
+
+  &__chevron-animation {
+    animation: bounce 2s 3;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+.mobile-header {
+  @apply z-[100] w-full sticky top-0 flex items-center justify-between px-4 py-4 lg:hidden bg-customDarkBackground text-white;
+
+  &__menu {
+    &-dropdown {
+      @apply absolute left-0 right-0 top-full bg-customDarkBackground transition-[max-height,visibility] duration-300 ease-out invisible overflow-hidden;
+      max-height: 0;
+
+      &--open {
+        @apply visible;
+        max-height: 25rem;
+      }
+
+      &-item {
+        @apply p-4 flex-none text-center;
+      }
+
+      ul {
+        @apply list-none p-0 m-0;
+      }
+    }
+  }
+
+  &__logo {
+    @apply absolute left-1/2 transform -translate-x-1/2 h-10;
+  }
+
+  &__language-selector {
+    @apply flex-shrink-0 whitespace-nowrap;
+  }
+}
+.what-i-do {
+  @apply pt-8 md:pt-20;
+
+  &__card-container {
+    @apply md:grid md:grid-cols-2 lg:flex gap-10 pt-8 space-y-4 md:space-y-0 lg:justify-center;
+  }
+}
+.app-layout {
+  @apply min-h-screen flex flex-col;
+
+  &__main {
+    @apply flex-1;
+  }
+}
+.layout {
+    @apply max-w-[1280px] mx-auto px-4 md:px-8 lg:px-4;
+}@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Base
+@import "../styles/base/fonts";
+@import "../styles/base/typography";
+
+// Components
+@import "../styles/components/button";
+@import "../styles/components/external-link";
+@import "../styles/components/card";
+@import "../styles/components/code-flow";
+@import "../styles/components/hero-banner";
+@import "../styles/components/desktop-header";
+@import "../styles/components/mobile-header";
+@import "../styles/components/footer";
+@import "../styles/components/greeting";
+@import "../styles/components/about";
+@import "../styles/components/what-i-do";
+@import "../styles/components/contact";
+
+// Layout
+@import "../styles/layout/layout";
+@import "../styles/layout/app-layout";
+
+// Pages
+@import "../styles/pages/privacy-policies";
+
+:root {
+  --bg-body: theme("colors.white");
+  --text-primary: theme("colors.black");
+  --text-secondary: theme("colors.textSecondary");
+  --bg-button: theme("colors.buttonBackground");
+  --bg-button-hover: theme("colors.buttonHover");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-body: theme("colors.bodyDark");
+    --text-primary: theme("colors.white");
+    --text-secondary: theme("colors.textSecondaryDark");
+    --bg-button: theme("colors.buttonBackgroundDark");
+    --bg-button-hover: theme("colors.buttonHoverDark");
+  }
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  @apply m-0;
+}
+
+.page-loader {
+  @apply min-h-[50vh];
+}
+
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+.skip-link {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+
+  &:focus {
+    @apply fixed top-4 left-4 z-[200] w-auto h-auto p-3 px-5 m-0 overflow-visible bg-customDarkBackground text-white rounded-lg;
+    clip: auto;
+  }
+}
+.privacy-policies {
+  @apply mx-4 space-y-8 py-16;
+
+  &__list {
+    @apply space-y-2 mt-8 mb-8;
+
+    .external-link {
+      @apply transition-colors duration-200;
+
+      &:hover {
+        @apply text-customDarkGreen;
+      }
+    }
+  }
+}
+import type { NavItemKey } from "../constants/navigation";
+
+export interface NavItem {
+  key: NavItemKey;
+  label: string;
+}
+
+export interface NavItemProps {
+  to: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}
+export interface Policy {
+  id: number;
+  title: string;
+  file: string;
+  type: string;
+}
+export interface WorkerInitMessage {
+  type: "init";
+  scrollHeight: number;
+}
+
+export interface WorkerStartMessage {
+  type: "start";
+}
+
+export interface WorkerUpdateMessage {
+  type: "update";
+  position: number;
+}
+
+export type WorkerIncomingMessage = WorkerInitMessage | WorkerStartMessage;
+export function isExternalUrl(href: string, explicit = false): boolean {
+  return explicit || href.startsWith("http");
+}
+
+export function externalLinkProps(isExternal: boolean) {
+  return isExternal ? { rel: "noopener noreferrer" as const, target: "_blank" as const } : {};
+}
+/// <reference types="vite/client" />
+import type { WorkerIncomingMessage } from "../types/worker";
+
+const SCROLL_SPEED_PX = 6;
+const VIEWPORT_OFFSET_PX = 950;
+const FRAME_INTERVAL_MS = 16;
+
+let position = 0;
+let scrollHeight = 0;
+
+onmessage = (event: MessageEvent<WorkerIncomingMessage>) => {
+  switch (event.data.type) {
+    case "init":
+      scrollHeight = event.data.scrollHeight;
+      break;
+
+    case "start": {
+      const updatePosition = () => {
+        position -= SCROLL_SPEED_PX;
+        if (position <= -scrollHeight + VIEWPORT_OFFSET_PX) {
+          position = 0;
+        }
+        postMessage({ type: "update", position });
+        setTimeout(updatePosition, FRAME_INTERVAL_MS);
+      };
+      updatePosition();
+      break;
+    }
+  }
+};

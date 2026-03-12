@@ -1,0 +1,1 @@
+(function(){"use strict";let t=0,s=0;onmessage=e=>{switch(e.data.type){case"init":s=e.data.scrollHeight;break;case"start":{const o=()=>{t-=6,t<=-s+950&&(t=0),postMessage({type:"update",position:t}),setTimeout(o,16)};o();break}}}})();
