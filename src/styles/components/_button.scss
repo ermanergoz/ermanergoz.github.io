@@ -1,0 +1,84 @@
+.button {
+  @apply flex border-none rounded-lg p-3 px-5 justify-center items-center cursor-pointer transition-all duration-200 ease-out;
+
+  &--primary {
+    @apply bg-customDarkBackground text-white;
+
+    &:hover {
+      @apply bg-buttonBackground text-black;
+    }
+  }
+
+  &--secondary {
+    @apply bg-buttonBackground text-black;
+
+    &:hover {
+      @apply bg-customDarkBackground text-white;
+    }
+  }
+
+  &--light.button--primary {
+    @apply bg-customDarkBackground text-white;
+
+    &:hover {
+      @apply text-white;
+      background-color: var(--bg-button-hover);
+    }
+  }
+
+  &--light.button--secondary {
+    background-color: var(--bg-button);
+    color: var(--text-primary);
+
+    &:hover {
+      @apply bg-customDarkBackground text-white;
+    }
+  }
+
+  &--dark {
+    @apply text-white;
+  }
+
+  &--wide {
+    @apply min-w-[12rem];
+  }
+
+  &--inline {
+    @apply p-0 border-none mix-blend-difference text-white;
+
+    &:hover {
+      @apply bg-transparent text-customGreen;
+    }
+  }
+
+  &--active {
+    @apply pb-1 bg-bottom bg-no-repeat bg-[length:100%_2px];
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      theme("colors.customGreen") 20%,
+      theme("colors.customGreen") 80%,
+      transparent
+    );
+  }
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:focus-visible {
+    @apply outline-2 outline-customGreen outline-offset-4;
+  }
+
+  &__icon {
+    @apply inline-flex items-center mr-4;
+  }
+
+  &--icon-only {
+    @apply px-3;
+
+    .button__icon {
+      @apply mr-0;
+    }
+  }
+}

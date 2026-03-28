@@ -1,0 +1,15 @@
+.footer {
+  @apply py-12 px-4 text-white bg-customDarkBackground w-full;
+
+  &__content {
+    @apply flex flex-col items-center gap-6 max-w-4xl mx-auto;
+
+    &-copyright {
+      @apply text-sm opacity-70;
+    }
+
+    &-logo {
+      @apply block h-16 w-auto;
+    }
+  }
+}
