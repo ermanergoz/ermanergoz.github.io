@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "aboutMe": "Hakkımda",
+    "whatIDo": "Ne Yapıyorum",
+    "contactMe": "İletişim"
+  },
+  "greeting": {
+    "title": "Merhaba! Benim adım Erman",
+    "subtitle": "Ben, mobil uygulama geliştirme konusunda tutkulu, güçlü problem çözme becerilerine sahip ve her projede kaliteyi önceliklendiren bir mobil uygulama geliştiricisiyim.",
+    "more": "DAHA FAZLA"
+  },
+  "about": {
+    "title": "Hakkımda",
+    "paragraph1": "Android, iOS ve web platformları için uygulamalar geliştirme konusunda deneyimli; farklı cihazlarda sorunsuz çalışan çözümler üretmeye önem veren bir geliştiriciyim. Kullanıcı dostu mobil uygulamalar geliştirmekten görsel olarak güçlü web siteleri tasarlamaya kadar, hem işlevsellik hem de tasarım beklentilerini karşılayan yüksek kaliteli işler ortaya koymayı önemsiyorum.",
+    "paragraph2": "Mobil ve web geliştirme alanındaki sağlam altyapımla, yaratıcı fikirleri pratik ve verimli şekilde hayata geçiriyorum. Hedefim, üzerinde çalıştığım her projenin kullanıcılar için sorunsuz ve ilgi çekici bir deneyim sunmasıdır.",
+    "paragraph3": "Her projeye iş birliği odaklı yaklaşır; birlikte çalıştığım kişilerin ve işletmelerin ihtiyaçları ve hedefleriyle uyumlu, özel çözümler üretirim."
+  },
+  "whatIDo": {
+    "title": "Ne yapıyorum?",
+    "android": {
+      "title": "Android",
+      "text": "Güncel teknolojileri ve en iyi pratikleri kullanarak yerel Android uygulamaları geliştiriyorum."
+    },
+    "ios": {
+      "title": "iOS",
+      "text": "Hızlı, güvenilir ve kullanımı kolay, yüksek kaliteli iOS uygulamaları geliştiriyorum."
+    },
+    "multiplatform": {
+      "title": "Çoklu Platform",
+      "text": "Kotlin Multiplatform ve React Native gibi teknolojilerle çoklu platform uygulamaları geliştiriyorum. Tek bir kod tabanıyla hem Android hem de iOS kullanıcılarına ulaşmanızı sağlıyorum."
+    },
+    "frontEnd": {
+      "title": "Front End",
+      "text": "Modern web teknolojileriyle mobil öncelikli, kullanıcı dostu web siteleri tasarlıyor ve geliştiriyorum."
+    },
+    "footer": "Beklentilerinize bağlı olarak, uzmanlık alanımın dışındaki projelerde de etkili şekilde iş birliği yapabilirim."
+  },
+  "contact": {
+    "title": "İletişim",
+    "description": "Üzerinde konuşmak istediğiniz bir proje varsa, haydi iletişime geçelim! Bana bir e-posta gönderin:",
+    "orFindMe": "Veya beni burada bulun:",
+    "copied": "E-posta panoya kopyalandı!"
+  },
+  "privacyPolicies": {
+    "title": "Gizlilik Politikaları"
+  },
+  "sections": {
+    "welcome": "Hoş geldiniz",
+    "about": "Hakkımda",
+    "whatIDo": "Hizmetler ve yetenekler",
+    "contact": "İletişim bilgileri"
+  },
+  "footer": {
+    "privacyPolicies": "Gizlilik Politikaları"
+  }
+}

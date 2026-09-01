@@ -1,0 +1,7 @@
+.what-i-do {
+  @apply pt-16 md:pt-28;
+
+  &__card-container {
+    @apply md:grid md:grid-cols-2 lg:flex gap-8 pt-10 space-y-4 md:space-y-0 lg:justify-center;
+  }
+}

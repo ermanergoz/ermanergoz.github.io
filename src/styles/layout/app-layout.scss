@@ -1,0 +1,7 @@
+.app-layout {
+  @apply min-h-screen flex flex-col;
+
+  &__main {
+    @apply flex-1;
+  }
+}
